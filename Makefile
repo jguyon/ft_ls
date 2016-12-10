@@ -6,7 +6,7 @@
 #    By: jguyon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#              #
-#    Updated: 2016/12/10 12:51:32 by jguyon           ###   ########.fr        #
+#    Updated: 2016/12/10 17:41:03 by jguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,25 @@ SRC_PATH = srcs
 INC_PATH = includes
 OBJ_PATH = objs
 
-SRC_NAMES = main.c
+SRC_NAMES = ls_parse_args.c													\
+			main.c
 INC_NAMES = ft_ls.h
 
 INC = $(INC_NAMES:%.h=$(INC_PATH)/%.h) $(LIB_INC_NAMES:%.h=$(LIB_INC_PATH)/%.h)
 OBJ = $(SRC_NAMES:%.c=$(OBJ_PATH)/%.o)
+OBJDIR = $(OBJ_PATH)
+
+TST_NAME = test_ls
+TST_PATH = tests
+TST_SRC_NAMES = test_parse_args.c											\
+				main.c
+TST_INC_NAMES = test_ls.h
+TST_INC = $(TST_INC_NAMES:%.h=$(INC_PATH)/$(TST_PATH)/%.h)
+TST_OBJ = $(filter-out $(OBJ_PATH)/main.o,$(OBJ))							\
+		  $(TST_SRC_NAMES:%.c=$(OBJ_PATH)/$(TST_PATH)/%.o)
+TST_CFLAGS = -g
+TST_LDFLAGS = -g
+TST_OBJDIR = $(OBJ_PATH)/$(TST_PATH)
 
 all: $(NAME)
 
@@ -43,16 +57,26 @@ $(NAME): $(LIB) $(OBJ)
 $(LIB):
 	make -C $(LIB_PATH)
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC)
-	@mkdir -p $(OBJ_PATH)
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(INC) $(TST_INC)
+	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -I$(INC_PATH) -I$(LIB_INC_PATH) -o $@ -c $<
 
+test: CFLAGS += $(TST_CFLAGS)
+test: LDFLAGS += $(TST_LDFLAGS)
+test: INC += $(TST_INC)
+test: OBJDIR += $(TST_OBJDIR)
+test: $(TST_NAME)
+	./$<
+
+$(TST_NAME): $(LIB) $(TST_OBJ)
+	$(LD) $(LDFLAGS) -o $@ $(filter %.o,$^) -L$(LIB_PATH) -l$(LIB_NAME)
+
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(TST_SRC_NAMES:%.c=$(OBJ_PATH)/$(TST_PATH)/%.o) $(TST_NAME)
 
 fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test
