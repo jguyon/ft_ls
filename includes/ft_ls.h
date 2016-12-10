@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/10 21:22:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/10 23:21:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,32 @@
 # include "libft.h"
 # include "libftstream.h"
 # include "libftprintf.h"
+
+# include <unistd.h>
+
+/*
+** STD OUTPUT
+*/
+
+# define LS_DEFAULT_PROGNAME	"ft_ls"
+# define LS_DEFAULT_STDOUT		1
+# define LS_DEFAULT_STDERR		2
+
+int				g_ls_stdout_fd;
+int				g_ls_stderr_fd;
+t_stream		*g_ls_stdout;
+t_stream		*g_ls_stderr;
+char			*g_ls_progname;
+
+void			ls_set_progname(char *name);
+int				ls_open_streams(void);
+int				ls_close_streams(void);
+int				ls_printf_out(const char *format, ...);
+int				ls_printf_err(int errnum, const char *format, ...);
+
+/*
+** ARG PARSING
+*/
 
 # define LS_CHAR_LNG 'l'
 # define LS_CHAR_REC 'R'

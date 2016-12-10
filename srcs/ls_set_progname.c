@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fflush.c                                        :+:      :+:    :+:   */
+/*   ls_set_progname.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 20:08:55 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 00:23:00 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/10 23:22:24 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/10 23:23:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftstream.h"
+#include "ft_ls.h"
 
-int		ft_fflush(t_stream *stream)
+void	ls_set_progname(char *name)
 {
-	if (!stream || !(stream->type.write) || !(stream->curr))
-		return (-1);
-	if (stream->curr == stream->buff)
-		return (0);
-	if (stream->type.write(stream->cookie, stream->buff,
-							stream->curr - stream->buff))
-	{
-		stream->curr = stream->buff;
-		return (1);
-	}
-	stream->curr = NULL;
-	return (-1);
+	if (name)
+		g_ls_progname = name;
 }

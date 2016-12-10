@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fflush.c                                        :+:      :+:    :+:   */
+/*   ls_streams.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 20:08:55 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 00:23:00 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/10 22:22:57 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/10 22:54:33 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftstream.h"
+#include "ft_ls.h"
 
-int		ft_fflush(t_stream *stream)
-{
-	if (!stream || !(stream->type.write) || !(stream->curr))
-		return (-1);
-	if (stream->curr == stream->buff)
-		return (0);
-	if (stream->type.write(stream->cookie, stream->buff,
-							stream->curr - stream->buff))
-	{
-		stream->curr = stream->buff;
-		return (1);
-	}
-	stream->curr = NULL;
-	return (-1);
-}
+int			g_ls_stdout_fd = LS_DEFAULT_STDOUT;
+int			g_ls_stderr_fd = LS_DEFAULT_STDERR;
+t_stream	*g_ls_stdout = NULL;
+t_stream	*g_ls_stderr = NULL;
+char		*g_ls_progname = LS_DEFAULT_PROGNAME;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/10 21:23:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 00:14:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,15 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+# include <errno.h>
 
+void	tls_stmrst(void);
+int		tls_outcmp(const char *str);
+int		tls_errcmp(const char *str);
+
+void	test_streams(void);
 void	test_parse_args(void);
 
 int		g_tls_run;

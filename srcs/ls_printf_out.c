@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fflush.c                                        :+:      :+:    :+:   */
+/*   ls_printf_out.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 20:08:55 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 00:23:00 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/10 22:36:34 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/10 22:50:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftstream.h"
+#include "ft_ls.h"
 
-int		ft_fflush(t_stream *stream)
+int		ls_printf_out(const char *format, ...)
 {
-	if (!stream || !(stream->type.write) || !(stream->curr))
+	va_list	ap;
+	int		res;
+
+	if (!g_ls_stdout)
 		return (-1);
-	if (stream->curr == stream->buff)
-		return (0);
-	if (stream->type.write(stream->cookie, stream->buff,
-							stream->curr - stream->buff))
-	{
-		stream->curr = stream->buff;
-		return (1);
-	}
-	stream->curr = NULL;
-	return (-1);
+	va_start(ap, format);
+	res = ft_vfprintf(g_ls_stdout, format, ap);
+	va_end(ap);
+	return (res);
 }
