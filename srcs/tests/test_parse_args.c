@@ -6,7 +6,7 @@
 /*   By: jguyon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:42:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/10 17:39:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/10 17:50:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ TLS_TEST(test_args_cmd)
 	TLS_ASSERT(args != NULL);
 	TLS_ASSERT(args && strcmp(args->cmd, "./ft_ls") == 0);
 	TLS_ASSERT(args && args->files == NULL);
-	free(args);
+	ls_destroy_args(&args);
 }
 
 TLS_TEST(test_args_files)
@@ -40,8 +40,7 @@ TLS_TEST(test_args_files)
 	TLS_ASSERT(str && strcmp(str, "file2") == 0);
 	str = str && args->files->next ? (char *)(args->files->next->content) : NULL;
 	TLS_ASSERT(str && strcmp(str, "file1") == 0);
-	ft_lstdel(&(args->files), &ft_lstdelcnt);
-	free(args);
+	ls_destroy_args(&args);
 }
 
 void	test_parse_args(void)

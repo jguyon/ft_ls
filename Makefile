@@ -6,7 +6,7 @@
 #    By: jguyon <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#              #
-#    Updated: 2016/12/10 17:41:03 by jguyon           ###   ########.fr        #
+#    Updated: 2016/12/10 17:49:56 by jguyon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ INC_PATH = includes
 OBJ_PATH = objs
 
 SRC_NAMES = ls_parse_args.c													\
+			ls_destroy_args.c												\
 			main.c
 INC_NAMES = ft_ls.h
 
