@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/10 23:21:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 14:34:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include "libftprintf.h"
 
 # include <unistd.h>
+
+# define LS_ERR_ILLEGAL "illegal option -- %c\nusage: ft_ls [-lRart] [file ...]"
 
 /*
 ** STD OUTPUT
@@ -60,7 +62,6 @@ int				ls_printf_err(int errnum, const char *format, ...);
 # define LS_HAS_FLAG(flags, f) (flags & f)
 
 typedef struct	s_ls_args {
-	char			*cmd;
 	unsigned int	flags : 5;
 	t_list			*files;
 }				t_ls_args;
