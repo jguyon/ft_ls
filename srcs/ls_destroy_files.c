@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ls_destroy_files.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 19:24:14 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/11 19:19:38 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/11 19:23:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int ac, char **av)
+void	delfile(void *cnt, size_t size)
 {
-	t_ls_args	*args;
-	t_list		*files;
+	t_ls_file	*file;
 
-	ls_set_progname(av[0]);
-	args = NULL;
-	if (ls_open_streams() && (args = ls_parse_args(ac - 1, av + 1)))
-	{
-		if (!(args->files))
-		{
-			files = ls_list_files(args->flags, ".");
-			ls_print_files(args->flags, files);
-			ls_destroy_files(&files);
-		}
-		else
-			ls_printf_err(0, "Not implemented yet");
-	}
-	ls_destroy_args(&args);
-	ls_close_streams();
-	return (0);
+	(void)size;
+	file = (t_ls_file *)cnt;
+	ft_memdel((void **)&(file->name));
+	ft_memdel((void **)&(file->path));
+	ft_memdel((void **)&(file->stat));
+	ft_memdel((void **)&file);
+}
+
+void	ls_destroy_files(t_list **files)
+{
+	ft_lstdel(files, &delfile);
 }

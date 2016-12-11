@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 14:34:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 19:23:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include "libftprintf.h"
 
 # include <unistd.h>
+# include <errno.h>
+# include <sys/stat.h>
+# include <dirent.h>
 
 # define LS_ERR_ILLEGAL "illegal option -- %c\nusage: ft_ls [-lRart] [file ...]"
 
@@ -68,5 +71,19 @@ typedef struct	s_ls_args {
 
 t_ls_args		*ls_parse_args(int ac, char **av);
 void			ls_destroy_args(t_ls_args **args);
+
+/*
+** FILE LISTING
+*/
+
+typedef struct	s_ls_file {
+	char			*name;
+	char			*path;
+	struct stat		*stat;
+}				t_ls_file;
+
+t_list			*ls_list_files(unsigned int flags, const char *dirname);
+void			ls_print_files(unsigned int flags, t_list *files);
+void			ls_destroy_files(t_list **files);
 
 #endif

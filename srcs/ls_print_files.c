@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ls_print_files.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 19:24:14 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/11 19:02:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int		main(int ac, char **av)
+static void	print_file(t_list *el)
 {
-	t_ls_args	*args;
-	t_list		*files;
+	t_ls_file	*file;
 
-	ls_set_progname(av[0]);
-	args = NULL;
-	if (ls_open_streams() && (args = ls_parse_args(ac - 1, av + 1)))
-	{
-		if (!(args->files))
-		{
-			files = ls_list_files(args->flags, ".");
-			ls_print_files(args->flags, files);
-			ls_destroy_files(&files);
-		}
-		else
-			ls_printf_err(0, "Not implemented yet");
-	}
-	ls_destroy_args(&args);
-	ls_close_streams();
-	return (0);
+	file = (t_ls_file *)(el->content);
+	ls_printf_out("%s\n", file->name);
+}
+
+void		ls_print_files(unsigned int flags, t_list *files)
+{
+	(void)flags;
+	ft_lstiter(files, &print_file);
 }

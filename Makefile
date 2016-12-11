@@ -37,6 +37,9 @@ SRC_NAMES = ls_streams.c													\
 			ls_printf_err.c													\
 			ls_parse_args.c													\
 			ls_destroy_args.c												\
+			ls_list_files.c													\
+			ls_print_files.c												\
+			ls_destroy_files.c												\
 			main.c
 INC_NAMES = ft_ls.h
 
