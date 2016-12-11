@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/11 23:33:56 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/12 00:10:49 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -56,6 +56,7 @@ TST_NAME = test_ls
 TST_PATH = tests
 TST_SRC_NAMES = test_streams.c												\
 				test_parse_args.c											\
+				test_list_files.c											\
 				test_utils.c												\
 				main.c
 TST_INC_NAMES = test_ls.h

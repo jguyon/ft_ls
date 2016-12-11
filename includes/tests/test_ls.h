@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 23:26:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 00:18:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int		tls_errcmp(const char *str);
 
 void	test_streams(void);
 void	test_parse_args(void);
+void	test_list_files(void);
 void	test_utils(void);
 
 int		g_tls_run;
@@ -76,5 +77,11 @@ int		g_tls_fail;
 			printf(TP_RED "\n%d / %d tests passed\n" TP_NRM,				\
 					g_tls_run - g_tls_fail, g_tls_run);						\
 	} while (0)
+
+# define TLS_DIR "/tmp/__test_ls__/"
+# define TLS_INIT_FS system("mkdir -p " TLS_DIR " && chmod 777 " TLS_DIR)
+# define TLS_STOP_FS system("rm -rf " TLS_DIR)
+# define TLS_MKDIR(dir) system("mkdir -p " TLS_DIR dir)
+# define TLS_TOUCH(file) system("touch " TLS_DIR file)
 
 #endif
