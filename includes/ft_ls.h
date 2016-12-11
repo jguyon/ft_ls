@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 19:23:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 21:46:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@
 # include <sys/stat.h>
 # include <dirent.h>
 
-# define LS_ERR_ILLEGAL "illegal option -- %c\nusage: ft_ls [-lRart] [file ...]"
+/*
+** ERROR MESSAGES
+*/
+
+# define LS_ERR_USAGE	"usage: ft_ls [-lRart] [file ...]"
+# define LS_ERR_ILLEGAL "illegal option -- "
 
 /*
 ** STD OUTPUT

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 14:27:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 21:42:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	parse_one_flag(t_ls_args *args, char c)
 		LS_ADD_FLAG(args->flags, LS_FLAG_TME);
 	else
 	{
-		ls_printf_err(0, LS_ERR_ILLEGAL, c);
+		ls_printf_err(0, "%s%c\n%s", LS_ERR_ILLEGAL, c, LS_ERR_USAGE);
 		return (0);
 	}
 	return (1);
