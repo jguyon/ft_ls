@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 21:49:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 23:31:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,9 @@ void			ls_destroy_files(t_list **files);
 */
 
 char			*ls_join_path(const char *dirname, const char *filename);
+int				ls_lexi_cmp(t_list *e1, t_list *e2);
+int				ls_modt_cmp(t_list *e1, t_list *e2);
+int				ls_lexi_revcmp(t_list *e1, t_list *e2);
+int				ls_modt_revcmp(t_list *e1, t_list *e2);
 
 #endif

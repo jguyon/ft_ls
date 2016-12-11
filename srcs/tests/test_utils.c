@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 22:12:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 23:36:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,106 @@ TLS_TEST(test_util_join_path)
 	free(str);
 }
 
+static t_list	*fname_create(const char *name)
+{
+	t_ls_file	f;
+
+	f.path = NULL;
+	f.stat = NULL;
+	f.name = ft_strdup(name);
+	return (ft_lstnew(&f, sizeof(f)));
+}
+
+TLS_TEST(test_util_lexi_cmp)
+{
+	t_list		*e1;
+	t_list		*e2;
+
+	TLS_ASSERT(!ls_lexi_cmp((e1 = fname_create("abc")), (e2 = fname_create("abd"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(ls_lexi_cmp((e1 = fname_create("abc")), (e2 = fname_create("abb"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(!ls_lexi_cmp((e1 = fname_create("abc")), (e2 = fname_create("abc"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+}
+
+TLS_TEST(test_util_lexi_revcmp)
+{
+	t_list		*e1;
+	t_list		*e2;
+
+	TLS_ASSERT(ls_lexi_revcmp((e1 = fname_create("abc")), (e2 = fname_create("abd"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(!ls_lexi_revcmp((e1 = fname_create("abc")), (e2 = fname_create("abb"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(ls_lexi_revcmp((e1 = fname_create("abc")), (e2 = fname_create("abc"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+}
+
+static t_list	*mtime_create(time_t t, const char *name)
+{
+	t_ls_file	f;
+
+	f.path = NULL;
+	f.name = ft_strdup(name);
+	f.stat = (struct stat *)ft_memalloc(sizeof(*(f.stat)));
+	f.stat->st_mtime = t;
+	return (ft_lstnew(&f, sizeof(f)));
+}
+
+TLS_TEST(test_util_modt_cmp)
+{
+	t_list		*e1;
+	t_list		*e2;
+	time_t		t;
+
+	t = time(NULL);
+	TLS_ASSERT(!ls_modt_cmp((e1 = mtime_create(t + 1, "b")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(ls_modt_cmp((e1 = mtime_create(t, "a")), (e2 = mtime_create(t + 1, "b"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(ls_modt_cmp((e1 = mtime_create(t, "b")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(!ls_modt_cmp((e1 = mtime_create(t, "a")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+}
+
+TLS_TEST(test_util_modt_revcmp)
+{
+	t_list		*e1;
+	t_list		*e2;
+	time_t		t;
+
+	t = time(NULL);
+	TLS_ASSERT(ls_modt_revcmp((e1 = mtime_create(t + 1, "b")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(!ls_modt_revcmp((e1 = mtime_create(t, "a")), (e2 = mtime_create(t + 1, "b"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(!ls_modt_revcmp((e1 = mtime_create(t, "b")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+	TLS_ASSERT(ls_modt_revcmp((e1 = mtime_create(t, "a")), (e2 = mtime_create(t, "a"))));
+	ls_destroy_files(&e1);
+	ls_destroy_files(&e2);
+}
+
 void	test_utils(void)
 {
 	TLS_RUN(test_util_join_path);
+	TLS_RUN(test_util_lexi_cmp);
+	TLS_RUN(test_util_lexi_revcmp);
+	TLS_RUN(test_util_modt_cmp);
+	TLS_RUN(test_util_modt_revcmp);
 }

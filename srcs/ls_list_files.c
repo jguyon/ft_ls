@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:56:39 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 22:17:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 23:37:05 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,6 @@ t_list		*create_file(const char *dirname, struct dirent *entry)
 	return (el);
 }
 
-static int	fcmp(t_list *e1, t_list *e2)
-{
-	t_ls_file	*f1;
-	t_ls_file	*f2;
-
-	f1 = (t_ls_file *)(e1->content);
-	f2 = (t_ls_file *)(e2->content);
-	return (ft_strcmp(f1->name, f2->name) > 0);
-}
-
 t_list		*ls_list_files(unsigned int flags, const char *dirname)
 {
 	DIR				*dir;
@@ -65,6 +55,6 @@ t_list		*ls_list_files(unsigned int flags, const char *dirname)
 	}
 	closedir(dir);
 	(void)flags;
-	ft_lstsort(&files, &fcmp);
+	ft_lstsort(&files, &ls_lexi_cmp);
 	return (files);
 }

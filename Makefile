@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/11 22:02:39 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/11 23:33:56 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -41,6 +41,10 @@ SRC_NAMES = ls_streams.c													\
 			ls_print_files.c												\
 			ls_destroy_files.c												\
 			ls_join_path.c													\
+			ls_lexi_cmp.c													\
+			ls_modt_cmp.c													\
+			ls_lexi_revcmp.c												\
+			ls_modt_revcmp.c												\
 			main.c
 INC_NAMES = ft_ls.h
 
