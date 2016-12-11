@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:56:39 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 21:29:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 22:17:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ t_list		*create_file(const char *dirname, struct dirent *entry)
 	file.path = NULL;
 	file.stat = NULL;
 	if (!(file.name = ft_strdup(entry->d_name))
+		|| !(file.path = ls_join_path(dirname, file.name))
 		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
-		|| !(file.path = ft_strnew(ft_strlen(entry->d_name) + 1 + ft_strlen(dirname)))
-		|| !(ft_strcpy(file.path, dirname))
-		|| !(ft_strcat(file.path, "/"))
-		|| !(ft_strcat(file.path, entry->d_name))
 		|| lstat(file.path, file.stat)
 		|| !(el = ft_lstnew(&file, sizeof(file))))
 	{

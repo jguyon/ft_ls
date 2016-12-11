@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 00:14:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 22:03:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		tls_errcmp(const char *str);
 
 void	test_streams(void);
 void	test_parse_args(void);
+void	test_utils(void);
 
 int		g_tls_run;
 int		g_tls_fail;

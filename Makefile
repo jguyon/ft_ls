@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/11 00:13:40 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/11 22:02:39 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -40,6 +40,7 @@ SRC_NAMES = ls_streams.c													\
 			ls_list_files.c													\
 			ls_print_files.c												\
 			ls_destroy_files.c												\
+			ls_join_path.c													\
 			main.c
 INC_NAMES = ft_ls.h
 
@@ -51,6 +52,7 @@ TST_NAME = test_ls
 TST_PATH = tests
 TST_SRC_NAMES = test_streams.c												\
 				test_parse_args.c											\
+				test_utils.c												\
 				main.c
 TST_INC_NAMES = test_ls.h
 TST_INC = $(TST_INC_NAMES:%.h=$(INC_PATH)/$(TST_PATH)/%.h)
