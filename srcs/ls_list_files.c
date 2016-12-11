@@ -6,13 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:56:39 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 19:26:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/11 19:29:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_list	*create_file(const char *dirname, struct dirent *entry)
+t_list		*create_file(const char *dirname, struct dirent *entry)
 {
 	t_list		*el;
 	t_ls_file	file;
@@ -51,7 +51,7 @@ static int	fcmp(t_list *e1, t_list *e2)
 	return (ft_strcmp(f1->name, f2->name) > 0);
 }
 
-t_list	*ls_list_files(unsigned int flags, const char *dirname)
+t_list		*ls_list_files(unsigned int flags, const char *dirname)
 {
 	DIR				*dir;
 	t_list			*files;
