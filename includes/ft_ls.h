@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 23:16:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 23:57:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				ls_printf_err(int errnum, const char *format, ...);
 # define LS_FLAG_TME 16
 
 # define LS_ADD_FLAG(flags, f) (flags |= f)
-# define LS_HAS_FLAG(flags, f) ((flags & f) == f)
+# define LS_HAS_FLAG(flags, f) ((flags & (f)) == (f))
 
 typedef struct	s_ls_args {
 	unsigned int	flags : 5;
@@ -96,10 +96,13 @@ void			ls_destroy_files(t_list **files);
 ** UTILS
 */
 
+typedef int		(*t_ls_sort)(t_list *e1, t_list *e2);
+
 char			*ls_join_path(const char *dirname, const char *filename);
 int				ls_lexi_cmp(t_list *e1, t_list *e2);
 int				ls_modt_cmp(t_list *e1, t_list *e2);
 int				ls_lexi_revcmp(t_list *e1, t_list *e2);
 int				ls_modt_revcmp(t_list *e1, t_list *e2);
+t_ls_sort		ls_sort_fun(unsigned int flags);
 
 #endif

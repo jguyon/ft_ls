@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 23:36:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 00:02:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,21 @@ TLS_TEST(test_util_modt_revcmp)
 	ls_destroy_files(&e2);
 }
 
+TLS_TEST(test_util_sort_fun)
+{
+	unsigned int	flags;
+
+	flags = 0;
+	TLS_ASSERT(ls_sort_fun(flags) == &ls_lexi_cmp);
+	LS_ADD_FLAG(flags, LS_FLAG_REV);
+	TLS_ASSERT(ls_sort_fun(flags) == &ls_lexi_revcmp);
+	flags = 0;
+	LS_ADD_FLAG(flags, LS_FLAG_TME);
+	TLS_ASSERT(ls_sort_fun(flags) == &ls_modt_cmp);
+	LS_ADD_FLAG(flags, LS_FLAG_REV);
+	TLS_ASSERT(ls_sort_fun(flags) == &ls_modt_revcmp);
+}
+
 void	test_utils(void)
 {
 	TLS_RUN(test_util_join_path);
@@ -135,4 +150,5 @@ void	test_utils(void)
 	TLS_RUN(test_util_lexi_revcmp);
 	TLS_RUN(test_util_modt_cmp);
 	TLS_RUN(test_util_modt_revcmp);
+	TLS_RUN(test_util_sort_fun);
 }
