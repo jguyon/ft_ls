@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 19:02:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 17:06:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_file(t_list *el)
 	t_ls_file	*file;
 
 	file = (t_ls_file *)(el->content);
-	ls_printf_out("%s\n", file->name);
+	ls_printf_out("%s\n", file->name ? file->name : file->path);
 }
 
 void		ls_print_files(unsigned int flags, t_list *files)

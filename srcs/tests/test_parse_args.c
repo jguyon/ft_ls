@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:42:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 14:38:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 15:52:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ TLS_TEST(test_args_files)
 	TLS_ASSERT(args && args->flags == 0);
 	TLS_ASSERT(args && args->files != NULL);
 	str = args && args->files ? (char *)(args->files->content) : NULL;
-	TLS_ASSERT(str && strcmp(str, "file2") == 0);
-	str = str && args->files->next ? (char *)(args->files->next->content) : NULL;
 	TLS_ASSERT(str && strcmp(str, "file1") == 0);
+	str = str && args->files->next ? (char *)(args->files->next->content) : NULL;
+	TLS_ASSERT(str && strcmp(str, "file2") == 0);
 	ls_destroy_args(&args);
 }
 

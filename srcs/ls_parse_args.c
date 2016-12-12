@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 21:42:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 17:52:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,46 @@ static int	parse_flags(t_ls_args *args, int ac, char **av)
 	return (i);
 }
 
+static void	parse_one_file(t_ls_args *args, char *name)
+{
+	t_ls_file	file;
+	t_list		*el;
+
+	file.name = NULL;
+	file.stat = NULL;
+	file.path = NULL;
+	if (!(file.path = ft_strdup(name))
+		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
+		|| stat(name, file.stat)
+		|| !(el = ft_lstnew(&file, sizeof(file))))
+	{
+		ls_printf_err(errno, "%s", name);
+		ft_memdel((void **)&(file.path));
+		ft_memdel((void **)&(file.stat));
+		return ;
+	}
+	if (S_ISDIR(file.stat->st_mode))
+		ft_lstadd(&(args->dirs), el);
+	else
+		ft_lstadd(&(args->files), el);
+}
+
+static void	parse_files(t_ls_args *args, int ac, char **av)
+{
+	int		i;
+
+	i = 0;
+	while (i < ac)
+	{
+		parse_one_file(args, av[i]);
+		++i;
+	}
+}
+
 t_ls_args	*ls_parse_args(int ac, char **av)
 {
 	t_ls_args	*args;
 	int			i;
-	t_list		*el;
 
 	if (ac < 0 || !(args = ft_memalloc(sizeof(*args))))
 		return (NULL);
@@ -65,15 +100,8 @@ t_ls_args	*ls_parse_args(int ac, char **av)
 		ls_destroy_args(&args);
 		return (NULL);
 	}
-	while (i < ac)
-	{
-		if (!(el = ft_lstnew(av[i], sizeof(av[i]))))
-		{
-			ls_destroy_args(&args);
-			return (NULL);
-		}
-		ft_lstadd(&(args->files), el);
-		++i;
-	}
+	parse_files(args, ac - i, av + i);
+	ft_lstsort(&(args->files), &ls_lexi_cmp);
+	ft_lstsort(&(args->dirs), &ls_lexi_cmp);
 	return (args);
 }

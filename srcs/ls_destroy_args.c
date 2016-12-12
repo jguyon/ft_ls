@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 17:47:59 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 14:11:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 17:29:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	ls_destroy_args(t_ls_args **args)
 {
 	if (*args)
 	{
-		ft_lstdel(&((*args)->files), ft_lstdelcnt);
+		ls_destroy_files(&((*args)->files));
+		ls_destroy_files(&((*args)->dirs));
 		ft_memdel((void **)args);
 	}
 }

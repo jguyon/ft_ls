@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 23:31:19 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 16:18:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int				ls_printf_err(int errnum, const char *format, ...);
 typedef struct	s_ls_args {
 	unsigned int	flags : 5;
 	t_list			*files;
+	t_list			*dirs;
 }				t_ls_args;
 
 t_ls_args		*ls_parse_args(int ac, char **av);
@@ -87,6 +88,7 @@ typedef struct	s_ls_file {
 	struct stat		*stat;
 }				t_ls_file;
 
+t_list			*ls_map_args(unsigned int flags, t_list *files);
 t_list			*ls_list_files(unsigned int flags, const char *dirname);
 void			ls_print_files(unsigned int flags, t_list *files);
 void			ls_destroy_files(t_list **files);
