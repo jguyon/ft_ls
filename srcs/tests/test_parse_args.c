@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:42:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 19:57:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 20:42:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,50 @@ TLS_TEST(test_args_files)
 	TLS_TOUCH("dir1/file3");
 	args = ls_parse_args(ac, av);
 	TLS_ASSERT(args != NULL);
-	TLS_ASSERT(args && args->flags == 0);
 	file = args ? file_at(args->files, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "dir1/file3") == 0);
 	file = args ? file_at(args->files, 1) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "file1") == 0);
 	file = args ? file_at(args->files, 2) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "file2") == 0);
-	TLS_ASSERT(args && !file_at(args->files, 4));
+	TLS_ASSERT(args && !file_at(args->files, 3));
 	file = args ? file_at(args->dirs, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "dir1") == 0);
 	TLS_ASSERT(args && !file_at(args->dirs, 1));
 	ls_destroy_args(&args);
 	TLS_STOP_FS;
+}
+
+TLS_TEST(test_no_args)
+{
+	char		*av[] = {};
+	int			ac = 0;
+	t_ls_args	*args;
+	t_ls_file	*file;
+
+	args = ls_parse_args(ac, av);
+	TLS_ASSERT(args != NULL);
+	TLS_ASSERT(args && args->files == NULL);
+	file = args ? file_at(args->dirs, 0) : NULL;
+	TLS_ASSERT(file && strcmp(file->path, ".") == 0);
+	TLS_ASSERT(args && !file_at(args->dirs, 1));
+	ls_destroy_args(&args);
+}
+
+TLS_TEST(test_no_files)
+{
+	char		*av[] = {"-a", "-r"};
+	int			ac = 2;
+	t_ls_args	*args;
+	t_ls_file	*file;
+
+	args = ls_parse_args(ac, av);
+	TLS_ASSERT(args != NULL);
+	TLS_ASSERT(args && args->files == NULL);
+	file = args ? file_at(args->dirs, 0) : NULL;
+	TLS_ASSERT(file && strcmp(file->path, ".") == 0);
+	TLS_ASSERT(args && !file_at(args->dirs, 1));
+	ls_destroy_args(&args);
 }
 
 TLS_TEST(test_args_all_flags)
@@ -58,7 +89,6 @@ TLS_TEST(test_args_all_flags)
 
 	args = ls_parse_args(ac, av);
 	TLS_ASSERT(args != NULL);
-	TLS_ASSERT(args && args->files == NULL && args->dirs == NULL);
 	TLS_ASSERT(args && LS_HAS_FLAG(args->flags, LS_FLAG_LNG));
 	TLS_ASSERT(args && LS_HAS_FLAG(args->flags, LS_FLAG_REC));
 	TLS_ASSERT(args && LS_HAS_FLAG(args->flags, LS_FLAG_ALL));
@@ -75,7 +105,6 @@ TLS_TEST(test_args_some_flags)
 
 	args = ls_parse_args(ac, av);
 	TLS_ASSERT(args != NULL);
-	TLS_ASSERT(args && args->files == NULL && args->dirs == NULL);
 	TLS_ASSERT(args && LS_HAS_FLAG(args->flags, LS_FLAG_LNG));
 	TLS_ASSERT(args && !LS_HAS_FLAG(args->flags, LS_FLAG_REC));
 	TLS_ASSERT(args && LS_HAS_FLAG(args->flags, LS_FLAG_ALL));
@@ -118,6 +147,8 @@ TLS_TEST(test_args_empty_flag)
 
 void	test_parse_args(void)
 {
+	TLS_RUN(test_no_args);
+	TLS_RUN(test_no_files);
 	TLS_RUN(test_args_files);
 	TLS_RUN(test_args_all_flags);
 	TLS_RUN(test_args_some_flags);

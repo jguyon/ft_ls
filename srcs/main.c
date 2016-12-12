@@ -6,20 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 17:49:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 20:47:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-
-static void	print_current_dir(t_ls_args *args)
-{
-	t_list	*files;
-
-	files = ls_list_files(args->flags, ".");
-	ls_print_files(args->flags, files);
-	ls_destroy_files(&files);
-}
 
 static void	print_first_dir(t_ls_args *args)
 {
@@ -58,9 +49,7 @@ int			main(int ac, char **av)
 	args = NULL;
 	if (ls_open_streams() && (args = ls_parse_args(ac - 1, av + 1)))
 	{
-		if (!(args->files) && !(args->dirs))
-			print_current_dir(args);
-		else if (!(args->files) && !(args->dirs->next))
+		if (!(args->files) && args->dirs && !(args->dirs->next))
 			print_first_dir(args);
 		else
 		{

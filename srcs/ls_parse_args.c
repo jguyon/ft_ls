@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 17:52:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 20:36:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ static void	parse_files(t_ls_args *args, int ac, char **av)
 {
 	int		i;
 
+	if (ac == 0)
+	{
+		parse_one_file(args, ".");
+		return ;
+	}
 	i = 0;
 	while (i < ac)
 	{
