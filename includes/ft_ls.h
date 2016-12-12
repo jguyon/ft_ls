@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 19:59:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 23:16:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int				ls_printf_err(int errnum, const char *format, ...);
 # define LS_FLAG_TME 16
 
 # define LS_ADD_FLAG(flags, f) (flags |= f)
-# define LS_HAS_FLAG(flags, f) (flags & f)
+# define LS_HAS_FLAG(flags, f) ((flags & f) == f)
 
 typedef struct	s_ls_args {
 	unsigned int	flags : 5;

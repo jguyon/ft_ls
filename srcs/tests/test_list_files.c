@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 00:03:44 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 00:32:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 23:07:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ TLS_TEST(test_list_files_normal)
 	TLS_MKDIR("normal");
 	TLS_TOUCH("normal/folder");
 	TLS_MKDIR("normal/dir");
+	TLS_MKDIR("normal/.hidden");
 	TLS_TOUCH("normal/file1");
 	TLS_TOUCH("normal/file2");
 	TLS_TOUCH("normal/Folder");
@@ -43,6 +44,37 @@ TLS_TEST(test_list_files_normal)
 	TLS_ASSERT((file = file_at(files, 3)) && strcmp(file->name, "file2") == 0);
 	TLS_ASSERT((file = file_at(files, 4)) && strcmp(file->name, "folder") == 0);
 	TLS_ASSERT(!file_at(files, 5));
+	ls_destroy_files(&files);
+	TLS_STOP_FS;
+}
+
+TLS_TEST(test_list_files_hidden)
+{
+	unsigned int	flags;
+	t_list			*files;
+	t_ls_file		*file;
+
+	TLS_INIT_FS;
+	TLS_MKDIR("normal");
+	TLS_TOUCH("normal/folder");
+	TLS_MKDIR("normal/dir");
+	TLS_MKDIR("normal/.hidden");
+	TLS_TOUCH("normal/file1");
+	TLS_TOUCH("normal/file2");
+	TLS_TOUCH("normal/Folder");
+	flags = 0;
+	LS_ADD_FLAG(flags, LS_FLAG_ALL);
+	files = ls_list_files(flags, TLS_DIR "normal");
+	TLS_ASSERT(files);
+	TLS_ASSERT((file = file_at(files, 0)) && strcmp(file->name, ".") == 0);
+	TLS_ASSERT((file = file_at(files, 1)) && strcmp(file->name, "..") == 0);
+	TLS_ASSERT((file = file_at(files, 2)) && strcmp(file->name, ".hidden") == 0);
+	TLS_ASSERT((file = file_at(files, 3)) && strcmp(file->name, "Folder") == 0);
+	TLS_ASSERT((file = file_at(files, 4)) && strcmp(file->name, "dir") == 0);
+	TLS_ASSERT((file = file_at(files, 5)) && strcmp(file->name, "file1") == 0);
+	TLS_ASSERT((file = file_at(files, 6)) && strcmp(file->name, "file2") == 0);
+	TLS_ASSERT((file = file_at(files, 7)) && strcmp(file->name, "folder") == 0);
+	TLS_ASSERT(!file_at(files, 8));
 	ls_destroy_files(&files);
 	TLS_STOP_FS;
 }
@@ -65,5 +97,6 @@ TLS_TEST(test_list_files_error)
 void	test_list_files(void)
 {
 	TLS_RUN(test_list_files_normal);
+	TLS_RUN(test_list_files_hidden);
 	TLS_RUN(test_list_files_error);
 }
