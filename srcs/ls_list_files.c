@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:56:39 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 23:19:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/12 23:41:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,10 @@ t_list			*ls_list_files(unsigned int flags, const char *dirname)
 	while ((entry = readdir(dir)))
 	{
 		if ((LS_HAS_FLAG(flags, LS_FLAG_ALL) || entry->d_name[0] != '.')
-				&& (el = create_file(dirname, entry)))
+			&& (el = create_file(dirname, entry)))
 			ft_lstadd(&files, el);
 	}
 	closedir(dir);
-	(void)flags;
 	ft_lstsort(&files, &ls_lexi_cmp);
 	return (files);
 }
