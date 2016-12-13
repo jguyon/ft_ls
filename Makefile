@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/13 02:01:59 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/13 15:47:35 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -47,6 +47,7 @@ SRC_NAMES = ls_streams.c													\
 			ls_lexi_revcmp.c												\
 			ls_modt_revcmp.c												\
 			ls_sort_fun.c													\
+			ls_file_mode.c													\
 			main.c
 INC_NAMES = ft_ls.h
 

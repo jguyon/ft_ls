@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 00:02:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 16:52:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,150 @@ TLS_TEST(test_util_sort_fun)
 	TLS_ASSERT(ls_sort_fun(flags) == &ls_modt_revcmp);
 }
 
+TLS_TEST(test_util_file_mode_type)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_mode = 0 | S_IFSOCK;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("s---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFLNK;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("l---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFBLK;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("b---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFDIR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("d---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFDIR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("d---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFCHR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("c---------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFIFO;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("p---------", str) == 0);
+	free(str);
+}
+
+TLS_TEST(test_util_file_mode_own)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_mode = 0 | S_IFREG;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IRUSR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("-r--------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IWUSR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("--w-------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IXUSR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---x------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISUID;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---S------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISUID | S_IXUSR;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---s------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISUID | S_IRWXU;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("-rws------", str) == 0);
+	free(str);
+}
+
+TLS_TEST(test_util_file_mode_grp)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_mode = 0 | S_IFREG;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IRGRP;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----r-----", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IWGRP;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("-----w----", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IXGRP;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("------x---", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISGID;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("------S---", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISGID | S_IXGRP;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("------s---", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISGID | S_IRWXG;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----rws---", str) == 0);
+	free(str);
+}
+
+TLS_TEST(test_util_file_mode_oth)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_mode = 0 | S_IFREG;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("----------", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IROTH;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("-------r--", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IWOTH;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("--------w-", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_IXOTH;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---------x", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISVTX;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---------T", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISVTX | S_IXOTH;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("---------t", str) == 0);
+	free(str);
+	sb.st_mode = 0 | S_IFREG | S_ISVTX | S_IRWXO;
+	str = ls_file_mode(&sb);
+	TLS_ASSERT(str && strcmp("-------rwt", str) == 0);
+	free(str);
+}
+
 void	test_utils(void)
 {
 	TLS_RUN(test_util_join_path);
@@ -151,4 +295,8 @@ void	test_utils(void)
 	TLS_RUN(test_util_modt_cmp);
 	TLS_RUN(test_util_modt_revcmp);
 	TLS_RUN(test_util_sort_fun);
+	TLS_RUN(test_util_file_mode_type);
+	TLS_RUN(test_util_file_mode_own);
+	TLS_RUN(test_util_file_mode_grp);
+	TLS_RUN(test_util_file_mode_oth);
 }
