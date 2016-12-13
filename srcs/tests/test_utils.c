@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 19:11:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 20:06:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,6 +310,21 @@ TLS_TEST(test_util_file_time)
 	free(str);
 }
 
+TLS_TEST(test_util_file_link)
+{
+	char		*str;
+	struct stat	sb;
+
+	TLS_INIT_FS;
+	TLS_TOUCH("file");
+	TLS_LNS("file", "link");
+	lstat(TLS_DIR "link", &sb);
+	str = ls_file_link(TLS_DIR "link", &sb);
+	TLS_ASSERT(str && strcmp(str, TLS_DIR "file") == 0);
+	free(str);
+	TLS_STOP_FS;
+}
+
 void	test_utils(void)
 {
 	TLS_RUN(test_util_join_path);
@@ -323,4 +338,5 @@ void	test_utils(void)
 	TLS_RUN(test_util_file_mode_grp);
 	TLS_RUN(test_util_file_mode_oth);
 	TLS_RUN(test_util_file_time);
+	TLS_RUN(test_util_file_link);
 }

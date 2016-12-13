@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 18:49:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 19:44:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,6 @@ int				ls_modt_revcmp(t_list *e1, t_list *e2);
 t_ls_sort		ls_sort_fun(unsigned int flags);
 char			*ls_file_mode(struct stat *sb);
 char			*ls_file_time(struct stat *sb);
+char			*ls_file_link(const char *path, struct stat *sb);
 
 #endif
