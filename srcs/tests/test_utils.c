@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 16:52:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 19:11:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,29 @@ TLS_TEST(test_util_file_mode_oth)
 	free(str);
 }
 
+TLS_TEST(test_util_file_time)
+{
+	struct stat	sb;
+	char		*str;
+	char		exp[13] = {0};
+
+	sb.st_mtime = time(NULL) - (365 * 24 * 3600);
+	str = ls_file_time(&sb);
+	strftime(exp, 13, "%b %e  %Y", localtime(&(sb.st_mtime)));
+	TLS_ASSERT(str && strcmp(str, exp) == 0);
+	free(str);
+	sb.st_mtime = time(NULL) + (365 * 24 * 3600);
+	str = ls_file_time(&sb);
+	strftime(exp, 13, "%b %e  %Y", localtime(&(sb.st_mtime)));
+	TLS_ASSERT(str && strcmp(str, exp) == 0);
+	free(str);
+	sb.st_mtime = time(NULL);
+	str = ls_file_time(&sb);
+	strftime(exp, 13, "%b %e %H:%M", localtime(&(sb.st_mtime)));
+	TLS_ASSERT(str && strcmp(str, exp) == 0);
+	free(str);
+}
+
 void	test_utils(void)
 {
 	TLS_RUN(test_util_join_path);
@@ -299,4 +322,5 @@ void	test_utils(void)
 	TLS_RUN(test_util_file_mode_own);
 	TLS_RUN(test_util_file_mode_grp);
 	TLS_RUN(test_util_file_mode_oth);
+	TLS_RUN(test_util_file_time);
 }
