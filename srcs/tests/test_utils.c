@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:06:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 20:37:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static t_list	*fname_create(const char *name)
 	f.path = NULL;
 	f.stat = NULL;
 	f.name = ft_strdup(name);
+	f.info = NULL;
 	return (ft_lstnew(&f, sizeof(f)));
 }
 
@@ -81,6 +82,7 @@ static t_list	*mtime_create(time_t t, const char *name)
 
 	f.path = NULL;
 	f.name = ft_strdup(name);
+	f.info = NULL;
 	f.stat = (struct stat *)ft_memalloc(sizeof(*(f.stat)));
 	f.stat->st_mtime = t;
 	return (ft_lstnew(&f, sizeof(f)));

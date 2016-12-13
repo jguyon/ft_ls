@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 01:51:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 02:43:19 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 20:36:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ TLS_TEST(test_destroy_nondirs_norec)
 	files = NULL;
 	file.name = NULL;
 	file.path = ft_strdup("..");
+	file.info = NULL;
 	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
 	file.stat->st_mode = S_IFREG;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
@@ -62,6 +63,7 @@ TLS_TEST(test_destroy_nondirs_rec)
 	files = NULL;
 	file.path = NULL;
 	file.name = ft_strdup("..");
+	file.info = NULL;
 	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
 	file.stat->st_mode = S_IFDIR;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));

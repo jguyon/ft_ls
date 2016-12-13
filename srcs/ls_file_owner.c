@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_destroy_files.c                                 :+:      :+:    :+:   */
+/*   ls_file_owner.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/11 19:19:38 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 21:20:09 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/13 21:06:46 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/13 21:13:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	delfile(void *cnt, size_t size)
+char	*ls_file_owner(struct stat *sb)
 {
-	t_ls_file	*file;
+	struct passwd	*pw;
 
-	(void)size;
-	file = (t_ls_file *)cnt;
-	ft_memdel((void **)&(file->name));
-	ft_memdel((void **)&(file->path));
-	ft_memdel((void **)&(file->stat));
-	ls_destroy_finfo(&(file->info));
-	ft_memdel((void **)&file);
-}
-
-void	ls_destroy_files(t_list **files)
-{
-	ft_lstdel(files, &delfile);
+	errno = 0;
+	if ((pw = getpwuid(sb->st_uid)))
+		return (ft_strdup(pw->pw_name));
+	else if (errno != 0)
+		return (NULL);
+	else
+		return (ft_uimtoa_base(sb->st_uid, 10, 0, 1));
 }

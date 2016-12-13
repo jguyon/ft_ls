@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 19:44:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 21:39:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <time.h>
+# include <pwd.h>
+# include <grp.h>
 
 /*
 ** ERROR MESSAGES
@@ -83,14 +85,35 @@ void			ls_destroy_args(t_ls_args **args);
 ** FILE LISTING
 */
 
+typedef struct	s_ls_finfo {
+	char	*mode;
+	char	*links;
+	char	*owner;
+	char	*group;
+	char	*size;
+	char	*time;
+	char	*dest;
+}				t_ls_finfo;
+
 typedef struct	s_ls_file {
 	char			*name;
 	char			*path;
 	struct stat		*stat;
+	t_ls_finfo		*info;
 }				t_ls_file;
 
-t_list			*ls_list_files(unsigned int flags, const char *dirname);
-void			ls_print_files(unsigned int flags, t_list *files);
+typedef struct	s_ls_dinfo {
+	size_t	total;
+	size_t	max_lnk_len;
+	size_t	max_usr_len;
+	size_t	max_grp_len;
+	size_t	max_sze_len;
+}				t_ls_dinfo;
+
+t_list			*ls_list_files(unsigned int flags, const char *dirname,
+								t_ls_dinfo **dinfo);
+void			ls_print_files(unsigned int flags, t_list *files,
+								t_ls_dinfo *dinfo);
 void			ls_destroy_nondirs(unsigned int flags, t_list **files);
 void			ls_destroy_files(t_list **files);
 
@@ -107,7 +130,14 @@ int				ls_lexi_revcmp(t_list *e1, t_list *e2);
 int				ls_modt_revcmp(t_list *e1, t_list *e2);
 t_ls_sort		ls_sort_fun(unsigned int flags);
 char			*ls_file_mode(struct stat *sb);
+char			*ls_file_nlinks(struct stat *sb);
+char			*ls_file_owner(struct stat *sb);
+char			*ls_file_group(struct stat *sb);
+char			*ls_file_size(struct stat *sb);
 char			*ls_file_time(struct stat *sb);
 char			*ls_file_link(const char *path, struct stat *sb);
+t_ls_finfo		*ls_file_info(const char *path, struct stat *sb,
+								t_ls_dinfo *dinfo);
+void			ls_destroy_finfo(t_ls_finfo **finfo);
 
 #endif

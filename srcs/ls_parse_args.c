@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 00:32:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 20:27:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	parse_one_file(t_ls_args *args, char *name)
 	file.name = NULL;
 	file.stat = NULL;
 	file.path = NULL;
+	file.info = NULL;
 	if (!(file.path = ft_strdup(name))
 		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
 		|| stat(name, file.stat)

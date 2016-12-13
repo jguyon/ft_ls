@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_destroy_files.c                                 :+:      :+:    :+:   */
+/*   ls_destroy_finfo.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/11 19:19:38 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 21:20:09 by jguyon           ###   ########.fr       */
+/*   Created: 2016/12/13 20:59:01 by jguyon            #+#    #+#             */
+/*   Updated: 2016/12/13 21:03:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	delfile(void *cnt, size_t size)
+void	ls_destroy_finfo(t_ls_finfo **finfo)
 {
-	t_ls_file	*file;
-
-	(void)size;
-	file = (t_ls_file *)cnt;
-	ft_memdel((void **)&(file->name));
-	ft_memdel((void **)&(file->path));
-	ft_memdel((void **)&(file->stat));
-	ls_destroy_finfo(&(file->info));
-	ft_memdel((void **)&file);
-}
-
-void	ls_destroy_files(t_list **files)
-{
-	ft_lstdel(files, &delfile);
+	if (*finfo)
+	{
+		ft_memdel((void **)&((*finfo)->mode));
+		ft_memdel((void **)&((*finfo)->links));
+		ft_memdel((void **)&((*finfo)->owner));
+		ft_memdel((void **)&((*finfo)->group));
+		ft_memdel((void **)&((*finfo)->size));
+		ft_memdel((void **)&((*finfo)->time));
+		ft_memdel((void **)&((*finfo)->dest));
+	}
+	ft_memdel((void **)finfo);
 }

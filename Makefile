@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/13 19:44:30 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/13 21:18:55 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -50,6 +50,12 @@ SRC_NAMES = ls_streams.c													\
 			ls_file_mode.c													\
 			ls_file_time.c													\
 			ls_file_link.c													\
+			ls_file_info.c													\
+			ls_file_nlinks.c												\
+			ls_file_owner.c													\
+			ls_file_group.c													\
+			ls_file_size.c													\
+			ls_destroy_finfo.c												\
 			main.c
 INC_NAMES = ft_ls.h
 
