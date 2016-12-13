@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/12 23:53:57 by jguyon           ###   ########.fr       *#
+#*   Updated: 2016/12/13 02:01:59 by jguyon           ###   ########.fr       *#
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -39,6 +39,7 @@ SRC_NAMES = ls_streams.c													\
 			ls_destroy_args.c												\
 			ls_list_files.c													\
 			ls_print_files.c												\
+			ls_destroy_nondirs.c											\
 			ls_destroy_files.c												\
 			ls_join_path.c													\
 			ls_lexi_cmp.c													\
@@ -59,6 +60,7 @@ TST_SRC_NAMES = test_streams.c												\
 				test_parse_args.c											\
 				test_list_files.c											\
 				test_print_files.c											\
+				test_destroy_nondirs.c										\
 				test_utils.c												\
 				main.c
 TST_INC_NAMES = test_ls.h

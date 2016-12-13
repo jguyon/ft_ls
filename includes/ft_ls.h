@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 23:57:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/13 01:50:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_ls_file {
 
 t_list			*ls_list_files(unsigned int flags, const char *dirname);
 void			ls_print_files(unsigned int flags, t_list *files);
+void			ls_destroy_nondirs(unsigned int flags, t_list **files);
 void			ls_destroy_files(t_list **files);
 
 /*
