@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 19:07:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 20:25:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,37 +54,11 @@ int				ls_printf_out(const char *format, ...);
 int				ls_printf_err(int errnum, const char *format, ...);
 
 /*
-** ARG PARSING
+** UTILS
 */
 
-# define LS_CHAR_LNG 'l'
-# define LS_CHAR_REC 'R'
-# define LS_CHAR_ALL 'a'
-# define LS_CHAR_REV 'r'
-# define LS_CHAR_TME 't'
-# define LS_CHAR_FLAG '-'
-
-# define LS_FLAG_LNG 1
-# define LS_FLAG_REC 2
-# define LS_FLAG_ALL 4
-# define LS_FLAG_REV 8
-# define LS_FLAG_TME 16
-
-# define LS_ADD_FLAG(flags, f) (flags |= f)
-# define LS_HAS_FLAG(flags, f) ((flags & (f)) == (f))
-
-typedef struct	s_ls_args {
-	unsigned int	flags : 5;
-	t_list			*files;
-	t_list			*dirs;
-}				t_ls_args;
-
-t_ls_args		*ls_parse_args(int ac, char **av);
-void			ls_destroy_args(t_ls_args **args);
-
-/*
-** FILE LISTING
-*/
+# define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
+# define LS_MINOR(d) ((d) & 0xff)
 
 typedef struct	s_ls_finfo {
 	char	*mode;
@@ -115,20 +89,6 @@ typedef struct	s_ls_dinfo {
 	size_t	max_min_len;
 }				t_ls_dinfo;
 
-t_list			*ls_list_files(unsigned int flags, const char *dirname,
-								t_ls_dinfo **dinfo);
-void			ls_print_files(unsigned int flags, t_list *files,
-								t_ls_dinfo *dinfo);
-void			ls_destroy_nondirs(unsigned int flags, t_list **files);
-void			ls_destroy_files(t_list **files);
-
-/*
-** UTILS
-*/
-
-# define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
-# define LS_MINOR(d) ((d) & 0xff)
-
 typedef int		(*t_ls_sort)(t_list *e1, t_list *e2);
 
 char			*ls_join_path(const char *dirname, const char *filename);
@@ -148,5 +108,46 @@ int				ls_file_devn(struct stat *sb, char **maj, char **min);
 t_ls_finfo		*ls_file_info(const char *path, struct stat *sb,
 								t_ls_dinfo *dinfo);
 void			ls_destroy_finfo(t_ls_finfo **finfo);
+
+/*
+** ARG PARSING
+*/
+
+# define LS_CHAR_LNG 'l'
+# define LS_CHAR_REC 'R'
+# define LS_CHAR_ALL 'a'
+# define LS_CHAR_REV 'r'
+# define LS_CHAR_TME 't'
+# define LS_CHAR_FLAG '-'
+
+# define LS_FLAG_LNG 1
+# define LS_FLAG_REC 2
+# define LS_FLAG_ALL 4
+# define LS_FLAG_REV 8
+# define LS_FLAG_TME 16
+
+# define LS_ADD_FLAG(flags, f) (flags |= f)
+# define LS_HAS_FLAG(flags, f) ((flags & (f)) == (f))
+
+typedef struct	s_ls_args {
+	unsigned int	flags : 5;
+	t_list			*files;
+	t_ls_dinfo		*dinfo;
+	t_list			*dirs;
+}				t_ls_args;
+
+t_ls_args		*ls_parse_args(int ac, char **av);
+void			ls_destroy_args(t_ls_args **args);
+
+/*
+** FILE LISTING
+*/
+
+t_list			*ls_list_files(unsigned int flags, const char *dirname,
+								t_ls_dinfo **dinfo);
+void			ls_print_files(unsigned int flags, t_list *files,
+								t_ls_dinfo *dinfo);
+void			ls_destroy_nondirs(unsigned int flags, t_list **files);
+void			ls_destroy_files(t_list **files);
 
 #endif

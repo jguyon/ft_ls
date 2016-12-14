@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:27:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 20:38:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static void	parse_one_file(t_ls_args *args, char *name)
 	file.info = NULL;
 	if (!(file.path = ft_strdup(name))
 		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
-		|| stat(name, file.stat)
+		|| (!LS_HAS_FLAG(args->flags, LS_FLAG_LNG) && stat(name, file.stat))
+		|| (LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
+			&& (lstat(name, file.stat)
+			|| !(file.info = ls_file_info(file.path, file.stat, args->dinfo))))
 		|| !(el = ft_lstnew(&file, sizeof(file))))
 	{
 		ls_printf_err(errno, "%s", name);
@@ -101,7 +104,9 @@ t_ls_args	*ls_parse_args(int ac, char **av)
 
 	if (ac < 0 || !(args = ft_memalloc(sizeof(*args))))
 		return (NULL);
-	if ((i = parse_flags(args, ac, av)) < 0)
+	if ((i = parse_flags(args, ac, av)) < 0
+		|| (LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
+		&& !(args->dinfo = (t_ls_dinfo *)ft_memalloc(sizeof(*(args->dinfo))))))
 	{
 		ls_destroy_args(&args);
 		return (NULL);

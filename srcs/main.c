@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 22:02:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 20:26:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			main(int ac, char **av)
 			print_first_dir(args);
 		else
 		{
-			ls_print_files(args->flags, args->files, NULL);
+			ls_print_files(args->flags, args->files, args->dinfo);
 			ft_lstfoldl(args->dirs, args, &print_dir);
 		}
 	}
