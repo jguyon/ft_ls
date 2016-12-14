@@ -55,6 +55,7 @@ SRC_NAMES = ls_streams.c													\
 			ls_file_owner.c													\
 			ls_file_group.c													\
 			ls_file_size.c													\
+			ls_file_devn.c													\
 			ls_destroy_finfo.c												\
 			main.c
 INC_NAMES = ft_ls.h

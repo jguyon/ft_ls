@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 21:39:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 16:52:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct	s_ls_finfo {
 	char	*owner;
 	char	*group;
 	char	*size;
+	char	*dmin;
+	char	*dmaj;
 	char	*time;
 	char	*dest;
 }				t_ls_finfo;
@@ -108,6 +110,8 @@ typedef struct	s_ls_dinfo {
 	size_t	max_usr_len;
 	size_t	max_grp_len;
 	size_t	max_sze_len;
+	size_t	max_maj_len;
+	size_t	max_min_len;
 }				t_ls_dinfo;
 
 t_list			*ls_list_files(unsigned int flags, const char *dirname,
@@ -120,6 +124,9 @@ void			ls_destroy_files(t_list **files);
 /*
 ** UTILS
 */
+
+# define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
+# define LS_MINOR(d) ((d) & 0xff)
 
 typedef int		(*t_ls_sort)(t_list *e1, t_list *e2);
 
@@ -136,6 +143,7 @@ char			*ls_file_group(struct stat *sb);
 char			*ls_file_size(struct stat *sb);
 char			*ls_file_time(struct stat *sb);
 char			*ls_file_link(const char *path, struct stat *sb);
+int				ls_file_devn(struct stat *sb, char **maj, char **min);
 t_ls_finfo		*ls_file_info(const char *path, struct stat *sb,
 								t_ls_dinfo *dinfo);
 void			ls_destroy_finfo(t_ls_finfo **finfo);

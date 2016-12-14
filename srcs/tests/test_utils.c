@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:37:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 16:34:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,79 @@ TLS_TEST(test_util_file_mode_oth)
 	free(str);
 }
 
+TLS_TEST(test_util_file_nlinks)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_nlink = 123;
+	str = ls_file_nlinks(&sb);
+	TLS_ASSERT(str && strcmp(str, "123") == 0);
+	free(str);
+}
+
+TLS_TEST(test_util_file_owner)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_uid = 42;
+	str = ls_file_owner(&sb);
+	TLS_ASSERT(str && strcmp(str, "42") == 0);
+	free(str);
+	TLS_INIT_FS;
+	TLS_TOUCH("file");
+	lstat(TLS_DIR "file", &sb);
+	str = ls_file_owner(&sb);
+	TLS_ASSERT(str && strcmp(str, "42"));
+	free(str);
+	TLS_STOP_FS;
+}
+
+TLS_TEST(test_util_file_group)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_gid = 42;
+	str = ls_file_group(&sb);
+	TLS_ASSERT(str && strcmp(str, "42") == 0);
+	free(str);
+	TLS_INIT_FS;
+	TLS_TOUCH("file");
+	lstat(TLS_DIR "file", &sb);
+	str = ls_file_group(&sb);
+	TLS_ASSERT(str && strcmp(str, "42"));
+	free(str);
+	TLS_STOP_FS;
+}
+
+TLS_TEST(test_util_file_size)
+{
+	struct stat	sb;
+	char		*str;
+
+	sb.st_size = 42;
+	str = ls_file_size(&sb);
+	TLS_ASSERT(str && strcmp(str, "42") == 0);
+	free(str);
+}
+
+TLS_TEST(test_util_file_devn)
+{
+	struct stat	sb;
+	char		*maj;
+	char		*min;
+
+	sb.st_rdev = makedev(24, 42);
+	sb.st_mode = 0 | S_IFBLK;
+	TLS_ASSERT(ls_file_devn(&sb, &maj, &min));
+	TLS_ASSERT(maj && strcmp(maj, "24") == 0);
+	TLS_ASSERT(min && strcmp(min, "42") == 0);
+	free(maj);
+	free(min);
+}
+
 TLS_TEST(test_util_file_time)
 {
 	struct stat	sb;
@@ -339,6 +412,11 @@ void	test_utils(void)
 	TLS_RUN(test_util_file_mode_own);
 	TLS_RUN(test_util_file_mode_grp);
 	TLS_RUN(test_util_file_mode_oth);
+	TLS_RUN(test_util_file_nlinks);
+	TLS_RUN(test_util_file_owner);
+	TLS_RUN(test_util_file_group);
+	TLS_RUN(test_util_file_size);
+	TLS_RUN(test_util_file_devn);
 	TLS_RUN(test_util_file_time);
 	TLS_RUN(test_util_file_link);
 }

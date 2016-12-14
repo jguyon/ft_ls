@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 14:41:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 16:10:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 # include <errno.h>
 # include <time.h>
+# include <sys/types.h>
 
 void	tls_stmrst(void);
 int		tls_outcmp(const char *str);
