@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 21:57:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 23:29:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,14 @@ static void	parse_one_file(t_ls_args *args, char *name)
 {
 	t_ls_file	file;
 	t_list		*el;
+	struct stat	sb;
 
-	file.name = NULL;
-	file.stat = NULL;
-	file.path = NULL;
-	file.info = NULL;
+	ft_bzero(&file, sizeof(file));
 	if (!(file.path = ft_strdup(name))
 		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
-		|| (!LS_HAS_FLAG(args->flags, LS_FLAG_LNG) && stat(name, file.stat))
+		|| lstat(name, file.stat)
 		|| (LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
-			&& (lstat(name, file.stat)
-			|| !(file.info = ls_file_info(file.path, file.stat, args->dinfo))))
+			&& !(file.info = ls_file_info(file.path, file.stat, args->dinfo)))
 		|| !(el = ft_lstnew(&file, sizeof(file))))
 	{
 		ls_printf_err(errno, "%s", name);
@@ -79,7 +76,11 @@ static void	parse_one_file(t_ls_args *args, char *name)
 		ft_memdel((void **)&(file.stat));
 		return ;
 	}
-	if (S_ISDIR(file.stat->st_mode))
+	if (S_ISDIR(file.stat->st_mode)
+		|| (S_ISLNK(file.stat->st_mode)
+				&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
+				&& !stat(name, &sb)
+				&& S_ISDIR(sb.st_mode)))
 		ft_lstadd(&(args->dirs), el);
 	else
 		ft_lstadd(&(args->files), el);
