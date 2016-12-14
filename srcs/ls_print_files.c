@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 17:07:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 17:12:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	*print_long_file(t_list *el, void *acc)
 									dinfo->max_min_len, file->info->dmin);
 	else
 		ls_printf_out(" %*s", dinfo->max_sze_len, file->info->size);
+	ls_printf_out(" %s", file->info->time);
 	if (file->info->dest)
 		ls_printf_out(" %s -> %s\n", file->name ? file->name : file->path,
 				file->info->dest);
