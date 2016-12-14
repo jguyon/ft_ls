@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 17:39:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 22:10:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void		ls_print_files(unsigned int flags, t_list *files, t_ls_dinfo *dinfo)
 			dinfo->max_maj_len = 3;
 		if (dinfo->max_min_len > 0 && dinfo->max_min_len < 3)
 			dinfo->max_min_len = 3;
-		if (dinfo->max_sze_len < dinfo->max_maj_len + dinfo->max_min_len + 2)
+		if (dinfo->max_min_len && dinfo->max_maj_len
+			&& dinfo->max_sze_len < dinfo->max_maj_len + dinfo->max_min_len + 2)
 			dinfo->max_sze_len = dinfo->max_maj_len + dinfo->max_min_len + 2;
 		ft_lstfoldl(files, dinfo, &print_long_file);
 	}
