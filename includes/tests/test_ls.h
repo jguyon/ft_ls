@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:01:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 14:41:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int		g_tls_fail;
 # define TLS_DIR "/tmp/__test_ls__/"
 # define TLS_INIT_FS system("mkdir -p " TLS_DIR " && chmod 777 " TLS_DIR)
 # define TLS_STOP_FS system("rm -rf " TLS_DIR)
-# define TLS_MKDIR(dir) system("mkdir -p " TLS_DIR dir)
+# define TLS_MKDIR(dir) system("mkdir " TLS_DIR dir)
 # define TLS_TOUCH(file) system("touch " TLS_DIR file)
 # define TLS_TOUCHT(time, file) system("touch -t " time " " TLS_DIR file)
 # define TLS_LNS(target, link) system("ln -s " TLS_DIR target " " TLS_DIR link)

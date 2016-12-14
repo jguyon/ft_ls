@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/12 20:03:22 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:35:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 14:27:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ TLS_TEST(test_simple_print_files)
 	file.path = ft_strdup("dir2/file2");
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
 	tls_stmrst();
-	ls_print_files(flags, files);
+	ls_print_files(flags, files, NULL);
 	TLS_ASSERT(tls_outcmp("dir2/file2\nfile1\n"));
 	ls_destroy_files(&files);
 }
