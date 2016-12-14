@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 17:12:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 17:39:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ static void	*print_long_file(t_list *el, void *acc)
 
 	file = (t_ls_file *)(el->content);
 	dinfo = (t_ls_dinfo *)acc;
-	ls_printf_out("%s %*s %*s %*s", file->info->mode,
+	ls_printf_out("%s  %*s %-*s  %-*s", file->info->mode,
 			dinfo->max_lnk_len, file->info->links,
 			dinfo->max_usr_len, file->info->owner,
 			dinfo->max_grp_len, file->info->group);
 	if (file->info->dmaj && file->info->dmin)
-		ls_printf_out(" %*s, %*s", dinfo->max_maj_len, file->info->dmaj,
+		ls_printf_out("  %*s, %*s", dinfo->max_maj_len, file->info->dmaj,
 									dinfo->max_min_len, file->info->dmin);
 	else
-		ls_printf_out(" %*s", dinfo->max_sze_len, file->info->size);
+		ls_printf_out("  %*s", dinfo->max_sze_len, file->info->size);
 	ls_printf_out(" %s", file->info->time);
 	if (file->info->dest)
 		ls_printf_out(" %s -> %s\n", file->name ? file->name : file->path,
@@ -50,6 +50,10 @@ void		ls_print_files(unsigned int flags, t_list *files, t_ls_dinfo *dinfo)
 	(void)flags;
 	if (dinfo)
 	{
+		if (dinfo->max_maj_len > 0 && dinfo->max_maj_len < 3)
+			dinfo->max_maj_len = 3;
+		if (dinfo->max_min_len > 0 && dinfo->max_min_len < 3)
+			dinfo->max_min_len = 3;
 		if (dinfo->max_sze_len < dinfo->max_maj_len + dinfo->max_min_len + 2)
 			dinfo->max_sze_len = dinfo->max_maj_len + dinfo->max_min_len + 2;
 		ft_lstfoldl(files, dinfo, &print_long_file);
