@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 20:38:12 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 21:45:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 14:21:05 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static size_t	max_len(size_t len1, size_t len2)
 	return (len2 > len1 ? len2 : len1);
 }
 
-t_ls_finfo	*ls_file_info(const char *path, struct stat *sb, t_ls_dinfo *dinfo)
+t_ls_finfo		*ls_file_info(const char *path, struct stat *sb,
+								t_ls_dinfo *dinfo)
 {
 	t_ls_finfo	*finfo;
 
