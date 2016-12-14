@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 20:26:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 22:03:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	*print_dir(t_list *el, void *acc)
 	args = (t_ls_args *)acc;
 	dir = (t_ls_file *)(el->content);
 	if (el == args->dirs && !(args->files))
-		ls_printf_out("%s: \n", dir->path);
+		ls_printf_out("%s:\n", dir->path);
 	else
 		ls_printf_out("\n%s:\n", dir->path);
 	files = ls_list_files(args->flags, dir->path, &dinfo);
