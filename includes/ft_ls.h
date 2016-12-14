@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 20:25:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 21:58:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void			ls_destroy_finfo(t_ls_finfo **finfo);
 ** ARG PARSING
 */
 
+# define LS_CHAR_LIN '1'
 # define LS_CHAR_LNG 'l'
 # define LS_CHAR_REC 'R'
 # define LS_CHAR_ALL 'a'

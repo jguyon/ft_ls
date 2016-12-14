@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 20:38:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/14 21:57:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	parse_one_flag(t_ls_args *args, char c)
 		LS_ADD_FLAG(args->flags, LS_FLAG_REV);
 	else if (c == LS_CHAR_TME)
 		LS_ADD_FLAG(args->flags, LS_FLAG_TME);
-	else
+	else if (c != LS_CHAR_LIN)
 	{
 		ls_printf_err(0, "%s%c\n%s", LS_ERR_ILLEGAL, c, LS_ERR_USAGE);
 		return (0);
@@ -40,6 +40,11 @@ static int	parse_flags(t_ls_args *args, int ac, char **av)
 	i = 0;
 	while (i < ac && av[i][0] && av[i][1] && av[i][0] == LS_CHAR_FLAG)
 	{
+		if (av[i][1] == LS_CHAR_FLAG && av[i][2] == '\0')
+		{
+			++i;
+			break ;
+		}
 		str = av[i] + 1;
 		while (*str)
 		{

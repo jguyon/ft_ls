@@ -103,12 +103,22 @@ test: $(TST_NAME)
 $(TST_NAME): $(LIB) $(TST_OBJ)
 	$(LD) $(LDFLAGS) -o $@ $(filter %.o,$^) -L$(LIB_PATH) -l$(LIB_NAME)
 
-clean:
+clean_lib:
+	@make -C $(LIB_PATH) clean
+
+fclean_lib:
+	@make -C $(LIB_PATH) fclean
+
+clean_self:
 	rm -f $(OBJ) $(TST_SRC_NAMES:%.c=$(OBJ_PATH)/$(TST_PATH)/%.o) $(TST_NAME)
 
-fclean: clean
+fclean_self: clean_self
 	rm -f $(NAME)
+
+clean: clean_lib clean_self
+
+fclean: fclean_lib fclean_self
 
 re: fclean all
 
-.PHONY: all clean fclean re test
+.PHONY: all clean fclean re test clean_self clean_lib fclean_self fclean_lib
