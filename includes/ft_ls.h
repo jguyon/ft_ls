@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/17 03:02:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/17 22:58:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,13 @@ int				ls_printf_err(int errnum, const char *format, ...);
 ** UTILS
 */
 
-# define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
-# define LS_MINOR(d) ((d) & 0xff)
+# ifdef __APPLE__
+#  define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
+#  define LS_MINOR(d) ((d) & 0xff)
+# else
+#  define LS_MAJOR(d) (((d) >> 8) & 0xff)
+#  define LS_MINOR(d) ((d) & 0xff)
+# endif
 
 typedef struct	s_ls_finfo {
 	char	*mode;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 16:34:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/17 23:51:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,15 +305,15 @@ TLS_TEST(test_util_file_owner)
 	struct stat	sb;
 	char		*str;
 
-	sb.st_uid = 42;
+	sb.st_uid = 123456;
 	str = ls_file_owner(&sb);
-	TLS_ASSERT(str && strcmp(str, "42") == 0);
+	TLS_ASSERT(str && strcmp(str, "123456") == 0);
 	free(str);
 	TLS_INIT_FS;
 	TLS_TOUCH("file");
 	lstat(TLS_DIR "file", &sb);
 	str = ls_file_owner(&sb);
-	TLS_ASSERT(str && strcmp(str, "42"));
+	TLS_ASSERT(str && strcmp(str, "123456"));
 	free(str);
 	TLS_STOP_FS;
 }
@@ -323,15 +323,15 @@ TLS_TEST(test_util_file_group)
 	struct stat	sb;
 	char		*str;
 
-	sb.st_gid = 42;
+	sb.st_gid = 123456;
 	str = ls_file_group(&sb);
-	TLS_ASSERT(str && strcmp(str, "42") == 0);
+	TLS_ASSERT(str && strcmp(str, "123456") == 0);
 	free(str);
 	TLS_INIT_FS;
 	TLS_TOUCH("file");
 	lstat(TLS_DIR "file", &sb);
 	str = ls_file_group(&sb);
-	TLS_ASSERT(str && strcmp(str, "42"));
+	TLS_ASSERT(str && strcmp(str, "123456"));
 	free(str);
 	TLS_STOP_FS;
 }
@@ -366,21 +366,26 @@ TLS_TEST(test_util_file_time)
 {
 	struct stat	sb;
 	char		*str;
-	char		exp[13] = {0};
+	char		exp[14] = {0};
 
 	sb.st_mtime = time(NULL) - (365 * 24 * 3600);
 	str = ls_file_time(&sb);
-	strftime(exp, 13, "%b %e  %Y", localtime(&(sb.st_mtime)));
+	strftime(exp, 14, "%b %e  %Y", localtime(&(sb.st_mtime)));
 	TLS_ASSERT(str && strcmp(str, exp) == 0);
 	free(str);
 	sb.st_mtime = time(NULL) + (365 * 24 * 3600);
 	str = ls_file_time(&sb);
-	strftime(exp, 13, "%b %e  %Y", localtime(&(sb.st_mtime)));
+	strftime(exp, 14, "%b %e  %Y", localtime(&(sb.st_mtime)));
 	TLS_ASSERT(str && strcmp(str, exp) == 0);
 	free(str);
 	sb.st_mtime = time(NULL);
 	str = ls_file_time(&sb);
-	strftime(exp, 13, "%b %e %H:%M", localtime(&(sb.st_mtime)));
+	strftime(exp, 14, "%b %e %H:%M", localtime(&(sb.st_mtime)));
+	TLS_ASSERT(str && strcmp(str, exp) == 0);
+	free(str);
+	sb.st_mtime = time(NULL) + (252288000000);
+	str = ls_file_time(&sb);
+	strftime(exp, 14, "%b %e  %Y", localtime(&(sb.st_mtime)));
 	TLS_ASSERT(str && strcmp(str, exp) == 0);
 	free(str);
 }
@@ -398,6 +403,22 @@ TLS_TEST(test_util_file_link)
 	TLS_ASSERT(str && strcmp(str, TLS_DIR "file") == 0);
 	free(str);
 	TLS_STOP_FS;
+}
+
+TLS_TEST(test_util_file_info)
+{
+	t_ls_finfo	*finfo;
+	t_ls_dinfo	dinfo;
+	struct stat	sb;
+
+	ft_bzero(&dinfo, sizeof(dinfo));
+	ft_bzero(&sb, sizeof(sb));
+	sb.st_blocks = 365;
+	finfo = ls_file_info("somefile", &sb, &dinfo);
+	TLS_ASSERT(finfo != NULL);
+	TLS_ASSERT(finfo && strcmp(finfo->size, "365"));
+	TLS_ASSERT(dinfo.total == 365);
+	ls_destroy_finfo(&finfo);
 }
 
 void	test_utils(void)
@@ -419,4 +440,5 @@ void	test_utils(void)
 	TLS_RUN(test_util_file_devn);
 	TLS_RUN(test_util_file_time);
 	TLS_RUN(test_util_file_link);
+	TLS_RUN(test_util_file_info);
 }
