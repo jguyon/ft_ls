@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 21:58:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/17 03:02:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <time.h>
 # include <pwd.h>
 # include <grp.h>
-# include <sys/syslimits.h>
+# include <limits.h>
 
 /*
 ** ERROR MESSAGES
