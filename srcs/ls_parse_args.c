@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:59:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 16:08:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,52 +57,57 @@ static int	parse_flags(t_ls_args *args, int ac, char **av)
 	return (i);
 }
 
-static void	parse_one_file(t_ls_args *args, char *name)
+static int	parse_one_file(t_ls_args *args, char *name, t_list **el)
 {
 	t_ls_file	file;
-	t_list		*el;
 	struct stat	sb;
 
+	*el = NULL;
 	ft_bzero(&file, sizeof(file));
 	if (!(file.path = ft_strdup(name))
 		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
 		|| lstat(name, file.stat)
 		|| (LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
 			&& !(file.info = ls_file_info(file.path, file.stat, args->dinfo)))
-		|| !(el = ft_lstnew(&file, sizeof(file))))
+		|| !(*el = ft_lstnew(&file, sizeof(file))))
 	{
-		++(args->dir_count);
 		ls_printf_err(errno, "%s", name);
 		ft_memdel((void **)&(file.path));
 		ft_memdel((void **)&(file.stat));
-		return ;
+		return (1);
 	}
 	if (S_ISDIR(file.stat->st_mode)
 		|| (S_ISLNK(file.stat->st_mode)
-				&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
-				&& !stat(name, &sb)
-				&& S_ISDIR(sb.st_mode)))
-	{
-		++(args->dir_count);
-		ft_lstadd(&(args->dirs), el);
-	}
+			&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
+			&& !stat(name, &sb) && S_ISDIR(sb.st_mode)))
+		return (1);
 	else
-		ft_lstadd(&(args->files), el);
+		return (0);
 }
 
 static void	parse_files(t_ls_args *args, int ac, char **av)
 {
 	int		i;
+	int		res;
+	t_list	*el;
 
 	if (ac == 0)
 	{
-		parse_one_file(args, ".");
+		if ((res = parse_one_file(args, ".", &el)))
+			++(args->dir_count);
+		if (el)
+			ft_lstadd(&(args->dirs), el);
 		return ;
 	}
 	i = 0;
 	while (i < ac)
 	{
-		parse_one_file(args, av[i]);
+		if ((res = parse_one_file(args, av[i], &el)))
+			++(args->dir_count);
+		if (res && el)
+			ft_lstadd(&(args->dirs), el);
+		else if (el)
+			ft_lstadd(&(args->files), el);
 		++i;
 	}
 }
