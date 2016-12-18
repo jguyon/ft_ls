@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 22:10:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 20:05:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ static void	*print_long_file(t_list *el, void *acc)
 
 void		ls_print_files(unsigned int flags, t_list *files, t_ls_dinfo *dinfo)
 {
-	(void)flags;
-	if (dinfo)
+	if (LS_HAS_FLAG(flags, LS_FLAG_REC) && dinfo)
 	{
 		if (dinfo->max_maj_len > 0 && dinfo->max_maj_len < 3)
 			dinfo->max_maj_len = 3;
