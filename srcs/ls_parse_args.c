@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 16:08:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 18:43:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_ls_args	*ls_parse_args(int ac, char **av)
 		return (NULL);
 	}
 	parse_files(args, ac - i, av + i);
-	ft_lstsort(&(args->files), ls_sort_fun(args->flags));
-	ft_lstsort(&(args->dirs), ls_sort_fun(args->flags));
+	ft_lstmsort(&(args->files), ls_sort_fun(args->flags));
+	ft_lstmsort(&(args->dirs), ls_sort_fun(args->flags));
 	return (args);
 }
