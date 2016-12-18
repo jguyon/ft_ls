@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 16:42:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 20:42:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:36:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static t_ls_file	*file_at(t_list *files, size_t i)
 
 TLS_TEST(test_args_files)
 {
-	char		*av[] = {TLS_DIR "file2", TLS_DIR "dir1", TLS_DIR "file1", TLS_DIR "dir1/file3"};
-	int			ac = 4;
+	char		*av[] = {TLS_DIR "file2", TLS_DIR "dir1", TLS_DIR "file1", TLS_DIR "dir1/file3", TLS_DIR "nonexisting", TLS_DIR "dir2"};
+	int			ac = 6;
 	t_ls_args	*args;
 	t_ls_file	*file;
 
@@ -33,8 +33,12 @@ TLS_TEST(test_args_files)
 	TLS_TOUCH("file2");
 	TLS_TOUCH("file1");
 	TLS_TOUCH("dir1/file3");
+	TLS_MKDIR("dir2");
+	tls_stmrst();
 	args = ls_parse_args(ac, av);
+	tls_errcmp("ft_ls: nonexisting: No such file or directory\n");
 	TLS_ASSERT(args != NULL);
+	TLS_ASSERT(args && args->dir_count == 3);
 	file = args ? file_at(args->files, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "dir1/file3") == 0);
 	file = args ? file_at(args->files, 1) : NULL;
@@ -44,7 +48,9 @@ TLS_TEST(test_args_files)
 	TLS_ASSERT(args && !file_at(args->files, 3));
 	file = args ? file_at(args->dirs, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "dir1") == 0);
-	TLS_ASSERT(args && !file_at(args->dirs, 1));
+	file = args ? file_at(args->dirs, 1) : NULL;
+	TLS_ASSERT(file && strcmp(file->path, TLS_DIR "dir2") == 0);
+	TLS_ASSERT(args && !file_at(args->dirs, 2));
 	ls_destroy_args(&args);
 	TLS_STOP_FS;
 }
@@ -58,6 +64,7 @@ TLS_TEST(test_no_args)
 
 	args = ls_parse_args(ac, av);
 	TLS_ASSERT(args != NULL);
+	TLS_ASSERT(args && args->dir_count == 1);
 	TLS_ASSERT(args && args->files == NULL);
 	file = args ? file_at(args->dirs, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, ".") == 0);
@@ -74,6 +81,7 @@ TLS_TEST(test_no_files)
 
 	args = ls_parse_args(ac, av);
 	TLS_ASSERT(args != NULL);
+	TLS_ASSERT(args && args->dir_count == 1);
 	TLS_ASSERT(args && args->files == NULL);
 	file = args ? file_at(args->dirs, 0) : NULL;
 	TLS_ASSERT(file && strcmp(file->path, ".") == 0);

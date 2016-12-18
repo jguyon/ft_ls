@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 23:29:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:59:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static void	parse_one_file(t_ls_args *args, char *name)
 			&& !(file.info = ls_file_info(file.path, file.stat, args->dinfo)))
 		|| !(el = ft_lstnew(&file, sizeof(file))))
 	{
+		++(args->dir_count);
 		ls_printf_err(errno, "%s", name);
 		ft_memdel((void **)&(file.path));
 		ft_memdel((void **)&(file.stat));
@@ -81,7 +82,10 @@ static void	parse_one_file(t_ls_args *args, char *name)
 				&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
 				&& !stat(name, &sb)
 				&& S_ISDIR(sb.st_mode)))
+	{
+		++(args->dir_count);
 		ft_lstadd(&(args->dirs), el);
+	}
 	else
 		ft_lstadd(&(args->files), el);
 }

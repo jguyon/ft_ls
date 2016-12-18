@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:18:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:41:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			main(int ac, char **av)
 	args = NULL;
 	if (ls_open_streams() && (args = ls_parse_args(ac - 1, av + 1)))
 	{
-		if (!(args->files) && args->dirs && !(args->dirs->next))
+		if (!(args->files) && args->dirs && args->dir_count == 1)
 			print_first_dir(args);
 		else
 		{

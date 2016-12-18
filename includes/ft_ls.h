@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:14:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:29:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void			ls_destroy_finfo(t_ls_finfo **finfo);
 
 typedef struct	s_ls_args {
 	unsigned int	flags : 5;
+	size_t			dir_count;
 	t_list			*files;
 	t_ls_dinfo		*dinfo;
 	t_list			*dirs;
