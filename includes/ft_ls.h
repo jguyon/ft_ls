@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/17 22:58:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:14:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int				g_ls_stderr_fd;
 t_stream		*g_ls_stdout;
 t_stream		*g_ls_stderr;
 char			*g_ls_progname;
+int				g_ls_status;
 
 void			ls_set_progname(char *name);
 int				ls_open_streams(void);

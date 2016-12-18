@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 22:03:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:18:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,5 @@ int			main(int ac, char **av)
 	}
 	ls_destroy_args(&args);
 	ls_close_streams();
-	return (0);
+	return (g_ls_status);
 }

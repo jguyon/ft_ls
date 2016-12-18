@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 23:48:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 13:58:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:17:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ TLS_TEST(test_stream_stdout)
 TLS_TEST(test_stream_stderr_nonum)
 {
 	tls_stmrst();
+	TLS_ASSERT(g_ls_status == 0);
 	TLS_ASSERT(ls_printf_err(0, "Hello, %u!", 42) == 18);
 	TLS_ASSERT(tls_errcmp("ft_ls: Hello, 42!\n"));
+	TLS_ASSERT(g_ls_status == 1);
 }
 
 TLS_TEST(test_stream_stderr_errnum)

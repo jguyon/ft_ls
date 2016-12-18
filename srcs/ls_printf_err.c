@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 22:56:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/11 00:23:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:17:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		ls_printf_err(int errnum, const char *format, ...)
 	va_list	ap;
 	int		res;
 
+	g_ls_status = 1;
 	if (!g_ls_stderr || ft_fflush(g_ls_stdout) < 0)
 		return (-1);
 	va_start(ap, format);
