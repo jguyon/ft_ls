@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 23:48:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/12 00:29:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 13:58:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,24 @@ TLS_TEST(test_stream_stderr_errnum)
 	TLS_ASSERT(tls_errcmp("ft_ls: Hello, 42!: Permission denied\n"));
 }
 
+TLS_TEST(test_stream_progname)
+{
+	char	*name;
+
+	name = g_ls_progname;
+	TLS_ASSERT(name);
+	TLS_ASSERT(name && strcmp(name, "ft_ls") == 0);
+	ls_set_progname("./my_ls");
+	TLS_ASSERT(g_ls_progname && strcmp(g_ls_progname, "my_ls") == 0);
+	ls_set_progname("/some/deep/dir/my_ls");
+	TLS_ASSERT(g_ls_progname && strcmp(g_ls_progname, "my_ls") == 0);
+	g_ls_progname = name;
+}
+
 void	test_streams(void)
 {
 	TLS_RUN(test_stream_stdout);
 	TLS_RUN(test_stream_stderr_nonum);
 	TLS_RUN(test_stream_stderr_errnum);
+	TLS_RUN(test_stream_progname);
 }

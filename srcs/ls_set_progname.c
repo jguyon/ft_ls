@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 23:22:24 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/10 23:23:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/18 14:03:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ls_set_progname(char *name)
 {
-	if (name)
-		g_ls_progname = name;
+	char	*prog;
+
+	if (name && (prog = ft_strrchr(name, '/')))
+		g_ls_progname = prog + 1;
 }
