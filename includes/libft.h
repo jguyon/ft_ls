@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 14:30:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 16:55:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/19 14:49:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include <stddef.h>
 # include <string.h>
 # include <wchar.h>
 # include <inttypes.h>
