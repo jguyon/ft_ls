@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:29:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/27 15:39:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ int				ls_printf_err(int errnum, const char *format, ...);
 #  define LS_MINOR(d) ((d) & 0xff)
 # endif
 
+# define LS_OWNER_LEN LOGIN_NAME_MAX
+# define LS_GROUP_LEN NSS_BUFLEN_GROUP
+# define LS_CACHE_SIZE 317
+# define LS_CACHE_EMPTY 0
+# define LS_CACHE_VALID 1
+# define LS_CACHE_INVALID 2
+
 typedef struct	s_ls_finfo {
 	char	*mode;
 	char	*links;
@@ -94,6 +101,16 @@ typedef struct	s_ls_dinfo {
 	size_t	max_maj_len;
 	size_t	max_min_len;
 }				t_ls_dinfo;
+
+typedef struct	s_ls_fowner {
+	int		status;
+	char	name[LS_OWNER_LEN];
+}				t_ls_fowner;
+
+typedef struct	s_ls_fgroup {
+	int		status;
+	char	name[LS_GROUP_LEN];
+}				t_ls_fgroup;
 
 typedef int		(*t_ls_sort)(t_list *e1, t_list *e2);
 
