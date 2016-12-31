@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/13 01:27:40 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 02:43:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 15:21:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	destroy_nondirs(t_list **files)
 	{
 		el = *files;
 		file = (t_ls_file *)(el->content);
-		if (!S_ISDIR(file->stat->st_mode)
+		if (!(file->is_dir)
 			|| ft_strcmp(file->name, ".") == 0
 			|| ft_strcmp(file->name, "..") == 0)
 		{

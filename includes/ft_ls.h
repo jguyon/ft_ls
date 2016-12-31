@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/31 12:35:19 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 15:18:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct	s_ls_finfo {
 }				t_ls_finfo;
 
 typedef struct	s_ls_file {
+	int				is_dir;
 	char			*name;
 	char			*path;
 	struct stat		*stat;

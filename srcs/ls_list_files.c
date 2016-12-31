@@ -6,13 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 17:56:39 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 18:43:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 15:20:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_list	*create_file(const char *dirname,
+static t_list	*create_file(unsigned int flags, const char *dirname,
 								t_ls_dinfo *dinfo, struct dirent *entry)
 {
 	t_list		*el;
@@ -22,11 +22,14 @@ static t_list	*create_file(const char *dirname,
 	file.path = NULL;
 	file.stat = NULL;
 	file.info = NULL;
+	file.is_dir = entry->d_type == DT_DIR;
 	if (!(file.name = ft_strdup(entry->d_name))
 		|| !(file.path = ls_join_path(dirname, file.name))
-		|| !(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
-		|| lstat(file.path, file.stat)
-		|| (dinfo && !(file.info = ls_file_info(file.path, file.stat, dinfo)))
+		|| ((LS_HAS_FLAG(flags, LS_FLAG_TME) || LS_HAS_FLAG(flags, LS_FLAG_LNG))
+			&& (!(file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat))))
+				|| lstat(file.path, file.stat)))
+		|| (LS_HAS_FLAG(flags, LS_FLAG_LNG)
+			&& !(file.info = ls_file_info(file.path, file.stat, dinfo)))
 		|| !(el = ft_lstnew(&file, sizeof(file))))
 	{
 		ls_printf_err(errno, "%s", file.path);
@@ -59,7 +62,7 @@ t_list			*ls_list_files(unsigned int flags, const char *dirname,
 	while ((entry = readdir(dir)))
 	{
 		if ((LS_HAS_FLAG(flags, LS_FLAG_ALL) || entry->d_name[0] != '.')
-			&& (el = create_file(dirname, *dinfo, entry)))
+			&& (el = create_file(flags, dirname, *dinfo, entry)))
 			ft_lstadd(&files, el);
 	}
 	closedir(dir);
