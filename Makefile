@@ -6,7 +6,7 @@
 #*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        *#
 #*                                                +#+#+#+#+#+   +#+           *#
 #*   Created: 2016/12/10 11:53:39 by jguyon            #+#    #+#             *#
-#*   Updated: 2016/12/13 21:18:55 by jguyon           ###   ########.fr       *#
+#    Updated: 2016/12/31 12:38:38 by jguyon           ###   ########.fr        #
 #*                                                                            *#
 #* ************************************************************************** *#
 
@@ -34,6 +34,10 @@ SRC_NAMES = ls_streams.c													\
 			ls_open_streams.c												\
 			ls_close_streams.c												\
 			ls_printf_out.c													\
+			ls_puts_out.c															\
+			ls_putc_out.c															\
+			ls_padl_out.c															\
+			ls_padr_out.c															\
 			ls_printf_err.c													\
 			ls_parse_args.c													\
 			ls_destroy_args.c												\

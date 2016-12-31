@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/27 15:39:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 12:35:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ void			ls_set_progname(char *name);
 int				ls_open_streams(void);
 int				ls_close_streams(void);
 int				ls_printf_out(const char *format, ...);
+int				ls_puts_out(const char *s);
+int				ls_putc_out(int c);
+int				ls_padl_out(const char *s, char padc, size_t len);
+int				ls_padr_out(const char *s, char padc, size_t len);
 int				ls_printf_err(int errnum, const char *format, ...);
 
 /*

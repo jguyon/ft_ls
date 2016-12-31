@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 20:22:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 13:03:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	print_file(t_list *el)
 	t_ls_file	*file;
 
 	file = (t_ls_file *)(el->content);
-	ls_printf_out("%s\n", file->name ? file->name : file->path);
+	ls_puts_out(file->name ? file->name : file->path);
+	ls_putc_out('\n');
 }
 
 static void	*print_long_file(t_list *el, void *acc)
@@ -27,21 +28,29 @@ static void	*print_long_file(t_list *el, void *acc)
 
 	file = (t_ls_file *)(el->content);
 	dinfo = (t_ls_dinfo *)acc;
-	ls_printf_out("%s  %*s %-*s  %-*s", file->info->mode,
-			dinfo->max_lnk_len, file->info->links,
-			dinfo->max_usr_len, file->info->owner,
-			dinfo->max_grp_len, file->info->group);
+	ls_puts_out(file->info->mode);
+	ls_padl_out(file->info->links, ' ', dinfo->max_lnk_len + 2);
+	ls_putc_out(' ');
+	ls_padr_out(file->info->owner, ' ', dinfo->max_usr_len + 2);
+	ls_padr_out(file->info->group, ' ', dinfo->max_grp_len);
 	if (file->info->dmaj && file->info->dmin)
-		ls_printf_out("  %*s, %*s", dinfo->max_maj_len, file->info->dmaj,
-									dinfo->max_min_len, file->info->dmin);
+	{
+		ls_padl_out(file->info->dmaj, ' ', dinfo->max_maj_len + 2);
+		ls_putc_out(',');
+		ls_padl_out(file->info->dmin, ' ', dinfo->max_min_len);
+	}
 	else
-		ls_printf_out("  %*s", dinfo->max_sze_len, file->info->size);
-	ls_printf_out(" %s", file->info->time);
+		ls_padl_out(file->info->size, ' ', dinfo->max_sze_len + 2);
+	ls_putc_out(' ');
+	ls_puts_out(file->info->time);
+	ls_putc_out(' ');
+	ls_puts_out(file->name ? file->name : file->path);
 	if (file->info->dest)
-		ls_printf_out(" %s -> %s\n", file->name ? file->name : file->path,
-				file->info->dest);
-	else
-		ls_printf_out(" %s\n", file->name ? file->name : file->path);
+	{
+		ls_puts_out(" -> ");
+		ls_puts_out(file->info->dest);
+	}
+	ls_putc_out('\n');
 	return (acc);
 }
 

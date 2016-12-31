@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 23:48:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:17:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2016/12/31 12:42:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@ TLS_TEST(test_stream_stdout)
 	tls_stmrst();
 	TLS_ASSERT(ls_printf_out("Hello, %u!", 42) == 10);
 	TLS_ASSERT(tls_outcmp("Hello, 42!"));
+	tls_stmrst();
+	TLS_ASSERT(ls_puts_out("Hello, world!"));
+	TLS_ASSERT(tls_outcmp("Hello, world!"));
+	tls_stmrst();
+	TLS_ASSERT(ls_putc_out('\n'));
+	TLS_ASSERT(tls_outcmp("\n"));
+	tls_stmrst();
+	TLS_ASSERT(ls_padl_out("hello", ' ', 8));
+	TLS_ASSERT(ls_padl_out("hello", ' ', 4));
+	TLS_ASSERT(tls_outcmp("   hellohell"));
+	tls_stmrst();
+	TLS_ASSERT(ls_padr_out("hello", ' ', 8));
+	TLS_ASSERT(ls_padr_out("hello", ' ', 4));
+	TLS_ASSERT(tls_outcmp("hello   hell"));
 }
 
 TLS_TEST(test_stream_stderr_nonum)
