@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/11 18:58:01 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/31 13:03:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 15:04:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ static void	print_file(t_list *el)
 	ls_putc_out('\n');
 }
 
+static void	print_file_size(t_ls_file *file, t_ls_dinfo *dinfo)
+{
+	if (file->info->dmaj && file->info->dmin)
+	{
+		ls_padl_out(file->info->dmaj, ' ', dinfo->max_maj_len + 2);
+		ls_putc_out(',');
+		ls_padl_out(file->info->dmin, ' ', dinfo->max_min_len + 1);
+	}
+	else
+		ls_padl_out(file->info->size, ' ', dinfo->max_sze_len + 2);
+}
+
+static void	print_file_name(t_ls_file *file)
+{
+	ls_puts_out(file->name ? file->name : file->path);
+	if (file->info->dest)
+	{
+		ls_puts_out(" -> ");
+		ls_puts_out(file->info->dest);
+	}
+}
+
 static void	*print_long_file(t_list *el, void *acc)
 {
 	t_ls_file	*file;
@@ -33,23 +55,11 @@ static void	*print_long_file(t_list *el, void *acc)
 	ls_putc_out(' ');
 	ls_padr_out(file->info->owner, ' ', dinfo->max_usr_len + 2);
 	ls_padr_out(file->info->group, ' ', dinfo->max_grp_len);
-	if (file->info->dmaj && file->info->dmin)
-	{
-		ls_padl_out(file->info->dmaj, ' ', dinfo->max_maj_len + 2);
-		ls_putc_out(',');
-		ls_padl_out(file->info->dmin, ' ', dinfo->max_min_len);
-	}
-	else
-		ls_padl_out(file->info->size, ' ', dinfo->max_sze_len + 2);
+	print_file_size(file, dinfo);
 	ls_putc_out(' ');
 	ls_puts_out(file->info->time);
 	ls_putc_out(' ');
-	ls_puts_out(file->name ? file->name : file->path);
-	if (file->info->dest)
-	{
-		ls_puts_out(" -> ");
-		ls_puts_out(file->info->dest);
-	}
+	print_file_name(file);
 	ls_putc_out('\n');
 	return (acc);
 }

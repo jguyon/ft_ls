@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 13:02:29 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/31 15:18:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 14:56:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ static int	parse_one_file(t_ls_args *args, char *name, t_list **el)
 		return (1);
 	}
 	if ((((t_ls_file *)((*el)->content))->is_dir =
-		 S_ISDIR(file.stat->st_mode)
-		 || (S_ISLNK(file.stat->st_mode)
-			&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
-			&& !stat(name, &sb) && S_ISDIR(sb.st_mode))))
+			S_ISDIR(file.stat->st_mode)
+			|| (S_ISLNK(file.stat->st_mode)
+				&& !LS_HAS_FLAG(args->flags, LS_FLAG_LNG)
+				&& !stat(name, &sb) && S_ISDIR(sb.st_mode))))
 		return (1);
 	else
 		return (0);
