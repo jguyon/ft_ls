@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/11 22:03:19 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/17 23:51:35 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 16:14:50 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 16:27:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/test_ls.h"
+#include "test_ls.h"
 
 TLS_TEST(test_util_join_path)
 {

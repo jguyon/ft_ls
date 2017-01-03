@@ -1,4 +1,5 @@
 ft_ls
 run_tests
+*.dSYM
 objs
 deps
