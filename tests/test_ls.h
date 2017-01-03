@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 16:49:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 17:00:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	test_streams(void);
 void	test_parse_args(void);
 void	test_list_files(void);
 void	test_print_files(void);
+void	test_destroy_nondirs(void);
 
 void	tls_stmrst(void);
 int		tls_outcmp(const char *str);

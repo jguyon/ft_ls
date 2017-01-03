@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/13 01:51:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 20:36:31 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 17:01:20 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 17:06:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/test_ls.h"
+#include "test_ls.h"
 
 TLS_TEST(test_destroy_nondirs_norec)
 {
@@ -64,20 +64,17 @@ TLS_TEST(test_destroy_nondirs_rec)
 	file.path = NULL;
 	file.name = ft_strdup("..");
 	file.info = NULL;
-	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
-	file.stat->st_mode = S_IFDIR;
+	file.stat = NULL;
+	file.is_dir = 1;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
 	file.name = ft_strdup("dir2");
-	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
-	file.stat->st_mode = S_IFDIR;
+	file.is_dir = 1;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
 	file.name = ft_strdup("file1");
-	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
-	file.stat->st_mode = S_IFREG;
+	file.is_dir = 0;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
 	file.name = ft_strdup("dir1");
-	file.stat = (struct stat *)ft_memalloc(sizeof(*(file.stat)));
-	file.stat->st_mode = S_IFDIR;
+	file.is_dir = 1;
 	ft_lstadd(&files, ft_lstnew(&file, sizeof(file)));
 	ls_destroy_nondirs(flags, &files);
 	TLS_ASSERT((tfile = file_at(files, 0)) && strcmp(tfile->name, "dir1") == 0);
