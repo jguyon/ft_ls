@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/10 16:51:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/13 02:01:25 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 16:00:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/test_ls.h"
+#include "test_ls.h"
 
 int			main(void)
 {
@@ -18,12 +18,6 @@ int			main(void)
 	g_ls_stderr_fd = -1;
 	tls_stmrst();
 	TLS_START;
-	test_streams();
-	test_parse_args();
-	test_list_files();
-	test_print_files();
-	test_destroy_nondirs();
-	test_utils();
 	TLS_SUMUP;
 	ls_close_streams();
 	close(g_ls_stdout_fd);

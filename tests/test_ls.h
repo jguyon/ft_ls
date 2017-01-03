@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/10 16:36:57 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 16:10:28 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 15:53:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@
 void	tls_stmrst(void);
 int		tls_outcmp(const char *str);
 int		tls_errcmp(const char *str);
-
-void	test_streams(void);
-void	test_parse_args(void);
-void	test_list_files(void);
-void	test_print_files(void);
-void	test_destroy_nondirs(void);
-void	test_utils(void);
 
 int		g_tls_run;
 int		g_tls_fail;

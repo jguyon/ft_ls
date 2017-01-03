@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/03 13:19:10 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/03 16:10:16 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -17,8 +17,10 @@ LIBS = -Llibft -lft
 DEPFLAGS = -MMD -MP -MF $(patsubst $(OBJ_PATH)/%.o,$(DEP_PATH)/%.d,$@)
 
 NAME = ft_ls
+TST_NAME = run_tests
 
 SRC_PATH = srcs
+TST_PATH = tests
 INC_PATH = includes
 OBJ_PATH = objs
 DEP_PATH = deps
@@ -30,9 +32,21 @@ SRC = $(wildcard $(SRC_PATH)/*.c)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
 DEP = $(SRC:$(SRC_PATH)/%.c=$(DEP_PATH)/%.d)
 
+TST_SRC = $(wildcard $(TST_PATH)/*.c)
+TST_OBJ = $(TST_SRC:$(TST_PATH)/%.c=$(OBJ_PATH)/$(TST_PATH)/%.o)
+TST_DEP = $(TST_SRC:$(TST_PATH)/%.c=$(DEP_PATH)/$(TST_PATH)/%.d)
+
 all: $(NAME)
 
+test: CFLAGS += -g
+test: LDFLAGS += -g
+test: $(TST_NAME)
+	./$<
+
 $(NAME): $(LIB_NAME) $(OBJ)
+	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
+
+$(TST_NAME): $(LIB_NAME) $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
 
 $(LIB_NAME):
@@ -42,13 +56,17 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(DEP_PATH)/%.d
 	@mkdir -p $(dir $@) $(dir $(DEP_PATH)/$*)
 	$(CC) $(CFLAGS) -I$(INC_PATH) -I$(LIB_INC_PATH) $(DEPFLAGS) -o $@ -c $<
 
+$(OBJ_PATH)/$(TST_PATH)/%.o: $(TST_PATH)/%.c $(DEP_PATH)/$(TST_PATH)/%.d
+	@mkdir -p $(dir $@) $(dir $(DEP_PATH)/$(TST_PATH)/$*)
+	$(CC) $(CFLAGS) -I$(INC_PATH) -I$(LIB_INC_PATH) $(DEPFLAGS) -o $@ -c $<
+
 $(DEP_PATH)/%.d: ;
 
--include $(DEP)
+-include $(DEP) $(TST_DEP)
 
 clean:
 	make -C $(LIB_PATH) clean
-	rm -f $(OBJ) $(DEP)
+	rm -f $(OBJ) $(DEP) $(TST_OBJ) $(TST_DEP)
 
 fclean: clean
 	rm -f $(NAME) $(LIB_NAME)
