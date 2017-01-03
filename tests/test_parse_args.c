@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/10 16:42:18 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/18 14:36:15 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 16:43:03 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 16:43:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/test_ls.h"
+#include "test_ls.h"
 
 static t_ls_file	*file_at(t_list *files, size_t i)
 {

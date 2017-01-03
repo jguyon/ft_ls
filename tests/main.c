@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 16:40:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 16:42:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int			main(void)
 	TLS_START;
 	test_utils();
 	test_streams();
+	test_parse_args();
 	TLS_SUMUP;
 	ls_close_streams();
 	close(g_ls_stdout_fd);
