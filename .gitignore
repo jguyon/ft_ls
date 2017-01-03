@@ -1,5 +1,3 @@
 ft_ls
-test_ls
-*.o
-*.dSYM
-.clang_complete
+objs
+deps

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:15 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/31 15:18:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 14:06:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define FT_LS_H
 
 # include "libft.h"
-# include "libftstream.h"
-# include "libftprintf.h"
 
 # include <unistd.h>
 # include <errno.h>
@@ -25,6 +23,7 @@
 # include <pwd.h>
 # include <grp.h>
 # include <limits.h>
+# include <string.h>
 
 /*
 ** ERROR MESSAGES
@@ -70,8 +69,16 @@ int				ls_printf_err(int errnum, const char *format, ...);
 #  define LS_MINOR(d) ((d) & 0xff)
 # endif
 
-# define LS_OWNER_LEN LOGIN_NAME_MAX
-# define LS_GROUP_LEN NSS_BUFLEN_GROUP
+# ifdef LOGIN_NAME_MAX
+#  define LS_OWNER_LEN LOGIN_NAME_MAX
+# else
+#  define LS_OWNER_LEN 256
+# endif
+# ifdef NSS_BUFLEN_GROUP
+#  define LS_GROUP_LEN NSS_BUFLEN_GROUP
+# else
+#  define LS_GROUP_LEN 256
+# endif
 # define LS_CACHE_SIZE 317
 # define LS_CACHE_EMPTY 0
 # define LS_CACHE_VALID 1

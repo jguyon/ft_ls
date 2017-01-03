@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/10 12:03:52 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/31 13:09:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/03 14:17:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	print_total(size_t total)
 {
 	char	*str;
 
-	if (!(str = ft_uimtoa_base(total, 10, 0, 0)))
+	if (!(str = ft_uimtoa_base(total, 10, 0, 1)))
 		return ;
 	ls_puts_out("total ");
 	ls_puts_out(str);
