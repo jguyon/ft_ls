@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/12 20:03:22 by jguyon            #+#    #+#             */
-/*   Updated: 2016/12/14 14:27:52 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/03 16:50:17 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/03 16:50:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/test_ls.h"
+#include "test_ls.h"
 
 TLS_TEST(test_simple_print_files)
 {
