@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 11:17:43 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 12:58:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 13:12:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 /*
 ** Program hooks and helpers
 */
+
+/*
+** LS_EXIT_SUCCESS - success exit code
+*/
+# define LS_EXIT_SUCCESS 0
+
+/*
+** LS_EXIT_FAILURE - failure exit code
+*/
+# define LS_EXIT_FAILURE 1
 
 # include <stdarg.h>
 
