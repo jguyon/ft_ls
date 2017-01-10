@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 13:42:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 16:35:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 21:27:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int		ls_getopt(int argc, char *const argv[], const char *optstring)
 	static int			index = 0;
 	static char	const	*next = NULL;
 
-	if (index != g_ls_optind)
+	if (index != g_ls_optind || !next)
 	{
 		next = g_ls_optind > 0 && g_ls_optind < argc ? argv[g_ls_optind] : NULL;
 		if (!next || next[0] != '-' || !next[1] || (next[1] == '-' && !next[2]))
 		{
-			if (next[1] == '-' && !next[2])
+			if (next && next[1] == '-' && !next[2])
 				++g_ls_optind;
 			return (-1);
 		}

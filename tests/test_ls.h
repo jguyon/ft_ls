@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 11:39:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 21:15:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 
 void	test_program(void);
+void	test_ls(void);
 
 int		tls_outcmp(const char *str);
 int		tls_errcmp(const char *str);
