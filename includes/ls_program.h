@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 11:17:43 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 13:12:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 16:08:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,25 @@ void		ls_vwarn(const char *format, va_list args);
 void		ls_vwarnx(const char *format, va_list args);
 void		ls_verr(int status, const char *format, va_list args);
 void		ls_verrx(int status, const char *format, va_list args);
+
+/*
+** ls_getopt - extract options from program arguments
+** @argc: argument count
+** @argv: arguments
+** @optstring: valid options
+**
+** Returns the next option if found, '?' if not, -1 if no more options
+** are available.
+** If "--" is supplied as an argument, parsing of options stops there.
+*/
+int			ls_getopt(int argc, char *const argv[], const char *optstring);
+
+/*
+** ls_g_optind - index of the next argument
+**
+** Read this variable at the end of option parsing to parse the
+** rest of the arguments yourself.
+*/
+int			g_ls_optind;
 
 #endif

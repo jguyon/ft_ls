@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 11:32:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 12:53:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 16:28:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,30 @@ TLS_TEST(test_program_warn)
 	ls_setprogname(NULL);
 }
 
+TLS_TEST(test_program_getopt)
+{
+	int		ac = 5;
+	char	*av[5] = {"ft_ls", "-d", "-abc", "--", "file"};
+
+	ls_setprogname("ft_ls");
+	TLS_ASSERT(ls_getopt(ac, av, "abcd") == 'd');
+	TLS_ASSERT(ls_getopt(ac, av, "abcd") == 'a');
+	TLS_ASSERT(ls_getopt(ac, av, "abcd") == 'b');
+	TLS_ASSERT(ls_getopt(ac, av, "abcd") == 'c');
+	TLS_ASSERT(ls_getopt(ac, av, "abcd") == -1);
+	TLS_ASSERT(g_ls_optind == 4);
+	TLS_ASSERT(tls_errcmp(""));
+	g_ls_optind = 1;
+	TLS_ASSERT(ls_getopt(ac, av, "bcd") == 'd');
+	TLS_ASSERT(ls_getopt(ac, av, "bcd") == '?');
+	TLS_ASSERT(tls_errcmp("ft_ls: illegal option -- a\n"));
+	TLS_ASSERT(g_ls_optind == 3);
+	ls_setprogname(NULL);
+}
+
 void	test_program(void)
 {
 	TLS_RUN(test_program_progname);
 	TLS_RUN(test_program_warn);
+	TLS_RUN(test_program_getopt);
 }
