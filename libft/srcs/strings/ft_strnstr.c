@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 21:07:33 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 12:24:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:03:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
-#include "libft/ft_strings.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
 
 static char	*next_char(const char *str, char c, size_t n)
 {

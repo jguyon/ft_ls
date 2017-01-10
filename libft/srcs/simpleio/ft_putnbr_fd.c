@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 22:28:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:36:28 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:58:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_simpleio.h"
+#include "ft_simpleio.h"
 
 void	ft_putnbr_fd(int n, int fd)
 {

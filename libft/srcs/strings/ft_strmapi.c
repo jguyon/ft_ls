@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:40:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:09:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:02:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_strings.h"
+#include "ft_strings.h"
 
 char	*ft_strmapi(char const *str, char (*f)(unsigned int, char))
 {

@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:40:29 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 12:21:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:00:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
-#include "libft/ft_strings.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
 
 char	*ft_strchrnul(const char *str, int c)
 {

@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 20:04:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 03:23:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:00:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_strings.h"
-#include "libft/ft_streams.h"
+#include "ft_strings.h"
+#include "ft_streams.h"
 
 int		ft_fputs(const char *s, t_stream *stream)
 {

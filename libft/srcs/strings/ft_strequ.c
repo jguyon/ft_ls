@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 16:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 01:58:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:01:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_strings.h"
+#include "ft_strings.h"
 
 int		ft_strequ(char const *s1, char const *s2)
 {

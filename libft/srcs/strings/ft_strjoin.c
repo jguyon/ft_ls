@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 16:38:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 01:30:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:02:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_strings.h"
+#include "ft_strings.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

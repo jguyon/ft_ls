@@ -6,13 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 22:20:38 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:34:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:57:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "libft/ft_chars.h"
-#include "libft/ft_simpleio.h"
+#include "ft_chars.h"
+#include "ft_simpleio.h"
 
 void	ft_putchar_fd(char c, int fd)
 {

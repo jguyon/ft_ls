@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 05:30:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 12:05:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/09 15:32:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,10 @@
 			break ;															\
 		}																	\
 		TFT_ASSERT(res_ft == res_pf);										\
-		TFT_ASSERT(strcmp(str_ft, str_pf) == 0);							\
+		if (str_ft && str_pf)												\
+			TFT_ASSERT(strcmp(str_ft, str_pf) == 0);						\
+		else																\
+			TFT_ASSERT(str_ft == str_pf);									\
 		free(str_ft);														\
 		free(str_pf);														\
 	} while (0)
@@ -97,7 +100,10 @@
 			break ;															\
 		}																	\
 		TFT_ASSERT(res_ft == res_pf);										\
-		TFT_ASSERT(strcmp(str_ft, str_pf) == 0);							\
+		if (!str_ft || !str_pf)												\
+			TFT_ASSERT(str_ft == str_pf);									\
+		else																\
+			TFT_ASSERT(strcmp(str_ft, str_pf) == 0);						\
 		TFT_ASSERT(*((type *)n_ft) == *((type *)n_pf));						\
 		free(str_ft);														\
 		free(str_pf);														\

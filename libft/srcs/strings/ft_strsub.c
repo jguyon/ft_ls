@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 16:34:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 01:30:28 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:04:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
-#include "libft/ft_strings.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
 
 char	*ft_strsub(char const *str, unsigned int start, size_t len)
 {

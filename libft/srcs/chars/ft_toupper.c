@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 23:30:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:21:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:42:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_chars.h"
+#include "ft_chars.h"
 
 int		ft_toupper(int c)
 {

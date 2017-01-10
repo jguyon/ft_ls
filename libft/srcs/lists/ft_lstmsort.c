@@ -6,11 +6,11 @@
 /*   By: jguyon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/18 17:09:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:53:08 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:50:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_lists.h"
+#include "ft_lists.h"
 
 static void		empty_into_list(t_list **dest, t_list *lst)
 {

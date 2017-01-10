@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 17:53:37 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 12:20:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:50:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
+#include "ft_memory.h"
 
 void	*ft_memchr(const void *str, int c, size_t n)
 {

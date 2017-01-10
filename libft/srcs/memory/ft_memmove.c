@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 17:24:14 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 01:11:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:51:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
+#include "ft_memory.h"
 
 static void	*cpy_left(void *dst, const void *src, size_t n)
 {

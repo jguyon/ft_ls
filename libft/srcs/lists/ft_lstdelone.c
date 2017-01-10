@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 23:56:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:50:11 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:49:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft/ft_lists.h"
+#include "ft_lists.h"
 
 void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t))
 {

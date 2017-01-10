@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 23:59:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:50:28 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:48:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft/ft_lists.h"
+#include "ft_lists.h"
 
 static void	lstdel(t_list *list, void (*del)(void *, size_t))
 {

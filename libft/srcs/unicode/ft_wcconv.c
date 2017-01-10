@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:34:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:40:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 21:09:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_unicode.h"
+#include "ft_unicode.h"
 
 size_t	do_wcconv(char *dst, wchar_t wc, size_t len)
 {
@@ -18,6 +18,8 @@ size_t	do_wcconv(char *dst, wchar_t wc, size_t len)
 	char	c;
 	size_t	count;
 
+	if (len >= FT_WC_MAXBYTES)
+		return (len);
 	shift = (len == 0) ? 7 : 6 - len;
 	if (wc >> shift)
 	{

@@ -5,34 +5,33 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 22:55:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 21:19:03 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/08 15:41:44 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/09 21:03:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "libft/ft_printf.h"
+#include "ft_printf.h"
 
-static size_t			fd_write(void *cookie, const char *buff, size_t count)
+static size_t	fd_write(void *fd, const char *buff, size_t count)
 {
-	return (write(*((int *)cookie), buff, count));
+	return (write(*((int *)fd), buff, count));
 }
 
-static t_stream_type	g_fd_type = {
-	FT_BUFF_SIZE,
-	&fd_write,
-	NULL
+static t_stream	g_stream = {
+	.funs = {
+		.write = &fd_write
+	},
+	.size = 0,
 };
 
-int						ft_vdprintf(int fd, const char *format, va_list ap)
+int				ft_vdprintf(int fd, const char *format, va_list args)
 {
-	t_stream	*stream;
-	int			count;
+	int		res;
 
-	if (!(stream = ft_fopencookie(&fd, g_fd_type)))
+	g_stream.cookie = &fd;
+	res = ft_vfprintf(&g_stream, format, args);
+	if (ft_fclose(&g_stream))
 		return (-1);
-	count = ft_vfprintf(stream, format, ap);
-	if (ft_fclose(stream))
-		count = -1;
-	return (count);
+	return (res);
 }

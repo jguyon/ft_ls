@@ -5,20 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/12/09 22:55:28 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 04:11:06 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/08 15:35:48 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/08 15:36:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_printf.h"
+#include "ft_printf.h"
 
 int		ft_dprintf(int fd, const char *format, ...)
 {
-	va_list	ap;
+	va_list	args;
 	int		res;
 
-	va_start(ap, format);
-	res = ft_vdprintf(fd, format, ap);
-	va_end(ap);
+	va_start(args, format);
+	res = ft_vdprintf(fd, format, args);
+	va_end(args);
 	return (res);
 }

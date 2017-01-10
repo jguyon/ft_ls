@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 16:15:07 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 01:12:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 13:50:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
+#include "ft_memory.h"
 
 void	ft_bzero(void *str, size_t n)
 {

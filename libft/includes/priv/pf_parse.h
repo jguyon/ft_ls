@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/02 03:38:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 03:52:14 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/08 16:20:40 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/09 15:30:09 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,29 @@
 # define PF_PARSE_H
 
 # include <stdarg.h>
-# include "libft/ft_lists.h"
-# include "libft/ft_streams.h"
-# include "priv/pf_info.h"
+# include "ft_streams.h"
+# include "priv/pf_defs.h"
 
-typedef struct	s_pf_format {
-	char	spec;
-	void	*(*get_arg)(t_pf_info *info, va_list ap);
-	int		(*format)(t_stream *stream, t_pf_info *info, void *arg);
-	void	(*clean_arg)(void **arg);
-}				t_pf_format;
+/*
+** pf_parse_info - parse conversion string
+** @format: format string starting with the conversion
+** @info: structure to write info to
+** @args: arguments given to printf
+**
+** Returns the next character after the format string,
+** or null if an error occurred.
+*/
+const char	*pf_parse_info(const char *format, t_pf_info *info,
+							size_t count, va_list args);
 
-typedef struct	s_pf_conv {
-	const char			*prev;
-	size_t				len;
-	t_pf_info			*info;
-	t_pf_format			*format;
-	void				*arg;
-}				t_pf_conv;
-
-typedef struct	s_pf_conv_acc {
-	int			count;
-	t_stream	*stream;
-}				t_pf_conv_acc;
-
-typedef struct	s_pf_arg {
-	size_t		n;
-	t_pf_conv	*conv;
-	int			type;
-}				t_pf_arg;
-
-t_list			*pf_parse_format(const char *format);
-int				pf_extract_args(t_list *convs, va_list ap);
-int				pf_write_convs(t_stream *stream, t_list *convs);
-void			pf_del_convs(t_list **convs);
-
-t_pf_info		*pf_get_info(char **format);
-t_pf_format		*pf_get_format(t_pf_info *info);
+/*
+** pf_convert - convert and write
+** @info - conversion info
+** @args - arguments given to printf
+**
+** Returns the number of bytes written if successful,
+** a negative number otherwise.
+*/
+int			pf_convert(t_stream *stream, t_pf_info *info, va_list args);
 
 #endif

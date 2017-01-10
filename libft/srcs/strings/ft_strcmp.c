@@ -6,16 +6,16 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 22:22:38 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 12:22:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:00:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_memory.h"
-#include "libft/ft_strings.h"
+#include "ft_memory.h"
+#include "ft_strings.h"
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
-	if (FT_MEM_ALIGN(s1) == FT_MEM_ALIGN(s1))
+	if (FT_MEM_ALIGN(s1) == FT_MEM_ALIGN(s2))
 	{
 		while (FT_MEM_ALIGN(s1))
 		{

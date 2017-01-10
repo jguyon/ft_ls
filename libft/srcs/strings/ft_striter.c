@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:32:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:09:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:01:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_strings.h"
+#include "ft_strings.h"
 
 void	ft_striter(char *str, void (*f)(char *))
 {

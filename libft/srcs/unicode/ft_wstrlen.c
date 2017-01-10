@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:37:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/02 02:41:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/08 14:04:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/ft_unicode.h"
+#include "ft_unicode.h"
 
 size_t	ft_wstrlen(const wchar_t *str)
 {
