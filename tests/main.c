@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 11:13:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 12:49:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int			main(void)
 	g_ft_stderr.cookie = g_errbuf;
 	g_ft_stderr.funs.write = &buff_write;
 	TLS_START;
+	test_program();
 	TLS_SUMUP;
 	return (0);
 }
@@ -42,7 +43,7 @@ int			tls_outcmp(const char *str)
 	ft_fflush(FT_STDOUT);
 	cmp = ft_strcmp(g_outbuf, str);
 	ft_bzero(g_outbuf, 8192);
-	return (cmp);
+	return (cmp == 0);
 }
 
 int			tls_errcmp(const char *str)
@@ -52,5 +53,5 @@ int			tls_errcmp(const char *str)
 	ft_fflush(FT_STDERR);
 	cmp = ft_strcmp(g_errbuf, str);
 	ft_bzero(g_errbuf, 8192);
-	return (cmp);
+	return (cmp == 0);
 }
