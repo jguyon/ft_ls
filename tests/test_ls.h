@@ -6,15 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 17:00:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 11:14:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_LS_H
 # define TEST_LS_H
 
-# include "ft_ls.h"
-# include "libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -24,14 +22,6 @@
 # include <time.h>
 # include <sys/types.h>
 
-void	test_utils(void);
-void	test_streams(void);
-void	test_parse_args(void);
-void	test_list_files(void);
-void	test_print_files(void);
-void	test_destroy_nondirs(void);
-
-void	tls_stmrst(void);
 int		tls_outcmp(const char *str);
 int		tls_errcmp(const char *str);
 

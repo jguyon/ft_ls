@@ -6,75 +6,51 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/03 17:01:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/10 11:13:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_streams.h"
+#include "ft_strings.h"
+#include "ft_memory.h"
 #include "test_ls.h"
+
+static char		g_outbuf[8192];
+static char		g_errbuf[8192];
+
+static size_t	buff_write(void *cookie, const char *buf, size_t count)
+{
+	ft_strncat(cookie, buf, count);
+	return (count);
+}
 
 int			main(void)
 {
-	g_ls_stdout_fd = -1;
-	g_ls_stderr_fd = -1;
-	tls_stmrst();
+	g_ft_stdout.cookie = g_outbuf;
+	g_ft_stdout.funs.write = &buff_write;
+	g_ft_stderr.cookie = g_errbuf;
+	g_ft_stderr.funs.write = &buff_write;
 	TLS_START;
-	test_utils();
-	test_streams();
-	test_parse_args();
-	test_list_files();
-	test_print_files();
-	test_destroy_nondirs();
 	TLS_SUMUP;
-	ls_close_streams();
-	close(g_ls_stdout_fd);
-	close(g_ls_stderr_fd);
 	return (0);
-}
-
-static int	fdcmp(int fd, const char *str)
-{
-	char	*fdstr;
-	size_t	size;
-	size_t	i;
-	int		res;
-
-	size = strlen(str);
-	if (!(fdstr = (char *)malloc(size + 2)))
-		return (0);
-	lseek(fd, 0, SEEK_SET);
-	i = 0;
-	while (i <= size && read(fd, fdstr + i, 1) == 1)
-		++i;
-	fdstr[i] = '\0';
-	res = (strcmp(fdstr, str) == 0);
-	free(fdstr);
-	return (res);
-}
-
-static void	fdrst(int *fd, const char *filename)
-{
-	if (*fd >= 0)
-		close(*fd);
-	*fd = open(filename, O_CREAT | O_TRUNC | O_RDWR);
-	fchmod(*fd, S_IRUSR | S_IWUSR);
-}
-
-void		tls_stmrst(void)
-{
-	ls_close_streams();
-	fdrst(&g_ls_stdout_fd, "/tmp/test_ls_out");
-	fdrst(&g_ls_stderr_fd, "/tmp/test_ls_err");
-	ls_open_streams();
 }
 
 int			tls_outcmp(const char *str)
 {
-	ft_fflush(g_ls_stdout);
-	return (fdcmp(g_ls_stdout_fd, str));
+	int		cmp;
+
+	ft_fflush(FT_STDOUT);
+	cmp = ft_strcmp(g_outbuf, str);
+	ft_bzero(g_outbuf, 8192);
+	return (cmp);
 }
 
 int			tls_errcmp(const char *str)
 {
-	ft_fflush(g_ls_stderr);
-	return (fdcmp(g_ls_stderr_fd, str));
+	int		cmp;
+
+	ft_fflush(FT_STDERR);
+	cmp = ft_strcmp(g_errbuf, str);
+	ft_bzero(g_errbuf, 8192);
+	return (cmp);
 }
