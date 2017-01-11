@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:39:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/12 00:41:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,17 @@ typedef struct	s_file {
 	int				is_dir;
 	struct stat		stat;
 }				t_file;
+
+/*
+** Use nano seconds for time comparison if possible
+*/
+# ifdef linux
+#  define LS_MTIM_NSEC(st) ((st).st_mtim.tv_nsec)
+# elif __APPLE__
+#  define LS_MTIM_NSEC(st) ((st).st_mtimespec.tv_nsec)
+# else
+#  define LS_MTIM_NSEC(st) (0)
+# endif
 
 /*
 ** Structure holding parsed arguments
