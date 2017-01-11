@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 12:20:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 13:40:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,18 @@ int				ls_parse_args(int argc, char *const argv[], t_args *args);
 ** List files in a directory
 */
 void			ls_list_files(t_flags flags, t_file *dir, t_dlist *files);
+
+/*
+** Print name of directory and associated info
+*/
+void			ls_print_dirinfo(t_flags flags, t_file *dir);
+
+/*
+** Output files info in the correct format
+**
+** Frees and deletes files from the list which do not need
+** to be recursed over (if the -R option is not given or if not a dir).
+*/
+void			ls_print_files(t_flags flags, t_dlist *files);
 
 #endif

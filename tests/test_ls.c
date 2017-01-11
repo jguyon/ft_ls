@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 12:35:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 13:44:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,36 @@ TLS_TEST(test_list_files)
 	TLS_STOP_FS;
 }
 
+TLS_TEST(test_print_files)
+{
+	t_flags		flags;
+	t_file		dir;
+	t_dlist		files;
+
+	bzero(&flags, sizeof(flags));
+	flags.rec = 1;
+	bzero(&dir, sizeof(dir));
+	dir.name = TLS_DIR "dir";
+	TLS_INIT_FS;
+	TLS_MKDIR("dir");
+	TLS_TOUCH("dir/file");
+	TLS_MKDIR("dir/recdir");
+	ls_list_files(flags, &dir, &files);
+	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
+	TLS_ASSERT(tls_errcmp(""));
+	ls_print_dirinfo(flags, &dir);
+	ls_print_files(flags, &files);
+	TLS_ASSERT(tls_outcmp(TLS_DIR "dir:\nfile\nrecdir\n"));
+	TLS_ASSERT(ft_dlst_singular(&files)
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, ft_dlst_first(&files)))->name,
+				 "recdir") == 0);
+	ft_dlst_foreachl(&files, NULL, &destroy_file);
+	TLS_STOP_FS;
+}
+
 void	test_ls(void)
 {
 	TLS_RUN(test_ls_parse_args);
 	TLS_RUN(test_list_files);
+	TLS_RUN(test_print_files);
 }

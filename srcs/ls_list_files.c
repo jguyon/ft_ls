@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 12:42:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 12:54:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
 	const char		*dname;
 	size_t			dnamlen;
 
-	(void)flags;
 	FT_DLST_INIT(files, t_file, node);
 	dname = dir->path ? dir->path : dir->name;
 	dnamlen = ft_strlen(dname);
