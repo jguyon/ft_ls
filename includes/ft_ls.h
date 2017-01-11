@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 01:36:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 12:20:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,10 @@ typedef struct	s_args {
 ** Returns 1 if successful, 0 if not.
 */
 int				ls_parse_args(int argc, char *const argv[], t_args *args);
+
+/*
+** List files in a directory
+*/
+void			ls_list_files(t_flags flags, t_file *dir, t_dlist *files);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 01:50:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 12:38:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int			tls_errcmp(const char *str)
 	int		cmp;
 
 	ft_fflush(FT_STDERR);
+	/* printf("%s\n", g_errbuf); */
 	cmp = ft_strcmp(g_errbuf, str);
 	ft_bzero(g_errbuf, 8192);
 	return (cmp == 0);
