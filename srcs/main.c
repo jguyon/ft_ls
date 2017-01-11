@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:20:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 17:16:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_program.h"
 #include "ft_ls.h"
+#include "ft_streams.h"
 
 int		main(int argc, char **argv)
 {
@@ -33,10 +34,15 @@ int		main(int argc, char **argv)
 		ls_destroy_file(dir);
 	}
 	ls_sort_files(args.flags, &(args.dirs));
-	ls_sort_files(args.flags, &(args.files));
-	ls_print_files(args.flags, &(args.files));
 	if (!ft_dlst_empty(&(args.files)))
-		ft_dlst_joinl(&(args.dirs), &(args.files));
+	{
+		ls_sort_files(args.flags, &(args.files));
+		ls_print_files(args.flags, &(args.files));
+		if (!ft_dlst_empty(&(args.files)))
+			ft_dlst_joinl(&(args.dirs), &(args.files));
+		if (!ft_dlst_empty(&(args.dirs)))
+			ft_fputc('\n', FT_STDOUT);
+	}
 	while ((dirnode = ft_dlst_popl(&(args.dirs))))
 	{
 		dir = FT_DLST_ENTRY(&(args.dirs), dirnode);
@@ -46,6 +52,8 @@ int		main(int argc, char **argv)
 		ls_print_files(args.flags, &(args.files));
 		if (!ft_dlst_empty(&(args.files)))
 			ft_dlst_joinl(&(args.dirs), &(args.files));
+		if (!ft_dlst_empty(&(args.dirs)))
+			ft_fputc('\n', FT_STDOUT);
 		ls_destroy_file(dir);
 	}
 	return (ls_cleanup(LS_EXIT_SUCCESS));
