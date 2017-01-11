@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:21:00 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 18:49:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,11 @@ TLS_TEST(test_sort_files)
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file1") == 0
 			   && (node = ft_dlst_next(&files, node))
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0);
+	ft_dlst_foreachl(&files, NULL, &destroy_file);
 	flags.mtim = 1;
+	ls_list_files(flags, &dir, &files);
+	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
+	TLS_ASSERT(tls_errcmp(""));
 	ls_sort_files(flags, &files);
 	TLS_ASSERT((node = ft_dlst_first(&files))
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0
