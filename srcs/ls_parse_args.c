@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 14:37:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 16:42:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 	}
 	++g_ls_optind;
 	if (is_dir(file->name, &(file->stat)))
+	{
+		file->is_dir = 1;
 		ft_dlst_pushr(&(args->dirs), &(file->node));
+	}
 	else
 		ft_dlst_pushr(&(args->files), &(file->node));
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 15:27:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 16:41:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_file		*create_file(t_flags flags,
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
 		|| !(file->path = join_path(dname, dnamlen,
 									dentry->d_name, dentry->d_namlen))
-		|| lstat(file->path, &(file->stat)))
+		|| ((flags.mtim || flags.lfmt) && lstat(file->path, &(file->stat))))
 	{
 		ls_warn("%s", dentry->d_name);
 		ft_memdel((void **)file->path);
@@ -51,6 +51,7 @@ static t_file		*create_file(t_flags flags,
 		return (NULL);
 	}
 	file->name = file->path + dnamlen;
+	file->is_dir = dentry->d_type == DT_DIR;
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);

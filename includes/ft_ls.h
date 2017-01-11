@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 13:51:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 16:39:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct	s_file {
 	const char		*name;
 	const char		*path;
 	t_dlist_node	node;
+	int				is_dir;
 	struct stat		stat;
 }				t_file;
 
@@ -92,5 +93,10 @@ void			ls_print_dirinfo(t_flags flags, t_file *dir);
 ** to be recursed over (if the -R option is not given or if not a dir).
 */
 void			ls_print_files(t_flags flags, t_dlist *files);
+
+/*
+** Free file structure memory
+*/
+void			ls_destroy_file(t_file *file);
 
 #endif
