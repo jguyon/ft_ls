@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 18:39:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 19:44:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_file		*create_file(t_flags flags,
 		return (NULL);
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
 		|| !(file->path = join_path(dname, dnamlen,
-									dentry->d_name, dentry->d_namlen))
+									dentry->d_name, ft_strlen(dentry->d_name)))
 		|| ((flags.mtim || flags.lfmt) && lstat(file->path, &(file->stat))))
 	{
 		ls_warn("%s", dentry->d_name);
