@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 18:49:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/12 00:01:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_ls.h"
 #include "ft_ls.h"
 #include "ls_program.h"
+#include "ft_dlists.h"
 #include <stdlib.h>
 
 static int	destroy_file(void *file, void *acc)
@@ -108,6 +109,7 @@ TLS_TEST(test_print_files)
 	TLS_TOUCH("dir/file");
 	TLS_MKDIR("dir/recdir");
 	ls_list_files(flags, &dir, &files);
+	ls_sort_files(flags, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
 	ls_print_dirinfo(flags, &dir);
