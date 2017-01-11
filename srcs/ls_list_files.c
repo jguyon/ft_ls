@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:41:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 18:39:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ static const char	*join_path(const char *path, size_t plen,
 	return (full);
 }
 
+static int			is_dir(const char *path,
+							struct dirent *dentry, struct stat *st)
+{
+	if (st->st_mode != 0)
+		return (S_ISDIR(st->st_mode));
+	if (dentry->d_type == DT_DIR)
+		return (1);
+	if (dentry->d_type != DT_UNKNOWN || lstat(path, st))
+		return (0);
+	return (S_ISDIR(st->st_mode));
+}
+
 static t_file		*create_file(t_flags flags,
 									const char *dname, size_t dnamlen,
 									struct dirent *dentry)
@@ -51,7 +63,7 @@ static t_file		*create_file(t_flags flags,
 		return (NULL);
 	}
 	file->name = file->path + dnamlen;
-	file->is_dir = dentry->d_type == DT_DIR;
+	file->is_dir = is_dir(file->path, dentry, &(file->stat));
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);
