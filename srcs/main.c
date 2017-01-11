@@ -6,14 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 10:56:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 01:59:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ls_program.h"
+#include "ft_ls.h"
 
-int		main(void)
+int		main(int argc, char **argv)
 {
-	ft_printf("Hello, %d!\n", 42);
-	return (0);
+	t_args	args;
+
+	ls_setprogname(argv[0]);
+	if (!(ls_parse_args(argc, argv, &args)))
+		ls_exit(LS_EXIT_FAILURE);
+	return (ls_cleanup(LS_EXIT_SUCCESS));
 }

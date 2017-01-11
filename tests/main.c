@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 21:15:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 01:50:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_strings.h"
 #include "ft_memory.h"
 #include "test_ls.h"
+#include "ls_program.h"
 
 static char		g_outbuf[8192];
 static char		g_errbuf[8192];
@@ -34,7 +35,7 @@ int			main(void)
 	test_program();
 	test_ls();
 	TLS_SUMUP;
-	return (0);
+	return (ls_cleanup(0));
 }
 
 int			tls_outcmp(const char *str)
