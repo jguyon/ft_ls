@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 14:16:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 14:38:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ TLS_TEST(test_ls_parse_args)
 	int			argc = 7;
 	char		*argv[7] = {"ft_ls", "-aR", "-ltr",
 							TLS_DIR "file", TLS_DIR "dir",
-							TLS_DIR "link", TLS_DIR "none"};
+							TLS_DIR "none", TLS_DIR "link"};
 
 	TLS_INIT_FS;
 	TLS_MKDIR("dir");
@@ -58,14 +58,14 @@ TLS_TEST(test_ls_parse_args)
 	TLS_ASSERT(args.flags.rev == 0);
 	TLS_ASSERT(args.flags.rec == 1);
 	TLS_ASSERT(tls_errcmp(""));
-	TLS_ASSERT(ft_dlst_empty(&(args.dirs)));
+	TLS_ASSERT(ft_dlst_singular(&(args.dirs)));
 	TLS_ASSERT(ft_dlst_empty(&(args.files)));
 	g_ls_optind = 1;
 	argv[1] = "-z";
 	TLS_ASSERT(!ls_parse_args(argc, argv, &args));
 	TLS_ASSERT(tls_errcmp("ft_ls: illegal option -- z\n"
 				   "usage: ft_ls [-" LS_FLAGS "] [file ...]\n"));
-	TLS_ASSERT(ft_dlst_empty(&(args.dirs)));
+	TLS_ASSERT(ft_dlst_singular(&(args.dirs)));
 	TLS_ASSERT(ft_dlst_empty(&(args.files)));
 	ls_setprogname(NULL);
 	TLS_STOP_FS;

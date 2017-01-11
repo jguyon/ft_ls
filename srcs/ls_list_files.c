@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 12:54:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 15:27:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static t_file		*create_file(t_flags flags,
 		|| lstat(file->path, &(file->stat)))
 	{
 		ls_warn("%s", dentry->d_name);
-		ft_memdel((void **)file);
 		ft_memdel((void **)file->path);
+		ft_memdel((void **)file);
 		return (NULL);
 	}
 	file->name = file->path + dnamlen;
@@ -67,7 +67,7 @@ void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
 	FT_DLST_INIT(files, t_file, node);
 	dname = dir->path ? dir->path : dir->name;
 	dnamlen = ft_strlen(dname);
-	if (!(dstream = opendir(dir->path ? dir->path : dir->name)))
+	if (!(dstream = opendir(dname)))
 	{
 		ls_warn("%s", dir->name);
 		return ;

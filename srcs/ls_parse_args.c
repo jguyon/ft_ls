@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 01:38:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 14:37:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 	{
 		ls_warn("%s", argv[g_ls_optind]);
 		ft_memdel((void **)&file);
-		return (0);
+		++g_ls_optind;
+		return (1);
 	}
 	++g_ls_optind;
 	if (is_dir(file->name, &(file->stat)))
@@ -73,13 +74,33 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 	return (1);
 }
 
+static char	*g_currdir = ".";
+
+static void	parse_currdir(t_args *args)
+{
+	t_file		*file;
+
+	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
+	{
+		ls_warn("%s", g_currdir);
+		return ;
+	}
+	file->name = g_currdir;
+	ft_dlst_pushr(&(args->dirs), &(file->node));
+}
+
 int			ls_parse_args(int argc, char *const argv[], t_args *args)
 {
 	if (!parse_flags(argc, argv, args))
 		return (0);
 	FT_DLST_INIT(&(args->dirs), t_file, node);
 	FT_DLST_INIT(&(args->files), t_file, node);
-	while (parse_file(argc, argv, args))
-		;
+	if (g_ls_optind == argc)
+		parse_currdir(args);
+	else
+	{
+		while (parse_file(argc, argv, args))
+			;
+	}
 	return (1);
 }
