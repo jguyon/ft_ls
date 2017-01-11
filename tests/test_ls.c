@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 13:44:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 14:16:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,42 @@ TLS_TEST(test_print_files)
 	TLS_STOP_FS;
 }
 
+TLS_TEST(test_sort_files)
+{
+	t_flags			flags;
+	t_file			dir;
+	t_dlist			files;
+	t_dlist_node	*node;
+
+	bzero(&flags, sizeof(flags));
+	bzero(&dir, sizeof(dir));
+	dir.name = TLS_DIR "dir";
+	TLS_INIT_FS;
+	TLS_MKDIR("dir");
+	TLS_TOUCHT("06060000", "dir/file1");
+	TLS_TOUCHT("06060100", "dir/file2");
+	ls_list_files(flags, &dir, &files);
+	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
+	TLS_ASSERT(tls_errcmp(""));
+	ls_sort_files(flags, &files);
+	TLS_ASSERT((node = ft_dlst_first(&files))
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file1") == 0
+			   && (node = ft_dlst_next(&files, node))
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0);
+	flags.mtim = 1;
+	ls_sort_files(flags, &files);
+	TLS_ASSERT((node = ft_dlst_first(&files))
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0
+			   && (node = ft_dlst_next(&files, node))
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file1") == 0);
+	ft_dlst_foreachl(&files, NULL, &destroy_file);
+	TLS_STOP_FS;
+}
+
 void	test_ls(void)
 {
 	TLS_RUN(test_ls_parse_args);
 	TLS_RUN(test_list_files);
 	TLS_RUN(test_print_files);
+	TLS_RUN(test_sort_files);
 }

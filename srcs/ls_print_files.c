@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 12:53:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 13:37:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 14:17:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ static int	print_file(void *file, void *flags)
 
 void		ls_print_files(t_flags flags, t_dlist *files)
 {
-	ft_dlst_foreachl(files, &flags, &print_file);
+	if (flags.rev)
+		ft_dlst_foreachr(files, &flags, &print_file);
+	else
+		ft_dlst_foreachl(files, &flags, &print_file);
 }

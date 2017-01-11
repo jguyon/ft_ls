@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 13:40:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/11 13:51:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ int				ls_parse_args(int argc, char *const argv[], t_args *args);
 ** List files in a directory
 */
 void			ls_list_files(t_flags flags, t_file *dir, t_dlist *files);
+
+/*
+** Sort files according to given flags
+*/
+void			ls_sort_files(t_flags flags, t_dlist *files);
 
 /*
 ** Print name of directory and associated info
