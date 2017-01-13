@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/13 21:24:56 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/13 22:51:09 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_ls.h"
 #include "ls_format.h"
+#include <unistd.h>
 
 TLS_TEST(test_format_mode)
 {
@@ -33,8 +34,27 @@ TLS_TEST(test_format_nlinks)
 	TLS_ASSERT(strcmp(info.nlinks, "132") == 0);
 }
 
+TLS_TEST(test_format_owner)
+{
+	t_finfo		info;
+	struct stat	st;
+	char		*login;
+
+	st.st_uid = getuid();
+	login = getenv("LOGNAME");
+	TLS_ASSERT(ls_set_owner(&info, &st) == strlen(login));
+	TLS_ASSERT(strcmp(info.owner, login) == 0);
+	info.owner[0] = '\0';
+	TLS_ASSERT(ls_set_owner(&info, &st) == strlen(login));
+	TLS_ASSERT(strcmp(info.owner, login) == 0);
+	st.st_uid = 123;
+	TLS_ASSERT(ls_set_owner(&info, &st) == 3);
+	TLS_ASSERT(strcmp(info.owner, "123") == 0);
+}
+
 void	test_format(void)
 {
 	TLS_RUN(test_format_mode);
 	TLS_RUN(test_format_nlinks);
+	TLS_RUN(test_format_owner);
 }
