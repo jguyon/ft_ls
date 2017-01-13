@@ -6,14 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:08:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/13 18:08:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/13 18:39:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_format.h"
 #include "ft_memory.h"
 
-void	put_type(char *str, struct stat *st)
+static void	put_type(char *str, struct stat *st)
 {
 	if (S_ISDIR(st->st_mode))
 		*str = 'd';
@@ -29,7 +29,7 @@ void	put_type(char *str, struct stat *st)
 		*str = 's';
 }
 
-void	put_own(char *str, struct stat *st)
+static void	put_own(char *str, struct stat *st)
 {
 	if (st->st_mode & S_IRUSR)
 		*str = 'r';
@@ -45,7 +45,7 @@ void	put_own(char *str, struct stat *st)
 		*str = 'x';
 }
 
-void	put_grp(char *str, struct stat *st)
+static void	put_grp(char *str, struct stat *st)
 {
 	if (st->st_mode & S_IRGRP)
 		*str = 'r';
@@ -61,7 +61,7 @@ void	put_grp(char *str, struct stat *st)
 		*str = 'x';
 }
 
-void	put_oth(char *str, struct stat *st)
+static void	put_oth(char *str, struct stat *st)
 {
 	if (st->st_mode & S_IROTH)
 		*str = 'r';
@@ -77,7 +77,7 @@ void	put_oth(char *str, struct stat *st)
 		*str = 'x';
 }
 
-void	ls_set_mode(t_finfo *info, struct stat *st)
+void		ls_set_mode(t_finfo *info, struct stat *st)
 {
 	ft_memset(info->mode, '-', sizeof(info->mode) - 1);
 	info->mode[sizeof(info->mode) - 1] = '\0';
