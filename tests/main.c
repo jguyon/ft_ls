@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/13 18:30:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/14 23:54:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			main(void)
 	g_ft_stderr.funs.write = &buff_write;
 	TLS_START;
 	test_program();
+	test_cache();
 	test_ls();
 	test_format();
 	TLS_SUMUP;

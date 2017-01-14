@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/13 18:30:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/14 23:53:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 
 void	test_program(void);
+void	test_cache(void);
 void	test_ls(void);
 void	test_format(void);
 
