@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/13 22:51:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 00:52:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ TLS_TEST(test_format_owner)
 	login = getenv("LOGNAME");
 	TLS_ASSERT(ls_set_owner(&info, &st) == strlen(login));
 	TLS_ASSERT(strcmp(info.owner, login) == 0);
-	info.owner[0] = '\0';
+	info.owner = NULL;
 	TLS_ASSERT(ls_set_owner(&info, &st) == strlen(login));
 	TLS_ASSERT(strcmp(info.owner, login) == 0);
 	st.st_uid = 123;

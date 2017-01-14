@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 21:35:16 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/14 21:23:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 00:51:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_strings.h"
 #include "ft_memory.h"
 #include <pwd.h>
+#include <stdlib.h>
 
 static size_t	put_uid(char *str, uid_t uid, size_t len)
 {
@@ -28,26 +29,50 @@ static size_t	put_uid(char *str, uid_t uid, size_t len)
 	return (len - i - 1);
 }
 
+static int		is_owner(void *owner, void *uid)
+{
+	return (((t_owner *)owner)->uid == *((uid_t *)uid));
+}
+
+static void		*new_owner(void *uid)
+{
+	struct passwd	*pw;
+	size_t			len;
+	t_owner			*owner;
+
+	if ((pw = getpwuid(*((uid_t *)uid))))
+	{
+		len = ft_strlen(pw->pw_name);
+		if (!(owner = (t_owner *)malloc(sizeof(*owner) + len + 1)))
+			return (NULL);
+		owner->uid = *((uid_t *)uid);
+		owner->len = len;
+		ft_memcpy(owner->name, pw->pw_name, len + 1);
+	}
+	else
+	{
+		len = sizeof(uid_t) * 3;
+		if (!(owner = (t_owner *)malloc(sizeof(*owner) + len + 1)))
+			return (NULL);
+		owner->uid = *((uid_t *)uid);
+		owner->len = put_uid(owner->name, *((uid_t *)uid), len + 1);
+	}
+	return (owner);
+}
+
+t_cache			g_ls_owners = {
+	.is = &is_owner,
+	.new = &new_owner,
+	.del = &free,
+	.list = LS_DLST(g_ls_owners.list, t_owner, node)
+};
+
 size_t			ls_set_owner(t_finfo *info, struct stat *st)
 {
-	static t_owner	cache[LS_CACHE_SIZE];
-	size_t			i;
-	struct passwd	*pw;
+	t_owner	*owner;
 
-	i = st->st_uid % LS_CACHE_SIZE;
-	if (!(cache[i].cached) || cache[i].uid != st->st_uid)
-	{
-		cache[i].uid = st->st_uid;
-		cache[i].cached = 1;
-		if ((pw = getpwuid(st->st_uid)))
-		{
-			cache[i].len = ft_strlen(pw->pw_name);
-			ft_memcpy(cache[i].owner, pw->pw_name, cache[i].len + 1);
-		}
-		else
-			cache[i].len = put_uid(cache[i].owner, cache[i].uid,
-									sizeof(cache[i].owner));
-	}
-	ft_memcpy(info->owner, cache[i].owner, cache[i].len + 1);
-	return (cache[i].len);
+	if (!(owner = ls_cache_get(&g_ls_owners, &(st->st_uid))))
+		return (0);
+	info->owner = owner->name;
+	return (owner->len);
 }
