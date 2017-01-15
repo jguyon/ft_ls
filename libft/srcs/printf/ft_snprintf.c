@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_setbuffer.c                                     :+:      :+:    :+:   */
+/*   ft_snprintf.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 17:24:15 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 14:34:33 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/15 16:01:15 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/15 16:02:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_streams.h"
+#include "ft_printf.h"
 
-int		ft_setbuffer(t_stream *stream, char *buff, size_t size)
+int		ft_snprintf(char *str, size_t size, const char *format, ...)
 {
-	if (!stream || stream->buff || (!buff && size > 0) || (buff && size == 0))
-		return (-1);
-	stream->buff = buff;
-	stream->size = size;
-	stream->curr = stream->buff;
-	return (0);
+	va_list	args;
+	int		res;
+
+	va_start(args, format);
+	res = ft_vsnprintf(str, size, format, args);
+	va_end(args);
+	return (res);
 }

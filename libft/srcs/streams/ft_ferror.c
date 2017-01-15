@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 20:06:13 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 17:09:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 14:31:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int		ft_ferror(t_stream *stream)
 {
-	return (stream->buff && !(stream->curr));
+	return (stream->err);
 }

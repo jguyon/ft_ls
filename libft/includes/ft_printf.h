@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 03:31:40 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 15:34:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 16:01:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,33 @@ int		ft_dprintf(int fd, const char *format, ...);
 ** ft_vdprintf - va_list variant of ft_dprintf
 */
 int		ft_vdprintf(int fd, const char *format, va_list args);
+
+/*
+** ft_sprintf - print formatted string to a string
+** @str: string to print to
+** @format: format to print
+** @rest: arguments referenced by @format
+*/
+int		ft_sprintf(char *str, const char *format, ...);
+
+/*
+** ft_vsprintf - va_list variant of ft_sprintf
+*/
+int		ft_vsprintf(char *str, const char *format, va_list args);
+
+/*
+** ft_snprintf - print formatted string to a string
+** @str: string to print to
+** @size: max number of bytes to write, including '\0'
+** @format: format to print
+** @rest: arguments referenced by @format
+*/
+int		ft_snprintf(char *str, size_t size, const char *format, ...);
+
+/*
+** ft_vsnprintf - va_list variant of ft_snprintf
+*/
+int		ft_vsnprintf(char *str, size_t size, const char *format, va_list args);
 
 /*
 ** ft_fprintf - print formatted string to a stream

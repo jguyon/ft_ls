@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 20:08:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 17:43:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 15:21:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,25 @@
 
 int		ft_fflush(t_stream *stream)
 {
-	if (!stream || !(stream->funs.write) || (stream->buff && !(stream->curr)))
+	size_t	count;
+
+	if (!stream || !(stream->funs.write) || ft_ferror(stream))
 		return (-1);
-	if (!(stream->buff))
+	if (stream->size > 0 && !(stream->buff))
 	{
 		if (!(stream->buff = (char *)ft_memalloc(stream->size)))
 			return (-1);
 		stream->own = 1;
 		stream->curr = stream->buff;
 	}
-	if (stream->curr == stream->buff)
+	if (stream->size == 0 || stream->curr == stream->buff)
 		return (0);
-	if (stream->funs.write(stream->cookie, stream->buff,
-							stream->curr - stream->buff))
+	count = stream->curr - stream->buff;
+	if (stream->funs.write(stream->cookie, stream->buff, count) == count)
 	{
 		stream->curr = stream->buff;
 		return (1);
 	}
-	stream->curr = NULL;
+	stream->err = 1;
 	return (-1);
 }

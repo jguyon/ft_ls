@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_setbuffer.c                                     :+:      :+:    :+:   */
+/*   ft_clearerr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/09 17:24:15 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 14:34:33 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/15 15:04:51 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/15 15:05:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_streams.h"
 
-int		ft_setbuffer(t_stream *stream, char *buff, size_t size)
+void	ft_clearerr(t_stream *stream)
 {
-	if (!stream || stream->buff || (!buff && size > 0) || (buff && size == 0))
-		return (-1);
-	stream->buff = buff;
-	stream->size = size;
-	stream->curr = stream->buff;
-	return (0);
+	stream->err = 0;
 }

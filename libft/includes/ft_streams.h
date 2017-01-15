@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 03:17:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 19:47:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 15:04:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct	s_stream {
 	size_t			size;
 	int				own;
 	int				alloc;
+	int				err;
 	char			*curr;
 	char			*buff;
 }				t_stream;
@@ -112,6 +113,12 @@ int				ft_fputs(const char *s, t_stream *stream);
 ** @stream: stream to test
 */
 int				ft_ferror(t_stream *stream);
+
+/*
+** ft_clearerr - clear stream error status
+** @stream: stream to clear
+*/
+void			ft_clearerr(t_stream *stream);
 
 /*
 ** ft_fclose - flush and close a stream
