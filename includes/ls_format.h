@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 00:53:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 00:59:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct	s_finfo {
 	char		mode[11];
 	char		nlinks[sizeof(nlink_t) * 3 + 1];
 	char		*owner;
+	char		*group;
 }				t_finfo;
 
 /*
@@ -63,8 +64,32 @@ t_cache			g_ls_owners;
 /*
 ** Set the owner name in @info from @st
 **
-** Returns the length of the string.
+** Returns the length of the string, or 0 in case of error.
 */
 size_t			ls_set_owner(t_finfo *info, struct stat *st);
+
+/*
+** Structure used to cache calls to getgrgid
+*/
+typedef struct	s_group {
+	gid_t			gid;
+	size_t			len;
+	t_dlist_node	node;
+	char			name[];
+}				t_group;
+
+/*
+** Cache holding group names
+**
+** Call ls_cache_clear on it at the end of the program.
+*/
+t_cache			g_ls_groups;
+
+/*
+** Set the group name in @info from @st
+**
+** Returns the length of the string, or 0 in case of error.
+*/
+size_t			ls_set_group(t_finfo *info, struct stat *st);
 
 #endif

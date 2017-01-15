@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 00:52:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 01:19:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int			main(void)
 	test_format();
 	TLS_SUMUP;
 	ls_cache_clear(&g_ls_owners);
+	ls_cache_clear(&g_ls_groups);
 	return (ls_cleanup(0));
 }
 
