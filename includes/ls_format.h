@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 20:40:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 20:58:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <sys/stat.h>
 # include <stddef.h>
 # include <limits.h>
+
+/*
+** Print file in line format
+*/
+int				ls_print_line(const char *name);
 
 /*
 ** Macros to extract major and minor device numbers from a dev_t number
@@ -47,11 +52,16 @@ typedef struct	s_dinfo {
 }				t_dinfo;
 
 /*
-** Update @info using @st
+** Update @info using @st for long format
 **
 ** Returns 1 if successful, 0 if not.
 */
 void			ls_update_info(t_dinfo *info, struct stat *st);
+
+/*
+** Print file in long format
+*/
+int				ls_print_long(const char *name, t_dinfo *info, struct stat *st);
 
 /*
 ** Structure used to cache calls to getpwuid

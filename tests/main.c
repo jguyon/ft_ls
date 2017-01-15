@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 20:36:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 23:55:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int			main(void)
 	test_ls();
 	test_format();
 	TLS_SUMUP;
+	ls_cache_clear(&g_ls_owners);
+	ls_cache_clear(&g_ls_groups);
 	return (ls_cleanup(0));
 }
 
@@ -56,7 +58,6 @@ int			tls_errcmp(const char *str)
 	int		cmp;
 
 	ft_fflush(FT_STDERR);
-	/* printf("%s\n", g_errbuf); */
 	cmp = ft_strcmp(g_errbuf, str);
 	ft_bzero(g_errbuf, 8192);
 	return (cmp == 0);

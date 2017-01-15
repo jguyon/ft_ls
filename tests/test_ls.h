@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/14 23:53:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 22:18:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_LS_H
 # define TEST_LS_H
 
+# define _GNU_SOURCE
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
