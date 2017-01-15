@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 00:59:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/15 20:40:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,35 @@
 # include <limits.h>
 
 /*
-** Structure holding file info used for the long format
+** Macros to extract major and minor device numbers from a dev_t number
 */
-typedef struct	s_finfo {
-	char		mode[11];
-	char		nlinks[sizeof(nlink_t) * 3 + 1];
-	char		*owner;
-	char		*group;
-}				t_finfo;
+# ifdef __APPLE__
+#  define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
+#  define LS_MINOR(d) ((d) & 0xff)
+# elif linux
+#  define LS_MAJOR(d) (((d) >> 8) & 0xff)
+#  define LS_MINOR(d) ((d) & 0xff)
+# endif
 
 /*
-** Set mode string in @info from @st
+** Structure holding total size and max lengths of a group of files
 */
-void			ls_set_mode(t_finfo *info, struct stat *st);
+typedef struct	s_dinfo {
+	size_t		total;
+	size_t		max_nlink;
+	size_t		max_owner;
+	size_t		max_group;
+	size_t		max_size;
+	size_t		max_maj;
+	size_t		max_min;
+}				t_dinfo;
 
 /*
-** Set number of links string in @info from @st
+** Update @info using @st
 **
-** Returns the length of the string.
+** Returns 1 if successful, 0 if not.
 */
-size_t			ls_set_nlinks(t_finfo *info, struct stat *st);
+void			ls_update_info(t_dinfo *info, struct stat *st);
 
 /*
 ** Structure used to cache calls to getpwuid
@@ -62,18 +71,15 @@ typedef struct	s_owner {
 t_cache			g_ls_owners;
 
 /*
-** Set the owner name in @info from @st
-**
-** Returns the length of the string, or 0 in case of error.
+** Get owner name corresponding to @uid
 */
-size_t			ls_set_owner(t_finfo *info, struct stat *st);
+const char		*ls_get_owner(uid_t uid);
 
 /*
 ** Structure used to cache calls to getgrgid
 */
 typedef struct	s_group {
 	gid_t			gid;
-	size_t			len;
 	t_dlist_node	node;
 	char			name[];
 }				t_group;
@@ -86,10 +92,8 @@ typedef struct	s_group {
 t_cache			g_ls_groups;
 
 /*
-** Set the group name in @info from @st
-**
-** Returns the length of the string, or 0 in case of error.
+** Get group name corresponding to @gid
 */
-size_t			ls_set_group(t_finfo *info, struct stat *st);
+const char		*ls_get_group(gid_t gid);
 
 #endif
