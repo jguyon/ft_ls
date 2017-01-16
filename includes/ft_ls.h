@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 16:50:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:28:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 */
 
 # include "ft_dlists.h"
+# include "ls_format.h"
 # include <sys/stat.h>
 
 /*
@@ -77,6 +78,7 @@ typedef struct	s_file {
 
 typedef struct	s_args {
 	t_flags		flags;
+	t_dinfo		dinfo;
 	t_dlist		dirs;
 	t_dlist		files;
 }				t_args;
@@ -87,9 +89,10 @@ typedef struct	s_args {
 int				ls_parse_args(int argc, char *const argv[], t_args *args);
 
 /*
-** List files in a directory
+** List files in a directory and initialize directory information
 */
-void			ls_list_files(t_flags flags, t_file *dir, t_dlist *files);
+void			ls_list_files(t_flags flags, t_file *dir,
+								t_dinfo *dinfo, t_dlist *files);
 
 /*
 ** Sort files according to given flags
@@ -104,7 +107,12 @@ t_file			*ls_pop_next(t_flags flags, t_dlist *dirs);
 /*
 ** Print name of directory and associated info
 */
-void			ls_print_dirinfo(t_flags flags, t_file *dir);
+void			ls_print_dirinfo(t_flags flags, t_file *dir, t_dinfo *dinfo);
+
+typedef struct	s_proginfo {
+	t_flags		flags;
+	t_dinfo		*dinfo;
+}				t_proginfo;
 
 /*
 ** Output files info in the correct format
@@ -112,7 +120,8 @@ void			ls_print_dirinfo(t_flags flags, t_file *dir);
 ** Puts dirs which need to be recursed over into @dirs, deletes and frees
 ** the rest.
 */
-void			ls_print_files(t_flags flags, t_dlist *files, t_dlist *dirs);
+void			ls_print_files(t_flags flags, t_dlist *files, t_dinfo *dinfo,
+								t_dlist *dirs);
 
 /*
 ** Free file structure memory

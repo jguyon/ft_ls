@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 15:20:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:19:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static t_file		*create_file(t_flags flags,
 	return (file);
 }
 
-void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
+void				ls_list_files(t_flags flags, t_file *dir,
+									t_dinfo *dinfo, t_dlist *files)
 {
 	DIR				*dstream;
 	struct dirent	*dentry;
@@ -79,6 +80,7 @@ void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
 	size_t			dnamlen;
 
 	FT_DLST_INIT(files, t_file, node);
+	ft_bzero(dinfo, sizeof(*dinfo));
 	dname = dir->path ? dir->path : dir->name;
 	dnamlen = ft_strlen(dname);
 	if (!(dstream = opendir(dname)))
@@ -91,6 +93,8 @@ void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
 	{
 		if ((file = create_file(flags, dname, dnamlen, dentry)))
 			ft_dlst_pushr(files, &(file->node));
+		if (file && flags.lfmt)
+			ls_update_info(dinfo, &(file->stat));
 	}
 	closedir(dstream);
 	return ;

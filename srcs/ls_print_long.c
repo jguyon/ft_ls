@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:44:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:39:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ls_print_long(const char *name, const char *path,
 	if (S_ISBLK(st->st_mode) || S_ISCHR(st->st_mode))
 		ls_print_dev(st->st_dev, info->max_size, info->max_maj, info->max_min);
 	else
-		ls_print_blocks(st->st_blocks, info->max_size,
+		ls_print_blocks(st->st_size, info->max_size,
 						info->max_maj, info->max_min);
 	ls_print_time(st->st_mtime);
 	ft_fputc(' ', FT_STDOUT);

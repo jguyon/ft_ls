@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 16:43:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:34:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ TLS_TEST(test_list_files)
 	t_flags		flags;
 	t_file		dir;
 	t_dlist		files;
+	t_dinfo		dinfo;
 
 	bzero(&flags, sizeof(flags));
 	bzero(&dir, sizeof(dir));
@@ -87,7 +88,7 @@ TLS_TEST(test_list_files)
 	TLS_INIT_FS;
 	TLS_MKDIR("dir");
 	TLS_TOUCH("dir/file");
-	ls_list_files(flags, &dir, &files);
+	ls_list_files(flags, &dir, &dinfo, &files);
 	TLS_ASSERT(tls_errcmp(""));
 	TLS_ASSERT(ft_dlst_singular(&files));
 	ft_dlst_foreachl(&files, NULL, &destroy_file);
@@ -100,6 +101,7 @@ TLS_TEST(test_print_files)
 	t_file		dir;
 	t_dlist		files;
 	t_dlist		dirs;
+	t_dinfo		dinfo;
 
 	FT_DLST_INIT(&dirs, t_file, node);
 	bzero(&flags, sizeof(flags));
@@ -110,12 +112,12 @@ TLS_TEST(test_print_files)
 	TLS_MKDIR("dir");
 	TLS_TOUCH("dir/file");
 	TLS_MKDIR("dir/recdir");
-	ls_list_files(flags, &dir, &files);
+	ls_list_files(flags, &dir, &dinfo, &files);
 	ls_sort_files(flags, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
-	ls_print_dirinfo(flags, &dir);
-	ls_print_files(flags, &files, &dirs);
+	ls_print_dirinfo(flags, &dir, &dinfo);
+	ls_print_files(flags, &files, &dinfo, &dirs);
 	TLS_ASSERT(tls_outcmp(TLS_DIR "dir:\nfile\nrecdir\n\n"));
 	TLS_ASSERT(ft_dlst_singular(&dirs)
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&dirs, ft_dlst_first(&dirs)))->name,
@@ -130,6 +132,7 @@ TLS_TEST(test_sort_files)
 	t_file			dir;
 	t_dlist			files;
 	t_dlist_node	*node;
+	t_dinfo			dinfo;
 
 	bzero(&flags, sizeof(flags));
 	bzero(&dir, sizeof(dir));
@@ -138,7 +141,7 @@ TLS_TEST(test_sort_files)
 	TLS_MKDIR("dir");
 	TLS_TOUCHT("06060000", "dir/file1");
 	TLS_TOUCHT("06060100", "dir/file2");
-	ls_list_files(flags, &dir, &files);
+	ls_list_files(flags, &dir, &dinfo, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
 	ls_sort_files(flags, &files);
@@ -148,7 +151,7 @@ TLS_TEST(test_sort_files)
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0);
 	ft_dlst_foreachl(&files, NULL, &destroy_file);
 	flags.mtim = 1;
-	ls_list_files(flags, &dir, &files);
+	ls_list_files(flags, &dir, &dinfo, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
 	ls_sort_files(flags, &files);

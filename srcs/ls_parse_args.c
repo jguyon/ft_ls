@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 15:17:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:43:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,24 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 		return (0);
 	errno = 0;
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
-		|| !(file->name = argv[g_ls_optind])
-		|| lstat(file->name, &(file->stat)))
+	|| !(file->name = argv[g_ls_optind]) || lstat(file->name, &(file->stat)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", argv[g_ls_optind]);
 		ft_memdel((void **)&file);
-		++g_ls_optind;
-		return (1);
 	}
-	++g_ls_optind;
-	if (is_dir(file->name, &(file->stat)))
+	else if (is_dir(file->name, &(file->stat)))
 	{
 		file->is_dir = 1;
 		ft_dlst_pushr(&(args->dirs), &(file->node));
 	}
 	else
+	{
+		if (args->flags.lfmt)
+			ls_update_info(&(args->dinfo), &(file->stat));
 		ft_dlst_pushr(&(args->files), &(file->node));
+	}
+	++g_ls_optind;
 	return (1);
 }
 
@@ -102,6 +103,7 @@ int			ls_parse_args(int argc, char *const argv[], t_args *args)
 {
 	if (!parse_flags(argc, argv, args))
 		return (0);
+	ft_bzero(&(args->dinfo), sizeof(args->dinfo));
 	FT_DLST_INIT(&(args->dirs), t_file, node);
 	FT_DLST_INIT(&(args->files), t_file, node);
 	if (g_ls_optind == argc)

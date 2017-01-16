@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 16:55:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 17:37:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ int			main(int argc, char **argv)
 		&& ft_dlst_empty(&(args.files))
 		&& (dir = ls_pop_next(args.flags, &(args.dirs))))
 	{
-		ls_list_files(args.flags, dir, &(args.files));
+		ls_list_files(args.flags, dir, &(args.dinfo), &(args.files));
 		ls_sort_files(args.flags, &(args.files));
-		ls_print_files(args.flags, &(args.files), &(args.dirs));
+		ls_print_files(args.flags, &(args.files), &(args.dinfo), &(args.dirs));
 		ls_destroy_file(dir);
 	}
 	else
@@ -52,15 +52,16 @@ int			main(int argc, char **argv)
 		if (!ft_dlst_empty(&(args.files)))
 		{
 			ls_sort_files(args.flags, &(args.files));
-			ls_print_files(args.flags, &(args.files), &(args.dirs));
+			ls_print_files(args.flags, &(args.files),
+							&(args.dinfo), &(args.dirs));
 		}
 	}
 	while ((dir = ls_pop_next(args.flags, &(args.dirs))))
 	{
-		ls_list_files(args.flags, dir, &(args.files));
+		ls_list_files(args.flags, dir, &(args.dinfo), &(args.files));
 		ls_sort_files(args.flags, &(args.files));
-		ls_print_dirinfo(args.flags, dir);
-		ls_print_files(args.flags, &(args.files), &(args.dirs));
+		ls_print_dirinfo(args.flags, dir, &(args.dinfo));
+		ls_print_files(args.flags, &(args.files), &(args.dinfo), &(args.dirs));
 		ls_destroy_file(dir);
 	}
 	return (ls_cleanup(LS_EXIT_STATUS));
