@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/08 15:50:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 15:08:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:45:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static t_stream	g_buff_stream = {
 	.curr = g_buff,
 };
 
-static int		buff_vfprintf(t_stream *stream, const char *format, va_list args)
+static int		buff_vfprintf(t_stream *stream,
+								const char *format, va_list args)
 {
 	int		res;
 
