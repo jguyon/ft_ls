@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 20:58:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 13:20:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 /*
 ** Print file in line format
 */
-int				ls_print_line(const char *name);
+void			ls_print_line(const char *name);
 
 /*
 ** Macros to extract major and minor device numbers from a dev_t number
@@ -37,6 +37,11 @@ int				ls_print_line(const char *name);
 #  define LS_MAJOR(d) (((d) >> 8) & 0xff)
 #  define LS_MINOR(d) ((d) & 0xff)
 # endif
+
+/*
+** Six months in type time_t
+*/
+# define LS_SIX_MONTHS ((time_t)((366 / 2) * 24 * 3600))
 
 /*
 ** Structure holding total size and max lengths of a group of files
@@ -61,7 +66,46 @@ void			ls_update_info(t_dinfo *info, struct stat *st);
 /*
 ** Print file in long format
 */
-int				ls_print_long(const char *name, t_dinfo *info, struct stat *st);
+void			ls_print_long(const char *name, const char *path,
+								t_dinfo *info, struct stat *st);
+
+/*
+** Print mode string
+*/
+void			ls_print_mode(mode_t mode);
+
+/*
+** Print number of links
+*/
+void			ls_print_nlink(nlink_t nlink, size_t width);
+
+/*
+** Print owner and group
+*/
+void			ls_print_pwd(uid_t uid, size_t uid_width,
+								gid_t gid, size_t gid_width);
+
+/*
+** Print number of blocks
+*/
+void			ls_print_blocks(blkcnt_t blocks, size_t blk_width,
+								size_t maj_width, size_t min_width);
+
+/*
+** Print device numbers
+*/
+void			ls_print_dev(dev_t dev, size_t blk_width,
+								size_t maj_width, size_t min_width);
+
+/*
+** Print last modification time
+*/
+void			ls_print_time(time_t time);
+
+/*
+** Print link target
+*/
+void			ls_print_target(const char *path, off_t size);
 
 /*
 ** Structure used to cache calls to getpwuid

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_line.c                                    :+:      :+:    :+:   */
+/*   ls_print_nlink.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/15 20:56:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:20:43 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/16 11:33:51 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/16 11:38:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_format.h"
-#include "ft_streams.h"
+#include "ft_printf.h"
+#include <inttypes.h>
 
-void	ls_print_line(const char *name)
+void	ls_print_nlink(nlink_t nlink, size_t width)
 {
-	ft_fputs(name, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
+	ft_fprintf(FT_STDOUT, " %*ju", width, (uintmax_t)nlink);
 }
