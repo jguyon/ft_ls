@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:19:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 21:15:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static t_file		*create_file(t_flags flags,
 	{
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", dentry->d_name);
-		ft_memdel((void **)file->path);
-		ft_memdel((void **)file);
+		if (file)
+			ft_memdel((void **)&(file->path));
+		ft_memdel((void **)&(file));
 		return (NULL);
 	}
 	file->name = file->path + dnamlen;
