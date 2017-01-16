@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 23:55:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 14:56:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,32 @@ static size_t	buff_write(void *cookie, const char *buf, size_t count)
 	return (count);
 }
 
+static void		clear_caches(void)
+{
+	ls_cache_clear(&g_ls_owners);
+	ls_cache_clear(&g_ls_groups);
+}
+
+static void		close_streams(void)
+{
+	ft_fclose(FT_STDOUT);
+	ft_fclose(FT_STDERR);
+}
+
 int			main(void)
 {
 	g_ft_stdout.cookie = g_outbuf;
 	g_ft_stdout.funs.write = &buff_write;
 	g_ft_stderr.cookie = g_errbuf;
 	g_ft_stderr.funs.write = &buff_write;
+	ls_atexit(&clear_caches);
+	ls_atexit(&close_streams);
 	TLS_START;
 	test_program();
 	test_cache();
 	test_ls();
 	test_format();
 	TLS_SUMUP;
-	ls_cache_clear(&g_ls_owners);
-	ls_cache_clear(&g_ls_groups);
 	return (ls_cleanup(0));
 }
 

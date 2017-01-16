@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 11:17:43 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/10 16:08:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 14:49:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ void		ls_setprogname(const char *name);
 ** ls_getprogname - get program name
 */
 const char	*ls_getprogname(void);
+
+/*
+** LS_ATEXIT_SIZE - number of exit callbacks that can be registered
+*/
+# define LS_ATEXIT_SIZE 32
+
+void		(*g_ls_atexit[LS_ATEXIT_SIZE])(void);
+
+/*
+** ls_atexit - register a function to be executed by ls_exit or ls_cleanup
+**
+** Returns 0 if successful, -1 if not.
+** Registered functions are executed in reverse order.
+*/
+int			ls_atexit(void (*f)(void));
 
 /*
 ** ls_cleanup - clean up program before exiting
