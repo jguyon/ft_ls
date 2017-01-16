@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:37:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:08:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int			main(int argc, char **argv)
 	{
 		ls_list_files(args.flags, dir, &(args.dinfo), &(args.files));
 		ls_sort_files(args.flags, &(args.files));
+		ls_print_dirinfo(1, args.flags, dir, &(args.dinfo));
 		ls_print_files(args.flags, &(args.files), &(args.dinfo), &(args.dirs));
 		ls_destroy_file(dir);
 	}
@@ -60,7 +61,7 @@ int			main(int argc, char **argv)
 	{
 		ls_list_files(args.flags, dir, &(args.dinfo), &(args.files));
 		ls_sort_files(args.flags, &(args.files));
-		ls_print_dirinfo(args.flags, dir, &(args.dinfo));
+		ls_print_dirinfo(0, args.flags, dir, &(args.dinfo));
 		ls_print_files(args.flags, &(args.files), &(args.dinfo), &(args.dirs));
 		ls_destroy_file(dir);
 	}

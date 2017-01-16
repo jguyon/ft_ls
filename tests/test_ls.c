@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:34:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:07:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ TLS_TEST(test_print_files)
 	ls_sort_files(flags, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
-	ls_print_dirinfo(flags, &dir, &dinfo);
+	ls_print_dirinfo(0, flags, &dir, &dinfo);
 	ls_print_files(flags, &files, &dinfo, &dirs);
 	TLS_ASSERT(tls_outcmp(TLS_DIR "dir:\nfile\nrecdir\n\n"));
 	TLS_ASSERT(ft_dlst_singular(&dirs)

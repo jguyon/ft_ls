@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:28:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:05:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ t_file			*ls_pop_next(t_flags flags, t_dlist *dirs);
 /*
 ** Print name of directory and associated info
 */
-void			ls_print_dirinfo(t_flags flags, t_file *dir, t_dinfo *dinfo);
+void			ls_print_dirinfo(int is_single, t_flags flags,
+									t_file *dir, t_dinfo *dinfo);
 
 typedef struct	s_proginfo {
 	t_flags		flags;
