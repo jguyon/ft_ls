@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_dirinfo.c                                 :+:      :+:    :+:   */
+/*   ls_pop_next.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/11 13:40:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 15:26:26 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/16 16:50:00 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/16 16:52:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include "ls_format.h"
-#include "ft_printf.h"
 
-void	ls_print_dirinfo(t_flags flags, t_file *dir)
+t_file	*ls_pop_next(t_flags flags, t_dlist *dirs)
 {
-	(void)flags;
-	ls_print_dir(dir->path ? dir->path : dir->name);
+	t_dlist_node	*node;
+
+	if (flags.rev)
+		node = ft_dlst_popr(dirs);
+	else
+		node = ft_dlst_popl(dirs);
+	if (!node)
+		return (NULL);
+	return (FT_DLST_ENTRY(dirs, node));
 }

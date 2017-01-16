@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 19:44:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 15:20:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static t_file		*create_file(t_flags flags,
 									dentry->d_name, ft_strlen(dentry->d_name)))
 		|| ((flags.mtim || flags.lfmt) && lstat(file->path, &(file->stat))))
 	{
+		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", dentry->d_name);
 		ft_memdel((void **)file->path);
 		ft_memdel((void **)file);
@@ -82,6 +83,7 @@ void				ls_list_files(t_flags flags, t_file *dir, t_dlist *files)
 	dnamlen = ft_strlen(dname);
 	if (!(dstream = opendir(dname)))
 	{
+		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", dir->name);
 		return ;
 	}

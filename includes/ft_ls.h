@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/12 00:41:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 16:50:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@
 
 # include "ft_dlists.h"
 # include <sys/stat.h>
+
+/*
+** Macro to get program exit status
+*/
+int				g_ls_status;
+# define LS_EXIT_STATUS g_ls_status
 
 /*
 ** Macros and structure for parsing opts given to the program
@@ -77,8 +83,6 @@ typedef struct	s_args {
 
 /*
 ** Parse command line arguments
-**
-** Returns 1 if successful, 0 if not.
 */
 int				ls_parse_args(int argc, char *const argv[], t_args *args);
 
@@ -93,6 +97,11 @@ void			ls_list_files(t_flags flags, t_file *dir, t_dlist *files);
 void			ls_sort_files(t_flags flags, t_dlist *files);
 
 /*
+** Pop next dir to process
+*/
+t_file			*ls_pop_next(t_flags flags, t_dlist *dirs);
+
+/*
 ** Print name of directory and associated info
 */
 void			ls_print_dirinfo(t_flags flags, t_file *dir);
@@ -100,10 +109,10 @@ void			ls_print_dirinfo(t_flags flags, t_file *dir);
 /*
 ** Output files info in the correct format
 **
-** Frees and deletes files from the list which do not need
-** to be recursed over (if the -R option is not given or if not a dir).
+** Puts dirs which need to be recursed over into @dirs, deletes and frees
+** the rest.
 */
-void			ls_print_files(t_flags flags, t_dlist *files);
+void			ls_print_files(t_flags flags, t_dlist *files, t_dlist *dirs);
 
 /*
 ** Free file structure memory

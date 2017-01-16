@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/12 00:01:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 16:43:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,9 @@ TLS_TEST(test_print_files)
 	t_flags		flags;
 	t_file		dir;
 	t_dlist		files;
+	t_dlist		dirs;
 
+	FT_DLST_INIT(&dirs, t_file, node);
 	bzero(&flags, sizeof(flags));
 	flags.rec = 1;
 	bzero(&dir, sizeof(dir));
@@ -113,12 +115,12 @@ TLS_TEST(test_print_files)
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));
 	ls_print_dirinfo(flags, &dir);
-	ls_print_files(flags, &files);
-	TLS_ASSERT(tls_outcmp(TLS_DIR "dir:\nfile\nrecdir\n"));
-	TLS_ASSERT(ft_dlst_singular(&files)
-			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, ft_dlst_first(&files)))->name,
+	ls_print_files(flags, &files, &dirs);
+	TLS_ASSERT(tls_outcmp(TLS_DIR "dir:\nfile\nrecdir\n\n"));
+	TLS_ASSERT(ft_dlst_singular(&dirs)
+			   && strcmp(((t_file *)FT_DLST_ENTRY(&dirs, ft_dlst_first(&dirs)))->name,
 				 "recdir") == 0);
-	ft_dlst_foreachl(&files, NULL, &destroy_file);
+	ft_dlst_foreachl(&dirs, NULL, &destroy_file);
 	TLS_STOP_FS;
 }
 

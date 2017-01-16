@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:42:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 15:17:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ls_program.h"
 #include "ft_memory.h"
 #include "ft_printf.h"
+#include <errno.h>
 
 static int	parse_flags(int argc, char *const argv[], t_args *args)
 {
@@ -34,6 +35,7 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 			args->flags.rec = 1;
 		else if (opt == '?')
 		{
+			g_ls_status = LS_EXIT_FAILURE;
 			ft_fprintf(FT_STDERR, LS_USAGE_FMT, ls_getprogname(), LS_FLAGS);
 			return (0);
 		}
@@ -57,10 +59,12 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 
 	if (g_ls_optind >= argc)
 		return (0);
+	errno = 0;
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
 		|| !(file->name = argv[g_ls_optind])
 		|| lstat(file->name, &(file->stat)))
 	{
+		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", argv[g_ls_optind]);
 		ft_memdel((void **)&file);
 		++g_ls_optind;
@@ -83,8 +87,10 @@ static void	parse_currdir(t_args *args)
 {
 	t_file		*file;
 
+	errno = 0;
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
 	{
+		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", g_currdir);
 		return ;
 	}
