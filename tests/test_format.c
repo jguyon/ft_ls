@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:19:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 13:51:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,15 @@ TLS_TEST(test_format_print_line)
 	TLS_ASSERT(tls_outcmp("file\n"));
 }
 
+TLS_TEST(test_format_print_total)
+{
+	t_dinfo	info;
+
+	info.total = 123;
+	ls_print_total(&info);
+	TLS_ASSERT(tls_outcmp("total 123\n"));
+}
+
 TLS_TEST(test_format_print_long)
 {
 	t_dinfo		info;
@@ -75,9 +84,17 @@ TLS_TEST(test_format_print_long)
 	free(str);
 }
 
+TLS_TEST(test_print_dir)
+{
+	ls_print_dir("somedir");
+	TLS_ASSERT(tls_outcmp("somedir:\n"));
+}
+
 void	test_format(void)
 {
 	TLS_RUN(test_format_dinfo);
 	TLS_RUN(test_format_print_line);
 	TLS_RUN(test_format_print_long);
+	TLS_RUN(test_format_print_total);
+	TLS_RUN(test_print_dir);
 }

@@ -6,16 +6,19 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:13:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 13:44:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_format.h"
 #include "ft_streams.h"
+#include "ls_program.h"
+#include <errno.h>
 
 void	ls_print_long(const char *name, const char *path,
 							t_dinfo *info, struct stat *st)
 {
+	errno = 0;
 	ls_print_mode(st->st_mode);
 	ls_print_nlink(st->st_nlink, info->max_nlink);
 	ls_print_pwd(st->st_uid, info->max_owner, st->st_gid, info->max_group);
@@ -30,4 +33,8 @@ void	ls_print_long(const char *name, const char *path,
 	if (S_ISLNK(st->st_mode))
 		ls_print_target(path, st->st_size);
 	ft_fputc('\n', FT_STDOUT);
+	if (ft_ferror(FT_STDOUT))
+		ls_err(LS_EXIT_FAILURE, "stdout");
+	if (errno)
+		ls_warn("%s", name);
 }

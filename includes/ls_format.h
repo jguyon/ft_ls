@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:20:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 13:47:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <sys/stat.h>
 # include <stddef.h>
 # include <limits.h>
+
+/*
+** Print directory name
+*/
+void			ls_print_dir(const char *name);
 
 /*
 ** Print file in line format
@@ -58,10 +63,13 @@ typedef struct	s_dinfo {
 
 /*
 ** Update @info using @st for long format
-**
-** Returns 1 if successful, 0 if not.
 */
 void			ls_update_info(t_dinfo *info, struct stat *st);
+
+/*
+** Print total block count of files
+*/
+void			ls_print_total(t_dinfo *info);
 
 /*
 ** Print file in long format
