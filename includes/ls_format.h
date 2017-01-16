@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:58:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:36:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ void			ls_print_total(t_dinfo *info);
 
 /*
 ** Print file in long format
+**
+** Returns -1 if some non-blocking error occurred, 0 otherwise.
 */
-void			ls_print_long(const char *name, const char *path,
+int				ls_print_long(const char *name, const char *path,
 								t_dinfo *info, struct stat *st);
 
 /*

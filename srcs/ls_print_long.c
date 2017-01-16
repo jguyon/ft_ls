@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:48:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 20:35:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "ls_program.h"
 #include <errno.h>
 
-void	ls_print_long(const char *name, const char *path,
+int		ls_print_long(const char *name, const char *path,
 							t_dinfo *info, struct stat *st)
 {
 	errno = 0;
@@ -36,5 +36,9 @@ void	ls_print_long(const char *name, const char *path,
 	if (ft_ferror(FT_STDOUT))
 		ls_err(LS_EXIT_FAILURE, "stdout");
 	if (errno)
+	{
 		ls_warn("%s", name);
+		return (-1);
+	}
+	return (0);
 }
