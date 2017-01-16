@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:08:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 11:30:12 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 18:16:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static void	set_other(char str[3], mode_t mode)
 {
 	if (mode & S_IROTH)
 		str[0] = 'r';
-	else if (mode & S_IWOTH)
+	if (mode & S_IWOTH)
 		str[1] = 'w';
-	else if ((mode & S_ISVTX) && (mode & S_IXOTH))
+	if ((mode & S_ISVTX) && (mode & S_IXOTH))
 		str[2] = 't';
 	else if (mode & S_ISVTX)
 		str[2] = 'T';

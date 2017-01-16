@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:54:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 12:13:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 18:03:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ls_print_blocks(blkcnt_t blocks, size_t blk_width,
 {
 	size_t	width;
 
-	width = (maj_width + min_width + 3) < blk_width
-		? blk_width : maj_width + min_width + 3;
+	width = (maj_width == 0 && min_width == 0)
+			|| (maj_width + min_width + 3) < blk_width
+				? blk_width : maj_width + min_width + 3;
 	ft_fprintf(FT_STDOUT, "  %*llu", (int)width, blocks);
 }
