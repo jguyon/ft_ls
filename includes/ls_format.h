@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:14:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:58:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void			ls_print_line(const char *name);
 ** Macros to extract major and minor device numbers from a dev_t number
 */
 # ifdef __APPLE__
-#  define LS_MAJOR(d) (((d) >> (sizeof(dev_t) * 8 - 8)) & 0xff)
-#  define LS_MINOR(d) ((d) & 0xff)
+#  define LS_MAJOR(d) (((dev_t)(d) >> (sizeof(dev_t) * 8 - 8)) & 0xffu)
+#  define LS_MINOR(d) ((dev_t)(d) & 0xffu)
 # elif linux
-#  define LS_MAJOR(d) (((d) >> 8) & 0xff)
-#  define LS_MINOR(d) ((d) & 0xff)
+#  define LS_MAJOR(d) (((dev_t)(d) >> 8) & 0xffu)
+#  define LS_MINOR(d) ((dev_t)(d) & 0xffu)
 # endif
 
 /*

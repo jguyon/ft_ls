@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:19:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:51:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ TLS_TEST(test_format_dinfo)
 	st.st_nlink = 16;
 	st.st_uid = getuid();
 	st.st_gid = getgid();
-	st.st_dev = makedev(13, 3);
+	st.st_rdev = makedev(13, 3);
 	ls_update_info(&info, &st);
 	TLS_ASSERT(info.total == 512);
 	TLS_ASSERT(info.has_files);
@@ -78,12 +78,12 @@ TLS_TEST(test_format_print_long)
 	st.st_uid = UINT_MAX / 2;
 	st.st_gid = UINT_MAX / 2;
 	st.st_size = 1024;
-	st.st_dev = makedev(2, 1);
+	st.st_rdev = makedev(16, 127);
 	st.st_mtime = 0;
 	strftime(date, 13, "%b %e  %Y", localtime(&st.st_mtime));
 	ls_print_long("file", "/path/to/file", &info, &st);
 	asprintf(&str, "brws--x--T   2 %-20u  %-20u   %4u, %3u %s file\n",
-			 st.st_uid, st.st_gid, major(st.st_dev), minor(st.st_dev),
+			 st.st_uid, st.st_gid, major(st.st_rdev), minor(st.st_rdev),
 			 date);
 	TLS_ASSERT(tls_outcmp(str));
 	free(str);

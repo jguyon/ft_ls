@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:16:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:48:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void			ls_update_info(t_dinfo *info, struct stat *st)
 		info->max_group = sze_max(info->max_group, uim_len(st->st_gid));
 	if (S_ISBLK(st->st_mode) || S_ISCHR(st->st_mode))
 	{
-		info->max_maj = sze_max(info->max_maj, uim_len(LS_MAJOR(st->st_dev)));
-		info->max_min = sze_max(info->max_min, uim_len(LS_MINOR(st->st_dev)));
+		info->max_maj = sze_max(info->max_maj, uim_len(LS_MAJOR(st->st_rdev)));
+		info->max_min = sze_max(info->max_min, uim_len(LS_MINOR(st->st_rdev)));
 	}
 	else
 		info->max_size = sze_max(info->max_size, uim_len(st->st_size));
