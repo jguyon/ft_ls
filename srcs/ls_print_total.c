@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:33:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 18:19:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:16:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 
 void	ls_print_total(t_dinfo *info)
 {
-	errno = 0;
-	ft_fprintf(FT_STDOUT, "total %zu\n", info->total);
-	if (ft_ferror(FT_STDOUT))
-		ls_err(LS_EXIT_FAILURE, "stdout");
+	if (info->has_files)
+	{
+		errno = 0;
+		ft_fprintf(FT_STDOUT, "total %zu\n", info->total);
+		if (ft_ferror(FT_STDOUT))
+			ls_err(LS_EXIT_FAILURE, "stdout");
+	}
 }

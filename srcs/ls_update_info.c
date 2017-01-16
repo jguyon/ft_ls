@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:45:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:16:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void			ls_update_info(t_dinfo *info, struct stat *st)
 {
 	const char	*str;
 
+	info->has_files = 1;
 	info->total += st->st_blocks;
 	info->max_nlink = sze_max(info->max_nlink, uim_len(st->st_nlink));
 	if ((str = ls_get_owner(st->st_uid)))

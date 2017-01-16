@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 13:47:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/16 19:14:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void			ls_print_line(const char *name);
 ** Structure holding total size and max lengths of a group of files
 */
 typedef struct	s_dinfo {
+	int			has_files;
 	size_t		total;
 	size_t		max_nlink;
 	size_t		max_owner;
