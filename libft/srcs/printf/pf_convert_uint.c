@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 13:13:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 20:01:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 00:13:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int			write_uint(t_stream *stream, t_pf_info *info,
 	info->prec = info->prec < 0 ? 1 : info->prec;
 	if (*prefix == '0' && *(prefix + 1) == '\0' && (size_t)info->prec > lenn)
 		prefix = g_empty;
-	lenn = info->prec >= 0 && (size_t)info->prec > lenn ? info->prec : lenn;
+	lenn = (size_t)info->prec > lenn ? (size_t)info->prec : lenn;
 	lenp = ft_strlen(prefix);
 	if (info->flags.left || info->min_width < 0)
 		count = pf_write_str(stream, prefix, lenp)

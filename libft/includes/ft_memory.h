@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 00:20:48 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 17:52:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 00:10:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@
 ** FT_MEM_WORDLEN - number of bytes in a word
 */
 # ifdef FT_MEM_OPT
-#  if LONG_BIT == 32
+#  if ULONG_MAX == 4294967295UL
 #   define FT_MEM_WORDLEN 4
-#  elif LONG_BIT == 64
+#  elif ULONG_MAX == 18446744073709551615UL
 #   define FT_MEM_WORDLEN 8
 #  else
 #   undef FT_MEM_OPT
