@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 21:15:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 12:42:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 #include <dirent.h>
+#include <errno.h>
 
 static const char	*join_path(const char *path, size_t plen,
 								const char *name, size_t nlen)
@@ -52,6 +53,7 @@ static t_file		*create_file(t_flags flags,
 
 	if (!(flags.all) && dentry->d_name[0] == '.')
 		return (NULL);
+	errno = 0;
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
 		|| !(file->path = join_path(dname, dnamlen,
 									dentry->d_name, ft_strlen(dentry->d_name)))
@@ -84,6 +86,7 @@ void				ls_list_files(t_flags flags, t_file *dir,
 	ft_bzero(dinfo, sizeof(*dinfo));
 	dname = dir->path ? dir->path : dir->name;
 	dnamlen = ft_strlen(dname);
+	errno = 0;
 	if (!(dstream = opendir(dname)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
@@ -98,5 +101,4 @@ void				ls_list_files(t_flags flags, t_file *dir,
 			ls_update_info(dinfo, &(file->stat));
 	}
 	closedir(dstream);
-	return ;
 }
