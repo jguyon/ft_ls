@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/17 11:48:11 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/17 12:01:56 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -36,21 +36,21 @@ TST_SRC = $(wildcard $(TST_PATH)/*.c)
 TST_OBJ = $(TST_SRC:$(TST_PATH)/%.c=$(OBJ_PATH)/$(TST_PATH)/%.o)
 TST_DEP = $(TST_SRC:$(TST_PATH)/%.c=$(DEP_PATH)/$(TST_PATH)/%.d)
 
-all: $(NAME)
+all: lib $(NAME)
+
+lib:
+	@make -C $(LIB_PATH)
 
 test: CFLAGS += -g
 test: LDFLAGS += -g
-test: $(TST_NAME)
+test: lib $(TST_NAME)
 	./$<
 
-$(NAME): lib $(OBJ)
+$(NAME): $(LIB_NAME) $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
 
-$(TST_NAME): lib $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
+$(TST_NAME): $(LIB_NAME) $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
-
-lib:
-	make -C $(LIB_PATH)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(DEP_PATH)/%.d
 	@mkdir -p $(dir $@) $(dir $(DEP_PATH)/$*)
