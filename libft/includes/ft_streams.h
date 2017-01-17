@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 03:17:31 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 15:04:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 18:21:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** Buffered output stream implementation
 **
 ** /!\ Standard streams do not need to be opened,
-**     but they do need to be closed at the end of your program.
+** but they do need to be closed at the end of your program.
 */
 
 # include <stddef.h>

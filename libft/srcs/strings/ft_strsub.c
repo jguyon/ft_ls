@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 16:34:35 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:04:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 21:34:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*ft_strsub(char const *str, unsigned int start, size_t len)
 
 	sub = NULL;
 	if (str && (sub = ft_strnew(len)))
+	{
 		ft_memcpy(sub, str + start, len);
-	sub[len] = 0;
+		sub[len] = 0;
+	}
 	return (sub);
 }

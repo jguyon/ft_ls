@@ -6,12 +6,32 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 20:26:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:03:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 16:16:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+
+#ifndef FT_MEM_OPT
+
+char	*ft_strrchr(const char *str, int c)
+{
+	char	*res;
+
+	c = (char)c;
+	res = NULL;
+	while (1)
+	{
+		if (*str == c)
+			res = (char *)str;
+		if (!(*str))
+			return (res);
+		++str;
+	}
+}
+
+#else
 
 char	*ft_strrchr(const char *str, int c)
 {
@@ -41,3 +61,5 @@ char	*ft_strrchr(const char *str, int c)
 		++str;
 	}
 }
+
+#endif

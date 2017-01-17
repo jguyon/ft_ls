@@ -6,13 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 19:34:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 21:09:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 20:56:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_unicode.h"
 
-size_t	do_wcconv(char *dst, wchar_t wc, size_t len)
+static size_t	do_wcconv(char *dst, wchar_t wc, size_t len)
 {
 	int		shift;
 	char	c;
@@ -35,7 +35,7 @@ size_t	do_wcconv(char *dst, wchar_t wc, size_t len)
 	return (1);
 }
 
-size_t	ft_wcconv(char *dst, wchar_t wc)
+size_t			ft_wcconv(char *dst, wchar_t wc)
 {
 	return (do_wcconv(dst, wc, 0));
 }

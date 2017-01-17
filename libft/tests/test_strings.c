@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/27 16:59:10 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/04 11:21:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 15:28:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ TFT_TEST(test_memset)
 
 	TFT_ASSERT(memcmp(ft_memset(mem_ft, 1, 200), memset(mem_lc, 1, 200), 200) == 0);
 	TFT_ASSERT(memcmp(ft_memset(mem_ft + 3, 2, 197), memset(mem_lc + 3, 2, 197), 197) == 0);
+}
+
+TFT_TEST(test_bzero)
+{
+	char	mem_ft[200];
+	char	mem_lc[200];
+
+	memset(mem_ft, 1, 200);
+	memset(mem_lc, 1, 200);
+
+	ft_bzero(mem_ft + 3, 194);
+	bzero(mem_lc + 3, 194);
+	TFT_ASSERT(memcmp(mem_ft, mem_lc, 200) == 0);
 }
 
 TFT_TEST(test_memcpy)
@@ -393,6 +406,7 @@ TFT_TEST(test_strsub)
 void	test_strings(void)
 {
 	TFT_RUN(test_memset);
+	TFT_RUN(test_bzero);
 	TFT_RUN(test_memcpy);
 	TFT_RUN(test_memccpy);
 	TFT_RUN(test_memmove);

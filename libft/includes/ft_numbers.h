@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 02:23:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 12:33:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 20:00:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,5 @@ int		ft_atoi(const char *str);
 ** @n: int to convert
 */
 char	*ft_itoa(int n);
-
-/*
-** ft_uimtoa_base - convert unsigned int into string in a given base
-** @n: int to convert
-** @base: base to convert in, must be in the 2 - 16 range
-** @upper: whether the letter digits should be uppercase
-** @prec: minimum number of digits
-*/
-char	*ft_uimtoa_base(uintmax_t n, unsigned int base, int upper, int prec);
 
 #endif

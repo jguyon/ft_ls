@@ -6,12 +6,26 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 18:42:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:01:08 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 17:02:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+
+#ifndef FT_MEM_OPT
+
+char	*ft_strcpy(char *dst, const char *src)
+{
+	char	*ret;
+
+	ret = dst;
+	while ((*(dst++) = *(src++)))
+		;
+	return (ret);
+}
+
+#else
 
 char	*ft_strcpy(char *dst, const char *src)
 {
@@ -33,3 +47,5 @@ char	*ft_strcpy(char *dst, const char *src)
 		;
 	return (ret);
 }
+
+#endif

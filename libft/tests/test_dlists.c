@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 16:53:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 10:16:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 13:26:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ typedef struct	s_num {
 
 TFT_TEST(test_dlist_traverse_left)
 {
-	t_dlist			list;
+	t_dlist			list = FT_DLST(list, t_num, node);
 	t_num			nums[64];
 	size_t			i;
 	t_dlist_node	*curr;
 
 	i = 0;
-	FT_DLST_INIT(&list, t_num, node);
 	while (i < 64)
 	{
 		nums[i].n = i;
@@ -52,13 +51,12 @@ TFT_TEST(test_dlist_traverse_left)
 
 TFT_TEST(test_dlist_traverse_right)
 {
-	t_dlist			list;
+	t_dlist			list = FT_DLST(list, t_num, node);
 	t_num			nums[64];
 	size_t			i;
 	t_dlist_node	*curr;
 
 	i = 0;
-	FT_DLST_INIT(&list, t_num, node);
 	while (i < 64)
 	{
 		nums[i].n = i;

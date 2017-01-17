@@ -6,12 +6,24 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/05 15:22:59 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:00:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 17:00:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+
+#ifndef FT_MEM_OPT
+
+void	ft_strclr(char *str)
+{
+	if (!str)
+		return ;
+	while (*str)
+		*(str++) = 0;
+}
+
+#else
 
 void	ft_strclr(char *str)
 {
@@ -31,3 +43,5 @@ void	ft_strclr(char *str)
 	while (*str)
 		*(str++) = 0;
 }
+
+#endif

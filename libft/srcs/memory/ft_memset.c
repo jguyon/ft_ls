@@ -6,11 +6,26 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 15:57:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 13:51:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 15:24:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
+
+#ifndef FT_MEM_OPT
+
+void	*ft_memset(void *str, int c, size_t n)
+{
+	void	*ret;
+
+	ret = str;
+	c = (unsigned char)c;
+	while (n--)
+		*((unsigned char *)str++) = c;
+	return (ret);
+}
+
+#else
 
 void	*ft_memset(void *str, int c, size_t n)
 {
@@ -19,6 +34,11 @@ void	*ft_memset(void *str, int c, size_t n)
 
 	ret = str;
 	c = (unsigned char)c;
+	while (FT_MEM_ALIGN(str) && n)
+	{
+		*((unsigned char *)str++) = c;
+		--n;
+	}
 	if (n >= FT_MEM_WORDLEN)
 	{
 		word = FT_MEM_WORD(c);
@@ -29,11 +49,9 @@ void	*ft_memset(void *str, int c, size_t n)
 			n -= FT_MEM_WORDLEN;
 		}
 	}
-	while (n)
-	{
-		*((unsigned char *)str) = c;
-		++str;
-		--n;
-	}
+	while (n--)
+		*((unsigned char *)str++) = c;
 	return (ret);
 }
+
+#endif

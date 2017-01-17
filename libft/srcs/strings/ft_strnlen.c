@@ -6,12 +6,26 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/30 16:17:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:03:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 16:10:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_memory.h"
 #include "ft_strings.h"
+
+#ifndef FT_MEM_OPT
+
+size_t	ft_strnlen(const char *str, size_t max)
+{
+	const char	*end;
+
+	end = str;
+	while (*end && (size_t)(end - str) < max)
+		++end;
+	return (end - str);
+}
+
+#else
 
 size_t	ft_strnlen(const char *str, size_t max)
 {
@@ -31,3 +45,5 @@ size_t	ft_strnlen(const char *str, size_t max)
 		++end;
 	return (end - str);
 }
+
+#endif

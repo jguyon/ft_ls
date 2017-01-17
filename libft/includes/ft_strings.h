@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/02 01:15:52 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 12:18:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 17:51:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,33 +198,5 @@ char	*ft_strncat(char *dst, const char *src, size_t n);
 ** Guarentees null-termination if there is at least one free byte in @dst.
 */
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
-
-/*
-** ft_striter - iterate over a string
-** @s: string to iterate over
-** @f: function to call with each character
-*/
-void	ft_striter(char *s, void (*f)(char *));
-
-/*
-** ft_striteri - iterate over a string with indices
-** @s: string to iterate over
-** @f: function to with each index and character
-*/
-void	ft_striteri(char *s, void (*f)(unsigned int, char *));
-
-/*
-** ft_strmap - map over a string to create a new one
-** @s: string to map over
-** @f: function to get each new character from
-*/
-char	*ft_strmap(char const *s, char (*f)(char));
-
-/*
-** ft_strmapi - map over a string with indices
-** @s: string to map over
-** @f: function to get each new character from
-*/
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
 #endif

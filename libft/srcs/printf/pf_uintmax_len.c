@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   pf_uintmax_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/05 22:28:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 13:58:39 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/17 19:10:08 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/17 19:12:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_simpleio.h"
+#include "priv/pf_convert.h"
 
-void	ft_putnbr_fd(int n, int fd)
+size_t	pf_uintmax_len(uintmax_t n, int prec, unsigned int base)
 {
-	unsigned int	m;
-	char			c;
+	size_t	len;
 
-	if (n == 0)
-		return (ft_putchar_fd('0', fd));
-	else if (n < 0)
+	len = 0;
+	if (prec < 0)
+		prec = 1;
+	while (n)
 	{
-		ft_putchar_fd('-', fd);
-		m = -n;
+		n /= base;
+		++len;
 	}
-	else
-		m = n;
-	c = m % 10 + '0';
-	m = m / 10;
-	if (m)
-		ft_putnbr_fd(m, fd);
-	ft_putchar_fd(c, fd);
+	return (len < (size_t)prec ? (size_t)prec : len);
 }

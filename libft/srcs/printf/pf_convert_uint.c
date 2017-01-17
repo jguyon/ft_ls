@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 13:13:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 15:20:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 20:01:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,60 +59,57 @@ static const char	*get_prefix(t_pf_info *info)
 		return (g_uint);
 }
 
-static char			*get_nstr(uintmax_t n, t_pf_info *info)
+static int			get_base(t_pf_info *info)
 {
 	if (info->spec == PF_OCT_SPEC)
-		return (ft_uimtoa_base(n, 8, 0, info->prec));
+		return (8);
 	else if (info->spec == PF_HEXLO_SPEC || info->spec == PF_ADDR_SPEC)
-		return (ft_uimtoa_base(n, 16, 0, info->prec));
+		return (16);
 	else if (info->spec == PF_HEXUP_SPEC)
-		return (ft_uimtoa_base(n, 16, 1, info->prec));
+		return (-16);
 	else
-		return (ft_uimtoa_base(n, 10, 0, info->prec));
+		return (10);
 }
 
 static int			write_uint(t_stream *stream, t_pf_info *info,
-								const char *prefix, const char *ns)
+								const char *prefix, uintmax_t n)
 {
 	size_t	count;
 	size_t	lenp;
 	size_t	lenn;
+	int		base;
 
-	if (!ns)
-		return (-1);
-	if (*prefix == '0' && *(prefix + 1) == '\0' && *ns == '0')
+	base = get_base(info);
+	lenn = pf_uintmax_len(n, 0, PF_ABS(base));
+	info->prec = info->prec < 0 ? 1 : info->prec;
+	if (*prefix == '0' && *(prefix + 1) == '\0' && (size_t)info->prec > lenn)
 		prefix = g_empty;
+	lenn = info->prec >= 0 && (size_t)info->prec > lenn ? info->prec : lenn;
 	lenp = ft_strlen(prefix);
-	lenn = ft_strlen(ns);
 	if (info->flags.left || info->min_width < 0)
 		count = pf_write_str(stream, prefix, lenp)
-			+ pf_write_str(stream, ns, lenn)
+			+ pf_write_uint(stream, n, base, lenn)
 			+ pf_write_pad(stream, ' ', PF_ABS(info->min_width), lenn + lenp);
 	else if (info->flags.zero && info->prec < 0)
 		count = pf_write_str(stream, prefix, lenp)
 			+ pf_write_pad(stream, '0', info->min_width, lenn + lenp)
-			+ pf_write_str(stream, ns, lenn);
+			+ pf_write_uint(stream, n, base, lenn);
 	else
 		count = pf_write_pad(stream, ' ', info->min_width, lenn + lenp)
 			+ pf_write_str(stream, prefix, lenp)
-			+ pf_write_str(stream, ns, lenn);
-	if (ft_ferror(stream))
-		return (-1);
-	return ((int)count);
+			+ pf_write_uint(stream, n, base, lenn);
+	return (ft_ferror(stream) ? -1 : (int)count);
 }
 
 int					pf_convert_uint(t_stream *stream, t_pf_info *info,
 										va_list args)
 {
 	uintmax_t	n;
-	char		*str;
 	const char	*prefix;
 	int			res;
 
 	n = get_arg(info, args);
-	str = get_nstr(n, info);
 	prefix = get_prefix(info);
-	res = write_uint(stream, info, prefix, str);
-	ft_memdel((void **)&str);
+	res = write_uint(stream, info, prefix, n);
 	return (res);
 }

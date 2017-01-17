@@ -6,12 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/09 11:23:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 15:04:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 19:12:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <inttypes.h>
-#include "ft_memory.h"
 #include "ft_numbers.h"
 #include "ft_strings.h"
 #include "priv/pf_write.h"
@@ -35,28 +34,26 @@ static const char	*get_prefix(int is_neg, t_pf_flags flags)
 }
 
 static int			write_int(t_stream *stream, t_pf_info *info,
-								const char *prefix, const char *ns)
+								const char *prefix, uintmax_t n)
 {
 	size_t	count;
 	size_t	lenp;
 	size_t	lenn;
 
-	if (!ns)
-		return (-1);
 	lenp = ft_strlen(prefix);
-	lenn = ft_strlen(ns);
+	lenn = pf_uintmax_len(n, info->prec, 10);
 	if (info->flags.left || info->min_width < 0)
 		count = pf_write_str(stream, prefix, lenp)
-			+ pf_write_str(stream, ns, lenn)
+			+ pf_write_uint(stream, n, 10, lenn)
 			+ pf_write_pad(stream, ' ', PF_ABS(info->min_width), lenn + lenp);
 	else if (info->flags.zero && info->prec < 0)
 		count = pf_write_str(stream, prefix, lenp)
 			+ pf_write_pad(stream, '0', info->min_width, lenn + lenp)
-			+ pf_write_str(stream, ns, lenn);
+			+ pf_write_uint(stream, n, 10, lenn);
 	else
 		count = pf_write_pad(stream, ' ', info->min_width, lenn + lenp)
 			+ pf_write_str(stream, prefix, lenp)
-			+ pf_write_str(stream, ns, lenn);
+			+ pf_write_uint(stream, n, 10, lenn);
 	if (ft_ferror(stream))
 		return (-1);
 	return ((int)count);
@@ -66,7 +63,6 @@ int					pf_convert_int(t_stream *stream, t_pf_info *info,
 									va_list args)
 {
 	intmax_t	n;
-	char		*str;
 	const char	*prefix;
 	int			res;
 
@@ -84,9 +80,7 @@ int					pf_convert_int(t_stream *stream, t_pf_info *info,
 		n = va_arg(args, ssize_t);
 	else
 		n = va_arg(args, int);
-	str = ft_uimtoa_base(PF_ABS(n), 10, 0, info->prec);
 	prefix = get_prefix(n < 0, info->flags);
-	res = write_int(stream, info, prefix, str);
-	ft_memdel((void **)&str);
+	res = write_int(stream, info, prefix, PF_ABS(n));
 	return (res);
 }

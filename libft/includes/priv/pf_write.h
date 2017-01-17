@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/08 18:25:34 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/09 12:51:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 20:03:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PF_WRITE_H
 
 # include "ft_streams.h"
+# include <inttypes.h>
 
 /*
 ** pf_write_pad - writes padding corresponding to a string
@@ -41,5 +42,14 @@ size_t	pf_write_str(t_stream *stream, const char *str, size_t len);
 ** @len: number of bytes to write
 */
 size_t	pf_write_wstr(t_stream *stream, const wchar_t *wstr, size_t len);
+
+/*
+** pf_write_uint - write a number
+** @stream: stream to write to
+** @n: number to write
+** @base: base of @n, if negative letters will be uppercase
+** @len: min number of digits
+*/
+size_t	pf_write_uint(t_stream *stream, uintmax_t n, int base, size_t len);
 
 #endif

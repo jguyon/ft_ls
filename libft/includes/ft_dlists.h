@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/05 10:34:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:30:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 13:23:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,16 @@ typedef int		(*t_dlist_compare)(void *e1, void *e2);
 ** FT_DLST_ENTRY - retrieve the entry corresponding to a node
 ** @lst: list containing @n
 ** @n: node corresponding to the entry
-** @type: type of the entry
 */
 # define FT_DLST_ENTRY(lst, n) (((void *)(n)) - (lst)->offset)
+
+/*
+** FT_DLST - init a dlist statically
+** @n: name of the variable
+** @t: type of entries in the list
+** @m: name of the member containing the list node
+*/
+# define FT_DLST(n, t, m) {FT_DLST_OFFSET(t, m), {&(n.head), &(n.head)}}
 
 /*
 ** ft_dlst_init - initialize a list

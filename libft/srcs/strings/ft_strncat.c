@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 19:43:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/08 14:02:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 17:28:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,12 @@
 
 char	*ft_strncat(char *dst, const char *src, size_t len)
 {
-	char	*start;
-	char	*mid;
+	char	*ret;
+	size_t	dlen;
 
-	start = dst;
-	dst += ft_strlen(dst);
-	mid = dst;
-	while (FT_MEM_ALIGN(src) && (size_t)(dst - mid) < len && *src)
-		*(dst++) = *(src++);
-	if (*src)
-	{
-		while ((size_t)(dst - mid + FT_MEM_WORDLEN) <= len
-				&& !FT_MEM_HASZERO(*((t_mem_word *)src)))
-		{
-			*((t_mem_word *)dst) = *((t_mem_word *)src);
-			src += FT_MEM_WORDLEN;
-			dst += FT_MEM_WORDLEN;
-		}
-		while ((size_t)(dst - mid) < len && *src)
-			*(dst++) = *(src++);
-	}
-	*dst = '\0';
-	return (start);
+	ret = dst;
+	dlen = ft_strlen(dst);
+	dst += dlen;
+	ft_memccpy(dst, src, '\0', len);
+	return (ret);
 }
