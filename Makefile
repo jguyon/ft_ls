@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/03 16:10:16 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/17 11:48:11 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -43,13 +43,13 @@ test: LDFLAGS += -g
 test: $(TST_NAME)
 	./$<
 
-$(NAME): $(LIB_NAME) $(OBJ)
+$(NAME): lib $(OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
 
-$(TST_NAME): $(LIB_NAME) $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
+$(TST_NAME): lib $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
 
-$(LIB_NAME):
+lib:
 	make -C $(LIB_PATH)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(DEP_PATH)/%.d
@@ -73,4 +73,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all test lib clean fclean re
