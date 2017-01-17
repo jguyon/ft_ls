@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:36:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/17 11:04:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ void			ls_print_pwd(uid_t uid, size_t uid_width,
 								gid_t gid, size_t gid_width);
 
 /*
-** Print number of blocks
+** Print size of file
 */
-void			ls_print_blocks(blkcnt_t blocks, size_t blk_width,
+void			ls_print_size(off_t size, size_t size_width,
 								size_t maj_width, size_t min_width);
 
 /*
