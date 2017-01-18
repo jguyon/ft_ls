@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 15:13:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 15:27:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 	|| !(file->name = argv[g_ls_optind]) || lstat(file->name, &(file->stat)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
-		ls_warn("%s", argv[g_ls_optind]);
+		ls_warn("%s", argv[g_ls_optind][0] ? argv[g_ls_optind] : "\"\"");
 		ft_memdel((void **)&file);
 	}
 	else if (is_dir(file->name, args->flags, &(file->stat)))
