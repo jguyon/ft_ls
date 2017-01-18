@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:37:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 15:05:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ TLS_TEST(test_ls_parse_args)
 	ls_setprogname("ft_ls");
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
+	TLS_ASSERT(!args.single);
 	TLS_ASSERT(args.flags.all == 1);
 	TLS_ASSERT(args.flags.lfmt == 1);
 	TLS_ASSERT(args.flags.mtim == 1);
@@ -52,6 +53,7 @@ TLS_TEST(test_ls_parse_args)
 	argc = 2;
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
+	TLS_ASSERT(args.single);
 	TLS_ASSERT(args.flags.all == 1);
 	TLS_ASSERT(args.flags.lfmt == 0);
 	TLS_ASSERT(args.flags.mtim == 0);

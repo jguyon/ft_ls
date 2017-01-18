@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:05:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 15:00:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct	s_file {
 
 typedef struct	s_args {
 	t_flags		flags;
+	int			single;
 	t_dinfo		dinfo;
 	t_dlist		dirs;
 	t_dlist		files;

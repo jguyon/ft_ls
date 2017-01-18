@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:35:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 15:13:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int			ls_parse_args(int argc, char *const argv[], t_args *args)
 {
 	if (!parse_flags(argc, argv, args))
 		return (0);
+	args->single = g_ls_optind < argc - 1 ? 0 : 1;
 	ft_bzero(&(args->dinfo), sizeof(args->dinfo));
 	FT_DLST_INIT(&(args->dirs), t_file, node);
 	FT_DLST_INIT(&(args->files), t_file, node);
@@ -112,6 +113,8 @@ int			ls_parse_args(int argc, char *const argv[], t_args *args)
 	{
 		while (parse_file(argc, argv, args))
 			;
+		if (!(ft_dlst_empty(&(args->files))))
+			args->single = 0;
 	}
 	return (1);
 }

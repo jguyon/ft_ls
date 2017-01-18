@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:31:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 15:08:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int			main(int argc, char **argv)
 	ls_atexit(&clear_caches);
 	if (!(ls_parse_args(argc, argv, &args)))
 		ls_exit(LS_EXIT_STATUS);
-	if (ft_dlst_singular(&(args.dirs)) && ft_dlst_empty(&(args.files)))
+	if (args.single)
 		print_next(1, &args);
 	else
 		print_files(&args);
