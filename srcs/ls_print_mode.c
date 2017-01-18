@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:08:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:28:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 11:39:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ void		ls_print_mode(const char *path, mode_t mode)
 {
 	char	str[11];
 	acl_t	acl;
+	int		errnum;
 
 	ft_memcpy(str, "---------- ", 11);
 	set_type(str, mode);
 	set_owner(&(str[1]), mode);
 	set_group(&(str[4]), mode);
 	set_other(&(str[7]), mode);
+	errnum = errno;
 	if (listxattr(path, NULL, 0, XATTR_NOFOLLOW) > 0)
 		str[10] = '@';
 	else if ((acl = acl_get_file(path, ACL_TYPE_EXTENDED)))
@@ -93,6 +95,6 @@ void		ls_print_mode(const char *path, mode_t mode)
 		acl_free((void *)acl);
 		str[10] = '+';
 	}
-	errno = 0;
+	errno = errnum;
 	ft_fwrite(str, 11, FT_STDOUT);
 }

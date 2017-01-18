@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:07:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 11:37:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ TLS_TEST(test_ls_parse_args)
 	TLS_ASSERT(args.flags.rev == 1);
 	TLS_ASSERT(args.flags.rec == 1);
 	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "none: No such file or directory\n"));
-	TLS_ASSERT(!ft_dlst_empty(&(args.dirs)) && !ft_dlst_singular(&(args.dirs)));
-	TLS_ASSERT(ft_dlst_singular(&(args.files)));
+	TLS_ASSERT(ft_dlst_singular(&(args.dirs)));
+	TLS_ASSERT(!ft_dlst_empty(&(args.files)) && !ft_dlst_singular(&(args.files)));
 	ft_dlst_foreachl(&(args.dirs), NULL, &destroy_file);
 	ft_dlst_foreachl(&(args.files), NULL, &destroy_file);
 	argc = 2;

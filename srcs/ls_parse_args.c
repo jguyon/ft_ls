@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 17:43:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 11:35:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 	return (1);
 }
 
-static int	is_dir(const char *name, struct stat *st)
+static int	is_dir(const char *name, t_flags flags, struct stat *st)
 {
 	struct stat	target;
 
 	return (S_ISDIR(st->st_mode)
-			|| (S_ISLNK(st->st_mode)
+			|| (!(flags.lfmt) && S_ISLNK(st->st_mode)
 				&& !stat(name, &target)
 				&& S_ISDIR(target.st_mode)));
 }
@@ -67,7 +67,7 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 		ls_warn("%s", argv[g_ls_optind]);
 		ft_memdel((void **)&file);
 	}
-	else if (is_dir(file->name, &(file->stat)))
+	else if (is_dir(file->name, args->flags, &(file->stat)))
 	{
 		file->is_dir = 1;
 		ft_dlst_pushr(&(args->dirs), &(file->node));

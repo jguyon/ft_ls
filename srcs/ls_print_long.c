@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:17:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 12:04:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		ls_print_long(const char *name, const char *path,
 							t_dinfo *info, struct stat *st)
 {
 	errno = 0;
+	path = path ? path : name;
 	ls_print_mode(path, st->st_mode);
 	ls_print_nlink(st->st_nlink, info->max_nlink);
 	ls_print_pwd(st->st_uid, info->max_owner, st->st_gid, info->max_group);
