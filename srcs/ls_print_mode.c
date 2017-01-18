@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:08:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:39:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 12:25:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		ls_print_mode(const char *path, mode_t mode)
 	errnum = errno;
 	if (listxattr(path, NULL, 0, XATTR_NOFOLLOW) > 0)
 		str[10] = '@';
-	else if ((acl = acl_get_file(path, ACL_TYPE_EXTENDED)))
+	else if ((acl = acl_get_link_np(path, ACL_TYPE_EXTENDED)))
 	{
 		acl_free((void *)acl);
 		str[10] = '+';
