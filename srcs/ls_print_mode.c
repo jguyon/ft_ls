@@ -6,13 +6,17 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 11:08:26 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 18:16:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 11:28:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_format.h"
 #include "ft_memory.h"
 #include "ft_streams.h"
+#include <errno.h>
+#include <sys/types.h>
+#include <sys/acl.h>
+#include <sys/xattr.h>
 
 static void	set_type(char str[1], mode_t mode)
 {
@@ -72,14 +76,23 @@ static void	set_other(char str[3], mode_t mode)
 		str[2] = 'x';
 }
 
-void		ls_print_mode(mode_t mode)
+void		ls_print_mode(const char *path, mode_t mode)
 {
 	char	str[11];
+	acl_t	acl;
 
 	ft_memcpy(str, "---------- ", 11);
 	set_type(str, mode);
 	set_owner(&(str[1]), mode);
 	set_group(&(str[4]), mode);
 	set_other(&(str[7]), mode);
+	if (listxattr(path, NULL, 0, XATTR_NOFOLLOW) > 0)
+		str[10] = '@';
+	else if ((acl = acl_get_file(path, ACL_TYPE_EXTENDED)))
+	{
+		acl_free((void *)acl);
+		str[10] = '+';
+	}
+	errno = 0;
 	ft_fwrite(str, 11, FT_STDOUT);
 }

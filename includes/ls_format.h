@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 11:04:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/18 11:16:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int				ls_print_long(const char *name, const char *path,
 /*
 ** Print mode string
 */
-void			ls_print_mode(mode_t mode);
+void			ls_print_mode(const char *path, mode_t mode);
 
 /*
 ** Print number of links
