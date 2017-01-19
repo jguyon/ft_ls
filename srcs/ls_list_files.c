@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 17:26:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:47:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,6 @@ static t_file		*create_file(t_flags flags,
 	return (file);
 }
 
-static t_file		*copy_file(t_file *other, const char *name)
-{
-	t_file	*file;
-
-	if (!(file = (t_file *)malloc(sizeof(*file))))
-	{
-		g_ls_status = LS_EXIT_FAILURE;
-		ls_warn("%s", name);
-		return (NULL);
-	}
-	ft_memcpy(file, other, sizeof(*file));
-	file->path = NULL;
-	file->name = name;
-	return (file);
-}
-
-static const char	*g_curr_dir = ".";
-
 void				ls_list_files(t_flags flags, t_file *dir,
 									t_dinfo *dinfo, t_dlist *files)
 {
@@ -116,11 +98,7 @@ void				ls_list_files(t_flags flags, t_file *dir,
 	}
 	while ((dentry = readdir(dstream)))
 	{
-		if (flags.all && ft_strcmp(dentry->d_name, ".") == 0)
-			file = copy_file(dir, g_curr_dir);
-		else
-			file = create_file(flags, dname, dnamlen, dentry);
-		if (file)
+		if ((file = create_file(flags, dname, dnamlen, dentry)))
 			ft_dlst_pushr(files, &(file->node));
 		if (file && flags.lfmt)
 			ls_update_dinfo(dinfo, &(file->info));
