@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 15:52:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 15:59:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static t_file		*copy_file(t_file *other, const char *name)
 	ft_memcpy(file, other, sizeof(*file));
 	file->path = NULL;
 	file->name = name;
-	return (NULL);
+	return (file);
 }
 
 void				ls_list_files(t_flags flags, t_file *dir,

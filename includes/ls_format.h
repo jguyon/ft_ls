@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 15:05:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 16:15:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			ls_print_line(const char *name);
 /*
 ** Six months in type time_t
 */
-# define LS_SIX_MONTHS ((time_t)((366 / 2) * 24 * 3600))
+# define LS_SIX_MONTHS ((time_t)((365 / 2) * 24 * 3600))
 
 /*
 ** Structure holding total size and max lengths of a group of files
