@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/17 22:14:31 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/19 12:36:02 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -51,6 +51,7 @@ SRC_NAMES = \
 	\
 	ls_print_dir \
 	ls_print_line \
+	ls_extended_chr \
 	ls_update_info \
 	ls_print_total \
 	ls_print_long \

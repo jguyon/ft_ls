@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 15:00:28 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 12:51:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ typedef struct	s_flags {
 typedef struct	s_file {
 	const char		*name;
 	const char		*path;
-	t_dlist_node	node;
+	char			extended;
 	int				is_dir;
+	t_dlist_node	node;
 	struct stat		stat;
 }				t_file;
 

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:48:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 13:17:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,28 @@ static size_t	sze_max(size_t n1, size_t n2)
 	return (n1 > n2 ? n1 : n2);
 }
 
-void			ls_update_info(t_dinfo *info, struct stat *st)
+void			ls_update_info(t_dinfo *dinfo, struct stat *st)
 {
 	const char	*str;
 
-	info->has_files = 1;
-	info->total += st->st_blocks;
-	info->max_nlink = sze_max(info->max_nlink, uim_len(st->st_nlink));
+	dinfo->has_files = 1;
+	dinfo->total += st->st_blocks;
+	dinfo->max_nlink = sze_max(dinfo->max_nlink, uim_len(st->st_nlink));
 	if ((str = ls_get_owner(st->st_uid)))
-		info->max_owner = sze_max(info->max_owner, ft_strlen(str));
+		dinfo->max_owner = sze_max(dinfo->max_owner, ft_strlen(str));
 	else
-		info->max_owner = sze_max(info->max_owner, uim_len(st->st_uid));
+		dinfo->max_owner = sze_max(dinfo->max_owner, uim_len(st->st_uid));
 	if ((str = ls_get_group(st->st_gid)))
-		info->max_group = sze_max(info->max_group, ft_strlen(str));
+		dinfo->max_group = sze_max(dinfo->max_group, ft_strlen(str));
 	else
-		info->max_group = sze_max(info->max_group, uim_len(st->st_gid));
+		dinfo->max_group = sze_max(dinfo->max_group, uim_len(st->st_gid));
 	if (S_ISBLK(st->st_mode) || S_ISCHR(st->st_mode))
 	{
-		info->max_maj = sze_max(info->max_maj, uim_len(LS_MAJOR(st->st_rdev)));
-		info->max_min = sze_max(info->max_min, uim_len(LS_MINOR(st->st_rdev)));
+		dinfo->max_maj = sze_max(dinfo->max_maj,
+									uim_len(LS_MAJOR(st->st_rdev)));
+		dinfo->max_min = sze_max(dinfo->max_min,
+									uim_len(LS_MINOR(st->st_rdev)));
 	}
 	else
-		info->max_size = sze_max(info->max_size, uim_len(st->st_size));
+		dinfo->max_size = sze_max(dinfo->max_size, uim_len(st->st_size));
 }

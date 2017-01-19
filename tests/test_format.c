@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:51:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 12:58:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,20 @@ TLS_TEST(test_format_print_total)
 
 TLS_TEST(test_format_print_long)
 {
-	t_dinfo		info;
+	t_dinfo		dinfo;
+	t_finfo		finfo;
 	struct stat	st;
 	char		*str;
 	char		date[13];
 
-	info.max_nlink = 2;
-	info.max_owner = 20;
-	info.max_group = 20;
-	info.max_size = 10;
-	info.max_maj = 2;
-	info.max_min = 3;
+	finfo.extended = '@';
+	finfo.stat = &st;
+	dinfo.max_nlink = 2;
+	dinfo.max_owner = 20;
+	dinfo.max_group = 20;
+	dinfo.max_size = 10;
+	dinfo.max_maj = 2;
+	dinfo.max_min = 3;
 	st.st_mode = S_IFBLK | S_IRWXU | S_ISUID | S_IXGRP | S_ISVTX;
 	st.st_nlink = 2;
 	st.st_uid = UINT_MAX / 2;
@@ -81,8 +84,8 @@ TLS_TEST(test_format_print_long)
 	st.st_rdev = makedev(16, 127);
 	st.st_mtime = 0;
 	strftime(date, 13, "%b %e  %Y", localtime(&st.st_mtime));
-	ls_print_long("file", "/path/to/file", &info, &st);
-	asprintf(&str, "brws--x--T   2 %-20u  %-20u   %4u, %3u %s file\n",
+	ls_print_long("file", "/path/to/file", &dinfo, &finfo);
+	asprintf(&str, "brws--x--T@  2 %-20u  %-20u   %4u, %3u %s file\n",
 			 st.st_uid, st.st_gid, major(st.st_rdev), minor(st.st_rdev),
 			 date);
 	TLS_ASSERT(tls_outcmp(str));

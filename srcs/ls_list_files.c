@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/17 12:42:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 12:55:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static t_file		*create_file(t_flags flags,
 	}
 	file->name = file->path + dnamlen;
 	file->is_dir = is_dir(file->path, dentry, &(file->stat));
+	file->extended = ls_extended_chr(file->path);
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);

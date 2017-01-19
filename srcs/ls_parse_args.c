@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 15:27:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 12:56:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ls_program.h"
+#include "ls_format.h"
 #include "ft_memory.h"
 #include "ft_printf.h"
 #include <errno.h>
@@ -53,18 +54,16 @@ static int	is_dir(const char *name, t_flags flags, struct stat *st)
 				&& S_ISDIR(target.st_mode)));
 }
 
-static int	parse_file(int argc, char *const argv[], t_args *args)
+static void	parse_file(const char *name, t_args *args)
 {
 	t_file		*file;
 
-	if (g_ls_optind >= argc)
-		return (0);
 	errno = 0;
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
-	|| !(file->name = argv[g_ls_optind]) || lstat(file->name, &(file->stat)))
+	|| !(file->name = name) || lstat(file->name, &(file->stat)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
-		ls_warn("%s", argv[g_ls_optind][0] ? argv[g_ls_optind] : "\"\"");
+		ls_warn("%s", name[0] ? name : "\"\"");
 		ft_memdel((void **)&file);
 	}
 	else if (is_dir(file->name, args->flags, &(file->stat)))
@@ -78,8 +77,8 @@ static int	parse_file(int argc, char *const argv[], t_args *args)
 			ls_update_info(&(args->dinfo), &(file->stat));
 		ft_dlst_pushr(&(args->files), &(file->node));
 	}
-	++g_ls_optind;
-	return (1);
+	if (file && args->flags.lfmt)
+		file->extended = ls_extended_chr(file->name);
 }
 
 static char	*g_currdir = ".";
@@ -111,8 +110,11 @@ int			ls_parse_args(int argc, char *const argv[], t_args *args)
 		parse_currdir(args);
 	else
 	{
-		while (parse_file(argc, argv, args))
-			;
+		while (g_ls_optind < argc)
+		{
+			parse_file(argv[g_ls_optind], args);
+			++g_ls_optind;
+		}
 		if (!(ft_dlst_empty(&(args->files))))
 			args->single = 0;
 	}

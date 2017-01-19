@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 11:16:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 13:15:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,19 @@ typedef struct	s_dinfo {
 }				t_dinfo;
 
 /*
+** Structure holding info about the file
+*/
+typedef struct	s_finfo {
+	char		extended;
+	struct stat	*stat;
+}				t_finfo;
+
+/*
+** Return '@', '+' or ' ' depending on the file having xattrs or acls
+*/
+char			ls_extended_chr(const char *path);
+
+/*
 ** Update @info using @st for long format
 */
 void			ls_update_info(t_dinfo *info, struct stat *st);
@@ -78,12 +91,12 @@ void			ls_print_total(t_dinfo *info);
 ** Returns -1 if some non-blocking error occurred, 0 otherwise.
 */
 int				ls_print_long(const char *name, const char *path,
-								t_dinfo *info, struct stat *st);
+								t_dinfo *dinfo, t_finfo *finfo);
 
 /*
 ** Print mode string
 */
-void			ls_print_mode(const char *path, mode_t mode);
+void			ls_print_mode(mode_t mode, char extended);
 
 /*
 ** Print number of links

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 12:53:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:39:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 12:54:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@
 static int	print_file(void *file, void *info)
 {
 	int		err;
+	t_finfo	finfo;
 
 	err = 0;
+	finfo.extended = ((t_file *)file)->extended;
+	finfo.stat = &(((t_file *)file)->stat);
 	if (((t_proginfo *)info)->flags.lfmt)
 		err = ls_print_long(((t_file *)file)->name, ((t_file *)file)->path,
-					((t_proginfo *)info)->dinfo, &((t_file *)file)->stat);
+							((t_proginfo *)info)->dinfo, &finfo);
 	else
 		ls_print_line(((t_file *)file)->name);
 	if (err)
