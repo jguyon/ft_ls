@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 12:56:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 14:27:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,12 @@ static void	parse_file(const char *name, t_args *args)
 			ls_update_info(&(args->dinfo), &(file->stat));
 		ft_dlst_pushr(&(args->files), &(file->node));
 	}
-	if (file && args->flags.lfmt)
+	if (file && args->flags.lfmt && !(file->is_dir))
+	{
 		file->extended = ls_extended_chr(file->name);
+		file->owner = ls_get_owner(file->stat.st_uid);
+		file->group = ls_get_group(file->stat.st_gid);
+	}
 }
 
 static char	*g_currdir = ".";

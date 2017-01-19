@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 13:05:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 14:22:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int		ls_print_long(const char *name, const char *path,
 	path = path ? path : name;
 	ls_print_mode(finfo->stat->st_mode, finfo->extended);
 	ls_print_nlink(finfo->stat->st_nlink, info->max_nlink);
-	ls_print_pwd(finfo->stat->st_uid, info->max_owner,
-					finfo->stat->st_gid, info->max_group);
+	ls_print_pwd(finfo, info->max_owner, info->max_group);
 	if (S_ISBLK(finfo->stat->st_mode) || S_ISCHR(finfo->stat->st_mode))
 		ls_print_dev(finfo->stat->st_rdev, info->max_size,
 						info->max_maj, info->max_min);

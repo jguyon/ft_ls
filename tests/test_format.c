@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 12:58:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 14:24:14 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ TLS_TEST(test_format_print_long)
 
 	finfo.extended = '@';
 	finfo.stat = &st;
+	finfo.owner = NULL;
+	finfo.group = NULL;
 	dinfo.max_nlink = 2;
 	dinfo.max_owner = 20;
 	dinfo.max_group = 20;

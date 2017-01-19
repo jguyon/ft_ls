@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 13:15:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 14:20:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct	s_dinfo {
 typedef struct	s_finfo {
 	char		extended;
 	struct stat	*stat;
+	const char	*owner;
+	const char	*group;
 }				t_finfo;
 
 /*
@@ -106,8 +108,7 @@ void			ls_print_nlink(nlink_t nlink, size_t width);
 /*
 ** Print owner and group
 */
-void			ls_print_pwd(uid_t uid, size_t uid_width,
-								gid_t gid, size_t gid_width);
+void			ls_print_pwd(t_finfo *info, size_t uid_width, size_t gid_width);
 
 /*
 ** Print size of file
