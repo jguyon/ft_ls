@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:34:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 15:46:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 14:03:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,18 @@
 
 void	ls_print_time(time_t t)
 {
-	char	*str;
-	time_t	now;
-	char	*date;
-	char	*day_or_year;
+	static time_t	now;
+	static int		has_time = 0;
+	char			*str;
+	char			*date;
+	char			*day_or_year;
 
+	if (!has_time)
+	{
+		now = time(NULL);
+		has_time = 1;
+	}
 	str = ctime(&t);
-	now = time(NULL);
 	date = str + 4;
 	if (t + LS_SIX_MONTHS > now && now + LS_SIX_MONTHS > t)
 		day_or_year = str + 11;
