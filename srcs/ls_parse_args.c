@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 15:41:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:17:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,11 @@ static void	parse_file(const char *name, t_args *args)
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", name[0] ? name : "\"\"");
 		ft_memdel((void **)&file);
+		return ;
 	}
-	else if (is_dir(file->name, args->flags, &(file->stat)))
+	if (args->flags.lfmt)
+		ls_set_finfo(&(file->info), file->name, &(file->stat));
+	if (is_dir(file->name, args->flags, &(file->stat)))
 	{
 		file->is_dir = 1;
 		ft_dlst_pushr(&(args->dirs), &(file->node));
@@ -74,14 +77,8 @@ static void	parse_file(const char *name, t_args *args)
 	else
 	{
 		if (args->flags.lfmt)
-			ls_update_info(&(args->dinfo), &(file->stat));
+			ls_update_dinfo(&(args->dinfo), &(file->info));
 		ft_dlst_pushr(&(args->files), &(file->node));
-	}
-	if (file && args->flags.lfmt)
-	{
-		file->extended = ls_extended_chr(file->name);
-		file->owner = ls_get_owner(file->stat.st_uid);
-		file->group = ls_get_group(file->stat.st_gid);
 	}
 }
 

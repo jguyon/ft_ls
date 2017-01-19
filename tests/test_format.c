@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 14:24:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:19:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,27 @@
 
 TLS_TEST(test_format_dinfo)
 {
-	t_dinfo		info;
+	t_dinfo		dinfo;
 	struct stat	st;
+	t_finfo		finfo;
 
-	bzero(&info, sizeof(info));
+	bzero(&dinfo, sizeof(dinfo));
 	st.st_mode = S_IFBLK;
 	st.st_blocks = 512;
 	st.st_nlink = 16;
 	st.st_uid = getuid();
 	st.st_gid = getgid();
 	st.st_rdev = makedev(13, 3);
-	ls_update_info(&info, &st);
-	TLS_ASSERT(info.total == 512);
-	TLS_ASSERT(info.has_files);
-	TLS_ASSERT(info.max_nlink == 2);
-	TLS_ASSERT(info.max_owner == strlen(getpwuid(st.st_uid)->pw_name));
-	TLS_ASSERT(info.max_group == strlen(getgrgid(st.st_gid)->gr_name));
-	TLS_ASSERT(info.max_size == 0);
-	TLS_ASSERT(info.max_maj == 2);
-	TLS_ASSERT(info.max_min == 1);
+	ls_set_finfo(&finfo, "file", &st);
+	ls_update_dinfo(&dinfo, &finfo);
+	TLS_ASSERT(dinfo.total == 512);
+	TLS_ASSERT(dinfo.has_files);
+	TLS_ASSERT(dinfo.max_nlink == 2);
+	TLS_ASSERT(dinfo.max_owner == strlen(getpwuid(st.st_uid)->pw_name));
+	TLS_ASSERT(dinfo.max_group == strlen(getgrgid(st.st_gid)->gr_name));
+	TLS_ASSERT(dinfo.max_size == 0);
+	TLS_ASSERT(dinfo.max_maj == 2);
+	TLS_ASSERT(dinfo.max_min == 1);
 	ls_cache_clear(&g_ls_owners);
 	ls_cache_clear(&g_ls_groups);
 }

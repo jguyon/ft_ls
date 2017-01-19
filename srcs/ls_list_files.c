@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 15:59:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:26:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,11 @@ static t_file		*create_file(t_flags flags,
 	file->name = file->path + dnamlen;
 	file->is_dir = is_dir(file->path, dentry, &(file->stat));
 	if (flags.lfmt)
-	{
-		file->extended = ls_extended_chr(file->path);
-		file->owner = ls_get_owner(file->stat.st_uid);
-		file->group = ls_get_group(file->stat.st_gid);
-	}
+		ls_set_finfo(&(file->info), file->path, &(file->stat));
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);
 }
-
-static const char	*g_curr_dir = ".";
 
 static t_file		*copy_file(t_file *other, const char *name)
 {
@@ -97,6 +91,8 @@ static t_file		*copy_file(t_file *other, const char *name)
 	file->name = name;
 	return (file);
 }
+
+static const char	*g_curr_dir = ".";
 
 void				ls_list_files(t_flags flags, t_file *dir,
 									t_dinfo *dinfo, t_dlist *files)
@@ -127,7 +123,7 @@ void				ls_list_files(t_flags flags, t_file *dir,
 		if (file)
 			ft_dlst_pushr(files, &(file->node));
 		if (file && flags.lfmt)
-			ls_update_info(dinfo, &(file->stat));
+			ls_update_dinfo(dinfo, &(file->info));
 	}
 	closedir(dstream);
 }

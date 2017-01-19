@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 16:15:11 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:04:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void			ls_print_line(const char *name);
 # define LS_SIX_MONTHS ((time_t)((365 / 2) * 24 * 3600))
 
 /*
-** Structure holding total size and max lengths of a group of files
+** Structure holding info about the directory for long format
 */
 typedef struct	s_dinfo {
 	int			has_files;
@@ -63,7 +63,7 @@ typedef struct	s_dinfo {
 }				t_dinfo;
 
 /*
-** Structure holding info about the file
+** Structure holding info about the file for long format
 */
 typedef struct	s_finfo {
 	char		extended;
@@ -73,14 +73,14 @@ typedef struct	s_finfo {
 }				t_finfo;
 
 /*
-** Return '@', '+' or ' ' depending on the file having xattrs or acls
+** Put file info need for long format in @info
 */
-char			ls_extended_chr(const char *path);
+void			ls_set_finfo(t_finfo *info, const char *path, struct stat *st);
 
 /*
-** Update @info using @st for long format
+** Update directory @dinfo using @finfo for long format
 */
-void			ls_update_info(t_dinfo *info, struct stat *st);
+void			ls_update_dinfo(t_dinfo *dinfo, t_finfo *finfo);
 
 /*
 ** Print total block count of files
@@ -131,6 +131,11 @@ void			ls_print_time(time_t time);
 ** Print link target
 */
 void			ls_print_target(const char *path, off_t size);
+
+/*
+** Return '@', '+' or ' ' depending on the file having xattrs or acls
+*/
+char			ls_extended_chr(const char *path);
 
 /*
 ** Structure used to cache calls to getpwuid

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_update_info.c                                   :+:      :+:    :+:   */
+/*   ls_update_dinfo.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 13:17:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 17:21:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,26 @@ static size_t	sze_max(size_t n1, size_t n2)
 	return (n1 > n2 ? n1 : n2);
 }
 
-void			ls_update_info(t_dinfo *dinfo, struct stat *st)
+void			ls_update_dinfo(t_dinfo *dinfo, t_finfo *finfo)
 {
-	const char	*str;
-
 	dinfo->has_files = 1;
-	dinfo->total += st->st_blocks;
-	dinfo->max_nlink = sze_max(dinfo->max_nlink, uim_len(st->st_nlink));
-	if ((str = ls_get_owner(st->st_uid)))
-		dinfo->max_owner = sze_max(dinfo->max_owner, ft_strlen(str));
-	else
-		dinfo->max_owner = sze_max(dinfo->max_owner, uim_len(st->st_uid));
-	if ((str = ls_get_group(st->st_gid)))
-		dinfo->max_group = sze_max(dinfo->max_group, ft_strlen(str));
-	else
-		dinfo->max_group = sze_max(dinfo->max_group, uim_len(st->st_gid));
-	if (S_ISBLK(st->st_mode) || S_ISCHR(st->st_mode))
+	dinfo->total += finfo->stat->st_blocks;
+	dinfo->max_nlink = sze_max(dinfo->max_nlink,
+								uim_len(finfo->stat->st_nlink));
+	dinfo->max_owner = finfo->owner
+		? sze_max(dinfo->max_owner, ft_strlen(finfo->owner))
+		: sze_max(dinfo->max_owner, uim_len(finfo->stat->st_uid));
+	dinfo->max_group = finfo->group
+		? sze_max(dinfo->max_group, ft_strlen(finfo->group))
+		: sze_max(dinfo->max_group, uim_len(finfo->stat->st_gid));
+	if (S_ISBLK(finfo->stat->st_mode) || S_ISCHR(finfo->stat->st_mode))
 	{
 		dinfo->max_maj = sze_max(dinfo->max_maj,
-									uim_len(LS_MAJOR(st->st_rdev)));
+									uim_len(LS_MAJOR(finfo->stat->st_rdev)));
 		dinfo->max_min = sze_max(dinfo->max_min,
-									uim_len(LS_MINOR(st->st_rdev)));
+									uim_len(LS_MINOR(finfo->stat->st_rdev)));
 	}
 	else
-		dinfo->max_size = sze_max(dinfo->max_size, uim_len(st->st_size));
+		dinfo->max_size = sze_max(dinfo->max_size,
+									uim_len(finfo->stat->st_size));
 }
