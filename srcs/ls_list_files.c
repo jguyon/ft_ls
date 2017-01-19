@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 14:15:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 15:52:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "ft_strings.h"
 #include <dirent.h>
 #include <errno.h>
+#include <stdlib.h>
 
 static const char	*join_path(const char *path, size_t plen,
 								const char *name, size_t nlen)
@@ -68,12 +69,33 @@ static t_file		*create_file(t_flags flags,
 	}
 	file->name = file->path + dnamlen;
 	file->is_dir = is_dir(file->path, dentry, &(file->stat));
-	file->extended = ls_extended_chr(file->path);
-	file->owner = ls_get_owner(file->stat.st_uid);
-	file->group = ls_get_group(file->stat.st_gid);
+	if (flags.lfmt)
+	{
+		file->extended = ls_extended_chr(file->path);
+		file->owner = ls_get_owner(file->stat.st_uid);
+		file->group = ls_get_group(file->stat.st_gid);
+	}
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);
+}
+
+static const char	*g_curr_dir = ".";
+
+static t_file		*copy_file(t_file *other, const char *name)
+{
+	t_file	*file;
+
+	if (!(file = (t_file *)malloc(sizeof(*file))))
+	{
+		g_ls_status = LS_EXIT_FAILURE;
+		ls_warn("%s", name);
+		return (NULL);
+	}
+	ft_memcpy(file, other, sizeof(*file));
+	file->path = NULL;
+	file->name = name;
+	return (NULL);
 }
 
 void				ls_list_files(t_flags flags, t_file *dir,
@@ -98,7 +120,11 @@ void				ls_list_files(t_flags flags, t_file *dir,
 	}
 	while ((dentry = readdir(dstream)))
 	{
-		if ((file = create_file(flags, dname, dnamlen, dentry)))
+		if (flags.all && ft_strcmp(dentry->d_name, ".") == 0)
+			file = copy_file(dir, g_curr_dir);
+		else
+			file = create_file(flags, dname, dnamlen, dentry);
+		if (file)
 			ft_dlst_pushr(files, &(file->node));
 		if (file && flags.lfmt)
 			ls_update_info(dinfo, &(file->stat));
