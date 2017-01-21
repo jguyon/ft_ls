@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:41:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 19:21:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,10 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "RSacdfglortu1"
+# define LS_FLAGS "ARSacdfglortu1"
 
 # define LS_FLAG_ALL	'a'
+# define LS_FLAG_ALMOST	'A'
 # define LS_FLAG_LFMT	'l'
 # define LS_FLAG_GRP	'g'
 # define LS_FLAG_USR	'o'
@@ -61,11 +62,17 @@ typedef enum	e_sorting {
 	LS_SORT_NONE = 3,
 }				t_sorting;
 
-typedef enum		e_time {
+typedef enum	e_time {
 	LS_TIME_MODIF = 0,
 	LS_TIME_ACCESS = 1,
 	LS_TIME_CHANGE = 2,
-}					t_time;
+}				t_time;
+
+typedef enum	e_show {
+	LS_SHOW_NOHIDDEN = 0,
+	LS_SHOW_ALMOST = 1,
+	LS_SHOW_ALL = 2,
+}				t_show;
 
 typedef enum	e_bool {
 	LS_BOOL_FALSE = 0,
@@ -77,7 +84,7 @@ typedef struct	s_flags {
 	t_bool			noowner : 1;
 	t_bool			nogroup : 1;
 	t_bool			reverse : 1;
-	t_bool			all : 1;
+	t_show			show : 2;
 	t_bool			recur : 1;
 	t_bool			nodirs : 1;
 	t_sorting		sorting : 2;

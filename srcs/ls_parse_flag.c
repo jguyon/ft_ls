@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:52:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 19:23:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 static void	parse_traversing(t_flags *flags, int opt)
 {
 	if (opt == LS_FLAG_ALL || opt == LS_FLAG_NOSRT)
-		flags->all = LS_BOOL_TRUE;
+		flags->show = LS_SHOW_ALL;
+	else if (opt == LS_FLAG_ALMOST && flags->show != LS_SHOW_ALL)
+		flags->show = LS_SHOW_ALMOST;
 	else if (opt == LS_FLAG_REC)
 		flags->recur = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_NODIR)

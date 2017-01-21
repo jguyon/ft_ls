@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 17:48:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 19:27:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static t_file		*create_file(t_flags flags,
 	t_file		*file;
 	const char	*path;
 
-	if (!(flags.all) && dentry->d_name[0] == '.')
+	if ((flags.show == LS_SHOW_NOHIDDEN && dentry->d_name[0] == '.')
+		|| (flags.show == LS_SHOW_ALMOST && !ft_strcmp(dentry->d_name, "."))
+		|| (flags.show == LS_SHOW_ALMOST && !ft_strcmp(dentry->d_name, "..")))
 		return (NULL);
 	errno = 0;
 	path = NULL;
