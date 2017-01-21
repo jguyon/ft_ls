@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 13:40:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 20:06:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:15:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	ls_print_dirinfo(int is_single, t_flags flags,
 {
 	if (!is_single)
 		ls_print_dir(dir->path ? dir->path : dir->name);
-	if (flags.lfmt)
+	if (flags.format == LS_FORMAT_LONG)
 		ls_print_total(dinfo);
 }

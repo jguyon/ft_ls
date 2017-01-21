@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 16:50:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:09:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,31 @@ int				g_ls_status;
 # define LS_FLAG_MTIM	't'
 # define LS_FLAG_REV	'r'
 # define LS_FLAG_REC	'R'
+# define LS_FLAG_LINE	'1'
 
 # define LS_USAGE_FMT "usage: %s [-%s] [file ...]\n"
 
+typedef enum	e_format {
+	LS_FORMAT_LINE = 0,
+	LS_FORMAT_LONG = 1,
+}				t_format;
+
+typedef enum	e_sorting {
+	LS_SORT_LEXI = 0,
+	LS_SORT_MTIME = 1,
+}				t_sorting;
+
+typedef enum	e_bool {
+	LS_BOOL_FALSE = 0,
+	LS_BOOL_TRUE = 1
+}				t_bool;
+
 typedef struct	s_flags {
-	unsigned char	all : 1;
-	unsigned char	lfmt : 1;
-	unsigned char	mtim : 1;
-	unsigned char	rev : 1;
-	unsigned char	rec : 1;
+	t_format		format : 1;
+	t_sorting		sorting : 1;
+	t_bool			reverse : 1;
+	t_bool			all : 1;
+	t_bool			recur : 1;
 }				t_flags;
 
 /*

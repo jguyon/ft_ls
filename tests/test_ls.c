@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 15:05:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:19:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ TLS_TEST(test_ls_parse_args)
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
 	TLS_ASSERT(!args.single);
-	TLS_ASSERT(args.flags.all == 1);
-	TLS_ASSERT(args.flags.lfmt == 1);
-	TLS_ASSERT(args.flags.mtim == 1);
-	TLS_ASSERT(args.flags.rev == 1);
-	TLS_ASSERT(args.flags.rec == 1);
+	TLS_ASSERT(args.flags.all);
+	TLS_ASSERT(args.flags.format == LS_FORMAT_LONG);
+	TLS_ASSERT(args.flags.sorting == LS_SORT_MTIME);
+	TLS_ASSERT(args.flags.reverse);
+	TLS_ASSERT(args.flags.recur);
 	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "none: No such file or directory\n"));
 	TLS_ASSERT(ft_dlst_singular(&(args.dirs)));
 	TLS_ASSERT(!ft_dlst_empty(&(args.files)) && !ft_dlst_singular(&(args.files)));
@@ -54,11 +54,11 @@ TLS_TEST(test_ls_parse_args)
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
 	TLS_ASSERT(args.single);
-	TLS_ASSERT(args.flags.all == 1);
-	TLS_ASSERT(args.flags.lfmt == 0);
-	TLS_ASSERT(args.flags.mtim == 0);
-	TLS_ASSERT(args.flags.rev == 0);
-	TLS_ASSERT(args.flags.rec == 1);
+	TLS_ASSERT(args.flags.all);
+	TLS_ASSERT(args.flags.format == LS_FORMAT_LINE);
+	TLS_ASSERT(args.flags.sorting == LS_SORT_LEXI);
+	TLS_ASSERT(!args.flags.reverse);
+	TLS_ASSERT(args.flags.recur);
 	TLS_ASSERT(tls_errcmp(""));
 	TLS_ASSERT(ft_dlst_singular(&(args.dirs)));
 	TLS_ASSERT(ft_dlst_empty(&(args.files)));
@@ -107,7 +107,7 @@ TLS_TEST(test_print_files)
 
 	FT_DLST_INIT(&dirs, t_file, node);
 	bzero(&flags, sizeof(flags));
-	flags.rec = 1;
+	flags.recur = LS_BOOL_TRUE;
 	bzero(&dir, sizeof(dir));
 	dir.name = TLS_DIR "dir";
 	TLS_INIT_FS;
@@ -152,7 +152,7 @@ TLS_TEST(test_sort_files)
 			   && (node = ft_dlst_next(&files, node))
 			   && strcmp(((t_file *)FT_DLST_ENTRY(&files, node))->name, "file2") == 0);
 	ft_dlst_foreachl(&files, NULL, &destroy_file);
-	flags.mtim = 1;
+	flags.sorting = LS_SORT_MTIME;
 	ls_list_files(flags, &dir, &dinfo, &files);
 	TLS_ASSERT(!ft_dlst_empty(&files) && !ft_dlst_singular(&files));
 	TLS_ASSERT(tls_errcmp(""));

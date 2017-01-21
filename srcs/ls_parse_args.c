@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 17:17:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:12:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 	while ((opt = ls_getopt(argc, argv, LS_FLAGS)) != -1)
 	{
 		if (opt == LS_FLAG_ALL)
-			args->flags.all = 1;
+			args->flags.all = LS_BOOL_TRUE;
 		else if (opt == LS_FLAG_LFMT)
-			args->flags.lfmt = 1;
+			args->flags.format = LS_FORMAT_LONG;
 		else if (opt == LS_FLAG_MTIM)
-			args->flags.mtim = 1;
+			args->flags.sorting = LS_SORT_MTIME;
 		else if (opt == LS_FLAG_REV)
-			args->flags.rev = 1;
+			args->flags.reverse = LS_BOOL_TRUE;
 		else if (opt == LS_FLAG_REC)
-			args->flags.rec = 1;
+			args->flags.recur = LS_BOOL_TRUE;
+		else if (opt == LS_FLAG_LINE)
+			args->flags.format = LS_FORMAT_LINE;
 		else if (opt == '?')
 		{
 			g_ls_status = LS_EXIT_FAILURE;
@@ -49,7 +51,7 @@ static int	is_dir(const char *name, t_flags flags, struct stat *st)
 	struct stat	target;
 
 	return (S_ISDIR(st->st_mode)
-			|| (!(flags.lfmt) && S_ISLNK(st->st_mode)
+			|| (!(flags.format == LS_FORMAT_LONG) && S_ISLNK(st->st_mode)
 				&& !stat(name, &target)
 				&& S_ISDIR(target.st_mode)));
 }
@@ -67,7 +69,7 @@ static void	parse_file(const char *name, t_args *args)
 		ft_memdel((void **)&file);
 		return ;
 	}
-	if (args->flags.lfmt)
+	if (args->flags.format == LS_FORMAT_LONG)
 		ls_set_finfo(&(file->info), file->name, &(file->stat));
 	if (is_dir(file->name, args->flags, &(file->stat)))
 	{
@@ -76,7 +78,7 @@ static void	parse_file(const char *name, t_args *args)
 	}
 	else
 	{
-		if (args->flags.lfmt)
+		if (args->flags.format == LS_FORMAT_LONG)
 			ls_update_dinfo(&(args->dinfo), &(file->info));
 		ft_dlst_pushr(&(args->files), &(file->node));
 	}

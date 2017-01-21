@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 13:51:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 12:55:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:15:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static int	mtimcmp(void *f1, void *f2)
 
 void		ls_sort_files(t_flags flags, t_dlist *files)
 {
-	if (flags.mtim)
+	if (flags.sorting == LS_SORT_MTIME)
 		ft_dlst_sort(files, &mtimcmp);
-	else
+	else if (flags.sorting == LS_SORT_LEXI)
 		ft_dlst_sort(files, &lexicmp);
 }

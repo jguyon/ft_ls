@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 17:47:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:14:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ static t_file		*create_file(t_flags flags,
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
 		|| !(file->path = join_path(dname, dnamlen,
 									dentry->d_name, ft_strlen(dentry->d_name)))
-		|| ((flags.mtim || flags.lfmt) && lstat(file->path, &(file->stat))))
+		|| ((flags.sorting != LS_SORT_LEXI || flags.format == LS_FORMAT_LONG)
+			&& lstat(file->path, &(file->stat))))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", dentry->d_name);
@@ -69,7 +70,7 @@ static t_file		*create_file(t_flags flags,
 	}
 	file->name = file->path + dnamlen;
 	file->is_dir = is_dir(file->path, dentry, &(file->stat));
-	if (flags.lfmt)
+	if (flags.format == LS_FORMAT_LONG)
 		ls_set_finfo(&(file->info), file->path, &(file->stat));
 	if (file->name[0] == '/')
 		++(file->name);
@@ -100,7 +101,7 @@ void				ls_list_files(t_flags flags, t_file *dir,
 	{
 		if ((file = create_file(flags, dname, dnamlen, dentry)))
 			ft_dlst_pushr(files, &(file->node));
-		if (file && flags.lfmt)
+		if (file && flags.format == LS_FORMAT_LONG)
 			ls_update_dinfo(dinfo, &(file->info));
 	}
 	closedir(dstream);
