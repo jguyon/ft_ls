@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 13:19:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 15:48:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,26 @@ typedef struct	s_flags {
 */
 
 typedef struct	s_file {
+	int				is_dir;
 	const char		*name;
 	const char		*path;
-	int				is_dir;
+	struct timespec	*time;
 	t_dlist_node	node;
 	struct stat		stat;
 	t_finfo			info;
 }				t_file;
 
 /*
-** Use nano seconds for time comparison if possible
+** Get pointer to timespec
 */
 # ifdef linux
-#  define LS_MTIM_NSEC(st) ((st).st_mtim.tv_nsec)
-#  define LS_ATIM_NSEC(st) ((st).st_atim.tv_nsec)
+#  define LS_MTIM(st) (&((st).st_mtim))
+#  define LS_ATIM(st) (&((st).st_atim))
+#  define LS_CTIM(st) (&((st).st_ctim))
 # elif __APPLE__
-#  define LS_MTIM_NSEC(st) ((st).st_mtimespec.tv_nsec)
-#  define LS_ATIM_NSEC(st) ((st).st_atimespec.tv_nsec)
-# else
-#  define LS_MTIM_NSEC(st) (0)
+#  define LS_MTIM(st) (&((st).st_mtimespec))
+#  define LS_ATIM(st) (&((st).st_atimespec))
+#  define LS_CTIM(st) (&((st).st_ctimespec))
 # endif
 
 /*
@@ -159,5 +160,13 @@ void			ls_print_files(t_flags flags, t_dlist *files, t_dinfo *dinfo,
 ** Free file structure memory
 */
 void			ls_destroy_file(t_file *file);
+
+/*
+** Create file, allocating only what is needed according to @flags
+**
+** If @need_stat is 1, the stat structure will always be filled.
+*/
+t_file			*ls_file_new(t_flags flags, const char *name, const char *path,
+								int need_stat);
 
 #endif

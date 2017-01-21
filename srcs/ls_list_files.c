@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 13:13:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 15:24:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,43 +46,29 @@ static int			is_dir(const char *path,
 	return (S_ISDIR(st->st_mode));
 }
 
-static time_t		file_time(t_flags flags, struct stat *st)
-{
-	if (flags.time == LS_TIME_ACCESS)
-		return (st->st_atime);
-	else if (flags.time == LS_TIME_CHANGE)
-		return (st->st_ctime);
-	else
-		return (st->st_mtime);
-}
-
 static t_file		*create_file(t_flags flags,
 									const char *dname, size_t dnamlen,
 									struct dirent *dentry)
 {
-	t_file	*file;
+	t_file		*file;
+	const char	*path;
 
 	if (!(flags.all) && dentry->d_name[0] == '.')
 		return (NULL);
 	errno = 0;
-	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
-		|| !(file->path = join_path(dname, dnamlen,
-									dentry->d_name, ft_strlen(dentry->d_name)))
-		|| ((flags.sorting != LS_SORT_LEXI || flags.format == LS_FORMAT_LONG)
-			&& lstat(file->path, &(file->stat))))
+	path = NULL;
+	file = NULL;
+	if (!(path = join_path(dname, dnamlen,
+							dentry->d_name, ft_strlen(dentry->d_name)))
+		|| !(file = ls_file_new(flags, path + dnamlen, path, 0)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", dentry->d_name);
-		if (file)
-			ft_memdel((void **)&(file->path));
+		ft_memdel((void **)&(path));
 		ft_memdel((void **)&(file));
 		return (NULL);
 	}
-	file->name = file->path + dnamlen;
 	file->is_dir = is_dir(file->path, dentry, &(file->stat));
-	if (flags.format == LS_FORMAT_LONG)
-		ls_set_finfo(&(file->info), file->path,
-						file_time(flags, &(file->stat)), &(file->stat));
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);

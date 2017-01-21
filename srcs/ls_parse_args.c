@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 13:21:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 15:17:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,15 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 	return (1);
 }
 
-static int	is_dir(const char *name, t_flags flags, struct stat *st)
+static int	is_dir(t_flags flags, t_file *file)
 {
 	struct stat	target;
 
-	return (S_ISDIR(st->st_mode)
-			|| (!(flags.format == LS_FORMAT_LONG) && S_ISLNK(st->st_mode)
-				&& !stat(name, &target)
-				&& S_ISDIR(target.st_mode)));
-}
-
-static time_t	file_time(t_flags flags, struct stat *st)
-{
-	if (flags.time == LS_TIME_ACCESS)
-		return (st->st_atime);
-	else if (flags.time == LS_TIME_CHANGE)
-		return (st->st_ctime);
-	else
-		return (st->st_mtime);
+	if (flags.format == LS_FORMAT_LONG || !S_ISLNK(file->stat.st_mode))
+		return (file->is_dir);
+	if (!stat(file->name, &target))
+		return (S_ISDIR(target.st_mode));
+	return (0);
 }
 
 static void	parse_file(const char *name, t_args *args)
@@ -87,18 +78,14 @@ static void	parse_file(const char *name, t_args *args)
 	t_file		*file;
 
 	errno = 0;
-	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
-	|| !(file->name = name) || lstat(file->name, &(file->stat)))
+	if (!(file = ls_file_new(args->flags, name, NULL, 1)))
 	{
 		g_ls_status = LS_EXIT_FAILURE;
 		ls_warn("%s", name[0] ? name : "\"\"");
 		ft_memdel((void **)&file);
 		return ;
 	}
-	if (args->flags.format == LS_FORMAT_LONG)
-		ls_set_finfo(&(file->info), file->name,
-						file_time(args->flags, &(file->stat)), &(file->stat));
-	if (is_dir(file->name, args->flags, &(file->stat)))
+	if (is_dir(args->flags, file))
 	{
 		file->is_dir = 1;
 		ft_dlst_pushr(&(args->dirs), &(file->node));

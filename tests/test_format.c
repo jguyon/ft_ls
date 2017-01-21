@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:49:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 15:47:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ TLS_TEST(test_format_dinfo)
 	st.st_uid = getuid();
 	st.st_gid = getgid();
 	st.st_rdev = makedev(13, 3);
-	ls_set_finfo(&finfo, "file", 123, &st);
+	ls_set_finfo(&finfo, "file", st.st_mtime, &st);
 	ls_update_dinfo(&dinfo, &finfo);
 	TLS_ASSERT(dinfo.total == 512);
 	TLS_ASSERT(dinfo.has_files);
@@ -87,8 +87,7 @@ TLS_TEST(test_format_print_long)
 	st.st_gid = UINT_MAX / 2;
 	st.st_size = 1024;
 	st.st_rdev = makedev(16, 127);
-	st.st_mtime = 0;
-	strftime(date, 13, "%b %e  %Y", localtime(&st.st_mtime));
+	strftime(date, 13, "%b %e  %Y", localtime(&(finfo.time)));
 	ls_print_long("file", "/path/to/file", &dinfo, &finfo);
 	asprintf(&str, "brws--x--T@  2 %-20u  %-20u   %4u, %3u %s file\n",
 			 st.st_uid, st.st_gid, major(st.st_rdev), minor(st.st_rdev),
