@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 12:53:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:16:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:06:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	print_file(void *file, void *info)
 	if (((t_proginfo *)info)->flags.format == LS_FORMAT_LONG)
 		err = ls_print_long(((t_file *)file)->name, ((t_file *)file)->path,
 							((t_proginfo *)info)->dinfo,
-							&(((t_file *)file)->info));
+							((t_file *)file)->info);
 	else
 		ls_print_line(((t_file *)file)->name);
 	if (err)

@@ -6,25 +6,41 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 13:57:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:45:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:42:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ft_memory.h"
 
+t_file	*alloc_file(int alloc_stat, int alloc_info)
+{
+	t_file	*file;
+
+	if (!(file = (t_file *)ft_memalloc(sizeof(*file)))
+		|| (alloc_stat &&
+			!(file->stat = (struct stat *)ft_memalloc(sizeof(*(file->stat)))))
+		|| (alloc_info &&
+			!(file->info = (t_finfo *)ft_memalloc(sizeof(*(file->info))))))
+	{
+		ls_destroy_file(file);
+		return (NULL);
+	}
+	return (file);
+}
+
 t_file	*ls_file_new(t_flags flags, const char *name, const char *path,
 						int need_stat)
 {
 	t_file	*file;
 
-	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
-		return (NULL);
-	if ((need_stat || flags.sorting == LS_SORT_TIME
-			|| flags.format == LS_FORMAT_LONG)
-		&& lstat(path ? path : name, &(file->stat)))
+	file = alloc_file(need_stat
+						|| flags.format == LS_FORMAT_LONG
+						|| flags.sorting == LS_SORT_TIME,
+					  flags.format == LS_FORMAT_LONG);
+	if (!file || (file->stat && lstat(path ? path : name, file->stat)))
 	{
-		ft_memdel((void **)&file);
+		ls_destroy_file(file);
 		return (NULL);
 	}
 	file->name = name;
@@ -35,10 +51,10 @@ t_file	*ls_file_new(t_flags flags, const char *name, const char *path,
 		file->time = LS_CTIM(file->stat);
 	else
 		file->time = LS_MTIM(file->stat);
-	if (flags.format == LS_FORMAT_LONG)
-		ls_set_finfo(&(file->info), path ? path : name, file->time->tv_sec,
-						&(file->stat));
-	if (file->stat.st_mode != 0)
-		file->is_dir = S_ISDIR(file->stat.st_mode);
+	if (file->info)
+		ls_set_finfo(file->info, path ? path : name, file->time->tv_sec,
+						file->stat);
+	if (file->stat)
+		file->is_dir = S_ISDIR(file->stat->st_mode);
 	return (file);
 }

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:48:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:16:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,21 +86,21 @@ typedef struct	s_file {
 	const char		*path;
 	struct timespec	*time;
 	t_dlist_node	node;
-	struct stat		stat;
-	t_finfo			info;
+	struct stat		*stat;
+	t_finfo			*info;
 }				t_file;
 
 /*
 ** Get pointer to timespec
 */
 # ifdef linux
-#  define LS_MTIM(st) (&((st).st_mtim))
-#  define LS_ATIM(st) (&((st).st_atim))
-#  define LS_CTIM(st) (&((st).st_ctim))
+#  define LS_MTIM(st) (&((st)->st_mtim))
+#  define LS_ATIM(st) (&((st)->st_atim))
+#  define LS_CTIM(st) (&((st)->st_ctim))
 # elif __APPLE__
-#  define LS_MTIM(st) (&((st).st_mtimespec))
-#  define LS_ATIM(st) (&((st).st_atimespec))
-#  define LS_CTIM(st) (&((st).st_ctimespec))
+#  define LS_MTIM(st) (&((st)->st_mtimespec))
+#  define LS_ATIM(st) (&((st)->st_atimespec))
+#  define LS_CTIM(st) (&((st)->st_ctimespec))
 # endif
 
 /*

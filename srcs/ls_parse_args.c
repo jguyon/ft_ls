@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:17:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:11:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	is_dir(t_flags flags, t_file *file)
 {
 	struct stat	target;
 
-	if (flags.format == LS_FORMAT_LONG || !S_ISLNK(file->stat.st_mode))
+	if (flags.format == LS_FORMAT_LONG || !S_ISLNK(file->stat->st_mode))
 		return (file->is_dir);
 	if (!stat(file->name, &target))
 		return (S_ISDIR(target.st_mode));
@@ -93,7 +93,7 @@ static void	parse_file(const char *name, t_args *args)
 	else
 	{
 		if (args->flags.format == LS_FORMAT_LONG)
-			ls_update_dinfo(&(args->dinfo), &(file->info));
+			ls_update_dinfo(&(args->dinfo), file->info);
 		ft_dlst_pushr(&(args->files), &(file->node));
 	}
 }

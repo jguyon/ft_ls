@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:24:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:19:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,15 @@ static const char	*join_path(const char *path, size_t plen,
 static int			is_dir(const char *path,
 							struct dirent *dentry, struct stat *st)
 {
-	if (st->st_mode != 0)
+	struct stat	lst;
+
+	if (st)
 		return (S_ISDIR(st->st_mode));
 	if (dentry->d_type == DT_DIR)
 		return (1);
-	if (dentry->d_type != DT_UNKNOWN || lstat(path, st))
+	if (dentry->d_type != DT_UNKNOWN || lstat(path, &lst))
 		return (0);
-	return (S_ISDIR(st->st_mode));
+	return (S_ISDIR(lst.st_mode));
 }
 
 static t_file		*create_file(t_flags flags,
@@ -68,7 +70,7 @@ static t_file		*create_file(t_flags flags,
 		ft_memdel((void **)&(file));
 		return (NULL);
 	}
-	file->is_dir = is_dir(file->path, dentry, &(file->stat));
+	file->is_dir = is_dir(file->path, dentry, file->stat);
 	if (file->name[0] == '/')
 		++(file->name);
 	return (file);
@@ -99,7 +101,7 @@ void				ls_list_files(t_flags flags, t_file *dir,
 		if ((file = create_file(flags, dname, dnamlen, dentry)))
 			ft_dlst_pushr(files, &(file->node));
 		if (file && flags.format == LS_FORMAT_LONG)
-			ls_update_dinfo(dinfo, &(file->info));
+			ls_update_dinfo(dinfo, file->info);
 	}
 	closedir(dstream);
 }

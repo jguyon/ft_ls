@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 16:07:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/11 16:22:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 16:39:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 void	ls_destroy_file(t_file *file)
 {
-	free((void *)(file->path));
-	free(file);
+	if (file)
+	{
+		free(file->stat);
+		free(file->info);
+		free((void *)(file->path));
+		free(file);
+	}
 }
