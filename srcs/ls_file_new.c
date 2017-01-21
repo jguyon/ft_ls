@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 13:57:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 16:46:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 17:09:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_file	*ls_file_new(t_flags flags, const char *name, const char *path,
 {
 	t_file	*file;
 
-	file = alloc_file(need_stat
-							|| flags.format == LS_FORMAT_LONG
-							|| flags.sorting == LS_SORT_TIME,
+	file = alloc_file(need_stat || flags.format == LS_FORMAT_LONG
+						|| flags.sorting == LS_SORT_TIME
+						|| flags.sorting == LS_SORT_SIZE,
 						flags.format == LS_FORMAT_LONG);
 	if (!file || (file->stat && lstat(path ? path : name, file->stat)))
 	{

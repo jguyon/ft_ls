@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 16:16:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 17:06:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "Racflrtu1"
+# define LS_FLAGS "RSacflrtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_LFMT	'l'
 # define LS_FLAG_TIME	't'
+# define LS_FLAG_SIZE	'S'
 # define LS_FLAG_REV	'r'
 # define LS_FLAG_REC	'R'
 # define LS_FLAG_LINE	'1'
@@ -53,7 +54,8 @@ typedef enum	e_format {
 typedef enum	e_sorting {
 	LS_SORT_LEXI = 0,
 	LS_SORT_TIME = 1,
-	LS_SORT_NONE = 2,
+	LS_SORT_SIZE = 2,
+	LS_SORT_NONE = 3,
 }				t_sorting;
 
 typedef enum		e_time {

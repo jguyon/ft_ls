@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 16:11:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 17:21:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,16 @@ static int	parse_one_flag(int opt, t_args *args)
 {
 	if (opt == '?')
 		return (0);
-	if (opt == LS_FLAG_ALL)
+	if (opt == LS_FLAG_ALL || opt == LS_FLAG_NOSRT)
 		args->flags.all = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_LFMT)
+	if (opt == LS_FLAG_LFMT)
 		args->flags.format = LS_FORMAT_LONG;
-	else if (opt == LS_FLAG_TIME)
+	else if (opt == LS_FLAG_TIME && !(args->flags.sorting))
 		args->flags.sorting = LS_SORT_TIME;
+	else if (opt == LS_FLAG_SIZE)
+		args->flags.sorting = LS_SORT_SIZE;
 	else if (opt == LS_FLAG_NOSRT)
-	{
 		args->flags.sorting = LS_SORT_NONE;
-		args->flags.all = LS_BOOL_TRUE;
-	}
 	else if (opt == LS_FLAG_REV)
 		args->flags.reverse = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_REC)
