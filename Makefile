@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/21 14:17:33 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/21 18:45:00 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -77,6 +77,7 @@ SRC_NAMES = \
 	ls_print_files \
 	ls_destroy_file \
 	ls_file_new \
+	ls_parse_flag \
 
 TST_NAMES = \
 	main \

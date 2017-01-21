@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:47:08 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:45:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ TLS_TEST(test_format_print_long)
 	char		*str;
 	char		date[13];
 
+	bzero(&finfo, sizeof(finfo));
 	finfo.extended = '@';
 	finfo.stat = &st;
 	finfo.time = 0;

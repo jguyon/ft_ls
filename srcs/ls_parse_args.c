@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:14:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:44:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,36 +16,6 @@
 #include "ft_memory.h"
 #include "ft_printf.h"
 #include <errno.h>
-
-static void	parse_one_flag(int opt, t_args *args)
-{
-	if (opt == LS_FLAG_ALL || opt == LS_FLAG_NOSRT)
-		args->flags.all = LS_BOOL_TRUE;
-	if (opt == LS_FLAG_LFMT || opt == LS_FLAG_USR || opt == LS_FLAG_GRP)
-		args->flags.format = LS_FORMAT_LONG;
-	if (opt == LS_FLAG_USR)
-		args->flags.nogroup = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_GRP)
-		args->flags.noowner = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_TIME && !(args->flags.sorting))
-		args->flags.sorting = LS_SORT_TIME;
-	else if (opt == LS_FLAG_SIZE)
-		args->flags.sorting = LS_SORT_SIZE;
-	else if (opt == LS_FLAG_NOSRT)
-		args->flags.sorting = LS_SORT_NONE;
-	else if (opt == LS_FLAG_REV)
-		args->flags.reverse = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_REC)
-		args->flags.recur = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_NODIR)
-		args->flags.nodirs = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_LINE)
-		args->flags.format = LS_FORMAT_LINE;
-	else if (opt == LS_FLAG_ATIM)
-		args->flags.time = LS_TIME_ACCESS;
-	else if (opt == LS_FLAG_CTIM)
-		args->flags.time = LS_TIME_CHANGE;
-}
 
 static int	parse_flags(int argc, char *const argv[], t_args *args)
 {
@@ -60,7 +30,7 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 			ft_fprintf(FT_STDERR, LS_USAGE_FMT, ls_getprogname(), LS_FLAGS);
 			return (0);
 		}
-		parse_one_flag(opt, args);
+		ls_parse_flag(&(args->flags), opt);
 	}
 	return (1);
 }

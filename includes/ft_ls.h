@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:13:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:41:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,11 @@ void			ls_print_files(t_flags flags, t_dlist *files, t_dinfo *dinfo,
 ** Free file structure memory
 */
 void			ls_destroy_file(t_file *file);
+
+/*
+** Parse one flag
+*/
+void			ls_parse_flag(t_flags *flags, int opt);
 
 /*
 ** Create file, allocating only what is needed according to @flags
