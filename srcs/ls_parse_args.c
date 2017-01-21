@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 17:21:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:00:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	parse_one_flag(int opt, t_args *args)
 		args->flags.reverse = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_REC)
 		args->flags.recur = LS_BOOL_TRUE;
+	else if (opt == LS_FLAG_NODIR)
+		args->flags.nodirs = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_LINE)
 		args->flags.format = LS_FORMAT_LINE;
 	else if (opt == LS_FLAG_ATIM)
@@ -65,6 +67,8 @@ static int	is_dir(t_flags flags, t_file *file)
 {
 	struct stat	target;
 
+	if (flags.nodirs)
+		return (0);
 	if (flags.format == LS_FORMAT_LONG || !S_ISLNK(file->stat->st_mode))
 		return (file->is_dir);
 	if (!stat(file->name, &target))
@@ -84,11 +88,8 @@ static void	parse_file(const char *name, t_args *args)
 		ft_memdel((void **)&file);
 		return ;
 	}
-	if (is_dir(args->flags, file))
-	{
-		file->is_dir = 1;
+	if ((file->is_dir = is_dir(args->flags, file)))
 		ft_dlst_pushr(&(args->dirs), &(file->node));
-	}
 	else
 	{
 		if (args->flags.format == LS_FORMAT_LONG)
@@ -116,8 +117,8 @@ int			ls_parse_args(int argc, char *const argv[], t_args *args)
 			parse_file(argv[g_ls_optind], args);
 			++g_ls_optind;
 		}
-		if (!(ft_dlst_empty(&(args->files))))
-			args->single = 0;
 	}
+	if (!(ft_dlst_empty(&(args->files))))
+		args->single = 0;
 	return (1);
 }
