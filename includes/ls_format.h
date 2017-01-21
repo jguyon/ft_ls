@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 17:04:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/19 19:38:04 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void			ls_print_target(const char *path, off_t size);
 /*
 ** Return '@', '+' or ' ' depending on the file having xattrs or acls
 */
-char			ls_extended_chr(const char *path);
+char			ls_extended_chr(const char *path, mode_t mode);
 
 /*
 ** Structure used to cache calls to getpwuid

@@ -6,14 +6,14 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/19 17:03:04 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/19 18:41:17 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 LDFLAGS =
-LIBS = -Llibft -lft
+LIBS = -Llibft -lft -lacl
 DEPFLAGS = -MMD -MP -MF $(patsubst $(OBJ_PATH)/%.o,$(DEP_PATH)/%.d,$@)
 
 NAME = ft_ls
