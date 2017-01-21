@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:36:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 13:15:05 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "Ralrtu1"
+# define LS_FLAGS "Raclrtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_LFMT	'l'
@@ -40,6 +40,7 @@ int				g_ls_status;
 # define LS_FLAG_REC	'R'
 # define LS_FLAG_LINE	'1'
 # define LS_FLAG_ATIM	'u'
+# define LS_FLAG_CTIM	'c'
 
 # define LS_USAGE_FMT "usage: %s [-%s] [file ...]\n"
 
@@ -56,6 +57,7 @@ typedef enum	e_sorting {
 typedef enum		e_time {
 	LS_TIME_MODIF = 0,
 	LS_TIME_ACCESS = 1,
+	LS_TIME_CHANGE = 2,
 }					t_time;
 
 typedef enum	e_bool {
@@ -66,10 +68,10 @@ typedef enum	e_bool {
 typedef struct	s_flags {
 	t_format		format : 1;
 	t_sorting		sorting : 1;
-	t_time			time : 1;
 	t_bool			reverse : 1;
 	t_bool			all : 1;
 	t_bool			recur : 1;
+	t_time			time : 2;
 }				t_flags;
 
 /*

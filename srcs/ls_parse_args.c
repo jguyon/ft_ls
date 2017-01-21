@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:56:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 13:12:00 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static int	parse_one_flag(int opt, t_args *args)
 		args->flags.format = LS_FORMAT_LINE;
 	else if (opt == LS_FLAG_ATIM)
 		args->flags.time = LS_TIME_ACCESS;
+	else if (opt == LS_FLAG_CTIM)
+		args->flags.time = LS_TIME_CHANGE;
 	return (1);
 }
 
@@ -65,6 +67,16 @@ static int	is_dir(const char *name, t_flags flags, struct stat *st)
 				&& S_ISDIR(target.st_mode)));
 }
 
+static time_t	file_time(t_flags flags, struct stat *st)
+{
+	if (flags.time == LS_TIME_ACCESS)
+		return (st->st_atime);
+	else if (flags.time == LS_TIME_CHANGE)
+		return (st->st_ctime);
+	else
+		return (st->st_mtime);
+}
+
 static void	parse_file(const char *name, t_args *args)
 {
 	t_file		*file;
@@ -80,9 +92,7 @@ static void	parse_file(const char *name, t_args *args)
 	}
 	if (args->flags.format == LS_FORMAT_LONG)
 		ls_set_finfo(&(file->info), file->name,
-						args->flags.time == LS_TIME_ACCESS
-							? file->stat.st_atime : file->stat.st_mtime,
-						&(file->stat));
+						file_time(args->flags, &(file->stat)), &(file->stat));
 	if (is_dir(file->name, args->flags, &(file->stat)))
 	{
 		file->is_dir = 1;
