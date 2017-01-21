@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 19:38:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:41:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct	s_dinfo {
 */
 typedef struct	s_finfo {
 	char		extended;
+	time_t		time;
 	struct stat	*stat;
 	const char	*owner;
 	const char	*group;
@@ -75,7 +76,8 @@ typedef struct	s_finfo {
 /*
 ** Put file info need for long format in @info
 */
-void			ls_set_finfo(t_finfo *info, const char *path, struct stat *st);
+void			ls_set_finfo(t_finfo *info, const char *path,
+								time_t time, struct stat *st);
 
 /*
 ** Update directory @dinfo using @finfo for long format

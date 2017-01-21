@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:09:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:36:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,15 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "Ralrt1"
+# define LS_FLAGS "Ralrtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_LFMT	'l'
-# define LS_FLAG_MTIM	't'
+# define LS_FLAG_TIME	't'
 # define LS_FLAG_REV	'r'
 # define LS_FLAG_REC	'R'
 # define LS_FLAG_LINE	'1'
+# define LS_FLAG_ATIM	'u'
 
 # define LS_USAGE_FMT "usage: %s [-%s] [file ...]\n"
 
@@ -49,8 +50,13 @@ typedef enum	e_format {
 
 typedef enum	e_sorting {
 	LS_SORT_LEXI = 0,
-	LS_SORT_MTIME = 1,
+	LS_SORT_TIME = 1,
 }				t_sorting;
+
+typedef enum		e_time {
+	LS_TIME_MODIF = 0,
+	LS_TIME_ACCESS = 1,
+}					t_time;
 
 typedef enum	e_bool {
 	LS_BOOL_FALSE = 0,
@@ -60,6 +66,7 @@ typedef enum	e_bool {
 typedef struct	s_flags {
 	t_format		format : 1;
 	t_sorting		sorting : 1;
+	t_time			time : 1;
 	t_bool			reverse : 1;
 	t_bool			all : 1;
 	t_bool			recur : 1;
@@ -83,8 +90,10 @@ typedef struct	s_file {
 */
 # ifdef linux
 #  define LS_MTIM_NSEC(st) ((st).st_mtim.tv_nsec)
+#  define LS_ATIM_NSEC(st) ((st).st_atim.tv_nsec)
 # elif __APPLE__
 #  define LS_MTIM_NSEC(st) ((st).st_mtimespec.tv_nsec)
+#  define LS_ATIM_NSEC(st) ((st).st_atimespec.tv_nsec)
 # else
 #  define LS_MTIM_NSEC(st) (0)
 # endif

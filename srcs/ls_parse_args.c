@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:12:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 12:56:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,27 @@
 #include "ft_printf.h"
 #include <errno.h>
 
+static int	parse_one_flag(int opt, t_args *args)
+{
+	if (opt == '?')
+		return (0);
+	if (opt == LS_FLAG_ALL)
+		args->flags.all = LS_BOOL_TRUE;
+	else if (opt == LS_FLAG_LFMT)
+		args->flags.format = LS_FORMAT_LONG;
+	else if (opt == LS_FLAG_TIME)
+		args->flags.sorting = LS_SORT_TIME;
+	else if (opt == LS_FLAG_REV)
+		args->flags.reverse = LS_BOOL_TRUE;
+	else if (opt == LS_FLAG_REC)
+		args->flags.recur = LS_BOOL_TRUE;
+	else if (opt == LS_FLAG_LINE)
+		args->flags.format = LS_FORMAT_LINE;
+	else if (opt == LS_FLAG_ATIM)
+		args->flags.time = LS_TIME_ACCESS;
+	return (1);
+}
+
 static int	parse_flags(int argc, char *const argv[], t_args *args)
 {
 	int		opt;
@@ -24,19 +45,7 @@ static int	parse_flags(int argc, char *const argv[], t_args *args)
 	ft_bzero(&(args->flags), sizeof(args->flags));
 	while ((opt = ls_getopt(argc, argv, LS_FLAGS)) != -1)
 	{
-		if (opt == LS_FLAG_ALL)
-			args->flags.all = LS_BOOL_TRUE;
-		else if (opt == LS_FLAG_LFMT)
-			args->flags.format = LS_FORMAT_LONG;
-		else if (opt == LS_FLAG_MTIM)
-			args->flags.sorting = LS_SORT_MTIME;
-		else if (opt == LS_FLAG_REV)
-			args->flags.reverse = LS_BOOL_TRUE;
-		else if (opt == LS_FLAG_REC)
-			args->flags.recur = LS_BOOL_TRUE;
-		else if (opt == LS_FLAG_LINE)
-			args->flags.format = LS_FORMAT_LINE;
-		else if (opt == '?')
+		if (!parse_one_flag(opt, args))
 		{
 			g_ls_status = LS_EXIT_FAILURE;
 			ft_fprintf(FT_STDERR, LS_USAGE_FMT, ls_getprogname(), LS_FLAGS);
@@ -70,7 +79,10 @@ static void	parse_file(const char *name, t_args *args)
 		return ;
 	}
 	if (args->flags.format == LS_FORMAT_LONG)
-		ls_set_finfo(&(file->info), file->name, &(file->stat));
+		ls_set_finfo(&(file->info), file->name,
+						args->flags.time == LS_TIME_ACCESS
+							? file->stat.st_atime : file->stat.st_mtime,
+						&(file->stat));
 	if (is_dir(file->name, args->flags, &(file->stat)))
 	{
 		file->is_dir = 1;
