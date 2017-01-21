@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 17:45:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:13:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "RSacdflrtu1"
+# define LS_FLAGS "RSacdfglortu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_LFMT	'l'
+# define LS_FLAG_GRP	'g'
+# define LS_FLAG_USR	'o'
 # define LS_FLAG_TIME	't'
 # define LS_FLAG_SIZE	'S'
 # define LS_FLAG_REV	'r'
@@ -72,6 +74,8 @@ typedef enum	e_bool {
 
 typedef struct	s_flags {
 	t_format		format : 1;
+	t_bool			noowner : 1;
+	t_bool			nogroup : 1;
 	t_bool			reverse : 1;
 	t_bool			all : 1;
 	t_bool			recur : 1;

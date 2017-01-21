@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/19 17:21:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:31:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void			ls_update_dinfo(t_dinfo *dinfo, t_finfo *finfo)
 	dinfo->total += finfo->stat->st_blocks;
 	dinfo->max_nlink = sze_max(dinfo->max_nlink,
 								uim_len(finfo->stat->st_nlink));
-	dinfo->max_owner = finfo->owner
-		? sze_max(dinfo->max_owner, ft_strlen(finfo->owner))
-		: sze_max(dinfo->max_owner, uim_len(finfo->stat->st_uid));
-	dinfo->max_group = finfo->group
-		? sze_max(dinfo->max_group, ft_strlen(finfo->group))
+	if (!(finfo->no_owner))
+		dinfo->max_owner = finfo->owner
+			? sze_max(dinfo->max_owner, ft_strlen(finfo->owner))
+			: sze_max(dinfo->max_owner, uim_len(finfo->stat->st_uid));
+	if (!(finfo->no_group))
+		dinfo->max_group = finfo->group
+			? sze_max(dinfo->max_group, ft_strlen(finfo->group))
 		: sze_max(dinfo->max_group, uim_len(finfo->stat->st_gid));
 	if (S_ISBLK(finfo->stat->st_mode) || S_ISCHR(finfo->stat->st_mode))
 	{

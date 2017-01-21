@@ -6,14 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 13:57:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 17:09:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/21 18:29:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ft_memory.h"
 
-t_file	*alloc_file(int alloc_stat, int alloc_info)
+static t_file	*alloc_file(int alloc_stat, int alloc_info)
 {
 	t_file	*file;
 
@@ -29,8 +29,15 @@ t_file	*alloc_file(int alloc_stat, int alloc_info)
 	return (file);
 }
 
-t_file	*ls_file_new(t_flags flags, const char *name, const char *path,
-						int need_stat)
+static t_finfo	*prepare_info(t_flags flags, t_finfo *info)
+{
+	info->no_group = flags.nogroup;
+	info->no_owner = flags.noowner;
+	return (info);
+}
+
+t_file			*ls_file_new(t_flags flags, const char *name, const char *path,
+								int need_stat)
 {
 	t_file	*file;
 
@@ -52,8 +59,8 @@ t_file	*ls_file_new(t_flags flags, const char *name, const char *path,
 	else
 		file->time = LS_MTIM(file->stat);
 	if (file->info)
-		ls_set_finfo(file->info, path ? path : name, file->time->tv_sec,
-						file->stat);
+		ls_set_finfo(prepare_info(flags, file->info),
+						path ? path : name, file->time->tv_sec, file->stat);
 	if (file->stat)
 		file->is_dir = S_ISDIR(file->stat->st_mode);
 	return (file);
