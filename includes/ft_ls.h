@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 19:21:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 07:28:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "ARSacdfglortu1"
+# define LS_FLAGS "ARSacdfglnortu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_ALMOST	'A'
 # define LS_FLAG_LFMT	'l'
 # define LS_FLAG_GRP	'g'
 # define LS_FLAG_USR	'o'
+# define LS_FLAG_NUM	'n'
 # define LS_FLAG_TIME	't'
 # define LS_FLAG_SIZE	'S'
 # define LS_FLAG_REV	'r'
@@ -83,6 +84,7 @@ typedef struct	s_flags {
 	t_format		format : 1;
 	t_bool			noowner : 1;
 	t_bool			nogroup : 1;
+	t_bool			numeric : 1;
 	t_bool			reverse : 1;
 	t_show			show : 2;
 	t_bool			recur : 1;

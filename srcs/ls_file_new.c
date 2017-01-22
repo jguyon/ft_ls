@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 13:57:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:29:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 07:37:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_finfo	*prepare_info(t_flags flags, t_finfo *info)
 {
 	info->no_group = flags.nogroup;
 	info->no_owner = flags.noowner;
+	info->numeric = flags.numeric;
 	return (info);
 }
 

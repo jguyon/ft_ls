@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 21:08:49 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 12:38:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 07:31:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ TLS_TEST(test_ls_parse_args)
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
 	TLS_ASSERT(!args.single);
-	TLS_ASSERT(args.flags.all);
+	TLS_ASSERT(args.flags.show == LS_SHOW_ALL);
 	TLS_ASSERT(args.flags.format == LS_FORMAT_LONG);
 	TLS_ASSERT(args.flags.sorting == LS_SORT_TIME);
 	TLS_ASSERT(args.flags.time == LS_TIME_MODIF);
@@ -55,7 +55,7 @@ TLS_TEST(test_ls_parse_args)
 	g_ls_optind = 1;
 	TLS_ASSERT(ls_parse_args(argc, argv, &args));
 	TLS_ASSERT(args.single);
-	TLS_ASSERT(args.flags.all);
+	TLS_ASSERT(args.flags.show == LS_SHOW_ALL);
 	TLS_ASSERT(args.flags.format == LS_FORMAT_LINE);
 	TLS_ASSERT(args.flags.sorting == LS_SORT_LEXI);
 	TLS_ASSERT(!args.flags.reverse);

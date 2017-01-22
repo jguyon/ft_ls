@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:19:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 07:49:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ typedef struct	s_dinfo {
 ** Structure holding info about the file for long format
 */
 typedef struct	s_finfo {
-	char		extended;
-	int			no_owner;
-	int			no_group;
-	time_t		time;
-	struct stat	*stat;
-	const char	*owner;
-	const char	*group;
+	unsigned int	no_owner : 1;
+	unsigned int	no_group : 1;
+	unsigned int	numeric : 1;
+	char			extended;
+	time_t			time;
+	struct stat		*stat;
+	const char		*owner;
+	const char		*group;
 }				t_finfo;
 
 /*
