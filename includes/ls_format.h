@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/22 07:49:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 08:28:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ typedef struct	s_dinfo {
 typedef struct	s_finfo {
 	unsigned int	no_owner : 1;
 	unsigned int	no_group : 1;
-	unsigned int	numeric : 1;
 	char			extended;
 	time_t			time;
 	struct stat		*stat;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 13:57:05 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/22 07:37:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/22 08:27:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,15 @@ static t_file	*alloc_file(int alloc_stat, int alloc_info)
 	return (file);
 }
 
-static t_finfo	*prepare_info(t_flags flags, t_finfo *info)
+static void		set_info(t_flags flags, t_finfo *info, t_file *file)
 {
-	info->no_group = flags.nogroup;
-	info->no_owner = flags.noowner;
-	info->numeric = flags.numeric;
-	return (info);
+	info->extended = ls_extended_chr(file->path, file->stat->st_mode);
+	info->time = file->time->tv_sec;
+	info->stat = file->stat;
+	if (!(info->no_owner = flags.noowner) && !(flags.numeric))
+		info->owner = ls_get_owner(file->stat->st_uid);
+	if (!(info->no_group = flags.nogroup) && !(flags.numeric))
+		info->group = ls_get_group(file->stat->st_gid);
 }
 
 t_file			*ls_file_new(t_flags flags, const char *name, const char *path,
@@ -59,10 +62,9 @@ t_file			*ls_file_new(t_flags flags, const char *name, const char *path,
 		file->time = LS_CTIM(file->stat);
 	else
 		file->time = LS_MTIM(file->stat);
-	if (file->info)
-		ls_set_finfo(prepare_info(flags, file->info),
-						path ? path : name, file->time->tv_sec, file->stat);
 	if (file->stat)
 		file->is_dir = S_ISDIR(file->stat->st_mode);
+	if (file->info)
+		set_info(flags, file->info, file);
 	return (file);
 }
