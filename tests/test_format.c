@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 12:24:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 13:54:33 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ TLS_TEST(test_format_print_line)
 {
 	ls_print_line("file");
 	TLS_ASSERT(tls_outcmp("file\n"));
+}
+
+TLS_TEST(test_format_print_stream)
+{
+	TLS_ASSERT(ls_print_stream("file", 74, 0, 80) == 80);
+	TLS_ASSERT(tls_outcmp("file, "));
+	TLS_ASSERT(ls_print_stream("file", 75, 0, 80) == 6);
+	TLS_ASSERT(tls_outcmp("\nfile, "));
+	ls_print_stream("file", 74, 1, 80);
+	TLS_ASSERT(tls_outcmp("file\n"));
+	ls_print_stream("file", 77, 1, 80);
+	TLS_ASSERT(tls_outcmp("\nfile\n"));
 }
 
 TLS_TEST(test_format_print_total)
@@ -111,6 +123,7 @@ void	test_format(void)
 {
 	TLS_RUN(test_format_dinfo);
 	TLS_RUN(test_format_print_line);
+	TLS_RUN(test_format_print_stream);
 	TLS_RUN(test_format_print_long);
 	TLS_RUN(test_format_print_total);
 	TLS_RUN(test_print_dir);

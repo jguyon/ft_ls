@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 12:09:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 13:43:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,18 @@ void			ls_print_dir(const char *name);
 ** Print file in line format
 */
 void			ls_print_line(const char *name);
+
+/*
+** Print file in stream format
+** @name: name of the file
+** @col: column at which the output is positioned
+** @last: whether the file is the last one to print
+** @width: width of the terminal
+**
+** Returns the new position after printing.
+*/
+size_t			ls_print_stream(const char *name, size_t col, int last,
+								size_t width);
 
 /*
 ** Macros to extract major and minor device numbers from a dev_t number
