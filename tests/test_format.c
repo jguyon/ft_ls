@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 18:41:08 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:34:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ TLS_TEST(test_format_dinfo)
 	finfo.owner = (getpwuid(st.st_uid)->pw_name);
 	finfo.group = (getgrgid(st.st_gid)->gr_name);
 	finfo.extended = ' ';
-	ls_update_dinfo(&dinfo, &finfo);
+	ls_update_long(&dinfo, &finfo);
 	TLS_ASSERT(dinfo.total == 512);
 	TLS_ASSERT(dinfo.has_files);
 	TLS_ASSERT(dinfo.max_nlink == 2);
@@ -56,13 +56,13 @@ TLS_TEST(test_format_print_line)
 
 TLS_TEST(test_format_print_stream)
 {
-	TLS_ASSERT(ls_print_stream("file", 73, 0, 80) == 79);
+	TLS_ASSERT(ls_print_stream("file", 73, 0) == 79);
 	TLS_ASSERT(tls_outcmp("file, "));
-	TLS_ASSERT(ls_print_stream("file", 74, 0, 80) == 6);
+	TLS_ASSERT(ls_print_stream("file", 74, 0) == 6);
 	TLS_ASSERT(tls_outcmp("\nfile, "));
-	ls_print_stream("file", 73, 1, 80);
+	ls_print_stream("file", 73, 1);
 	TLS_ASSERT(tls_outcmp("file\n"));
-	ls_print_stream("file", 77, 1, 80);
+	ls_print_stream("file", 77, 1);
 	TLS_ASSERT(tls_outcmp("\nfile\n"));
 }
 

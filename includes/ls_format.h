@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 18:54:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:33:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void			ls_print_line(const char *name);
 **
 ** Returns the new position after printing.
 */
-size_t			ls_print_stream(const char *name, size_t col, int last,
-								size_t width);
+size_t			ls_print_stream(const char *name, size_t col, int last);
 
 /*
 ** Update the @info according to file @name for columns format
@@ -109,7 +108,7 @@ typedef struct	s_finfo {
 /*
 ** Update directory @dinfo using @finfo for long format
 */
-void			ls_update_dinfo(t_dinfo *dinfo, t_finfo *finfo);
+void			ls_update_long(t_dinfo *dinfo, t_finfo *finfo);
 
 /*
 ** Print total block count of files

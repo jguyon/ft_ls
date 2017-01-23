@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 12:53:54 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 19:24:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:29:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 static void	print_long(t_file *file, t_print_info *info)
 {
-	ls_print_long(file->name, file->path, info->acc, file->info);
+	ls_print_long(file->name, file->path, info->dinfo, file->info);
 }
 
 static void	print_stream(t_file *file, t_print_info *info)
@@ -34,8 +34,7 @@ static void	print_stream(t_file *file, t_print_info *info)
 	*((size_t *)info->acc) = ls_print_stream(
 		file->name,
 		*((size_t *)info->acc),
-		next ? 0 : 1,
-		ls_tty_width());
+		next ? 0 : 1);
 }
 
 static void	print_columns(t_file *file, t_print_info *info)

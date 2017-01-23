@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_update_dinfo.c                                  :+:      :+:    :+:   */
+/*   ls_update_long.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:22:32 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:31:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:38:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static size_t	sze_max(size_t n1, size_t n2)
 	return (n1 > n2 ? n1 : n2);
 }
 
-void			ls_update_dinfo(t_dinfo *dinfo, t_finfo *finfo)
+void			ls_update_long(t_dinfo *dinfo, t_finfo *finfo)
 {
 	dinfo->has_files = 1;
 	dinfo->total += finfo->stat->st_blocks;

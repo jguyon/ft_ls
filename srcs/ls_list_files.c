@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 19:00:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:34:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static t_file		*create_file(t_flags flags,
 static void			update_info(t_dinfo *info, t_flags flags, t_file *file)
 {
 	if (flags.format == LS_FORMAT_LONG)
-		ls_update_dinfo(info, file->info);
+		ls_update_long(info, file->info);
 	else if (flags.format == LS_FORMAT_ACROSS)
 		ls_update_columns(info, file->name);
 }

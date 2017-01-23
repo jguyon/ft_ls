@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 18:57:28 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:34:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	parse_file(const char *name, t_args *args)
 	else
 	{
 		if (args->flags.format == LS_FORMAT_LONG)
-			ls_update_dinfo(&(args->dinfo), file->info);
+			ls_update_long(&(args->dinfo), file->info);
 		else if (args->flags.format == LS_FORMAT_ACROSS)
 			ls_update_columns(&(args->dinfo), file->name);
 		ft_dlst_pushr(&(args->files), &(file->node));

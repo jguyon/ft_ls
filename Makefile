@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/23 19:01:25 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/23 19:38:45 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -59,7 +59,7 @@ SRC_NAMES = \
 	ls_print_stream \
 	ls_update_columns \
 	ls_print_columns \
-	ls_update_dinfo \
+	ls_update_long \
 	ls_print_total \
 	ls_print_long \
 	ls_print_mode \
