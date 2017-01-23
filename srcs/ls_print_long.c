@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 15:46:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 12:11:41 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		ls_print_long(const char *name, const char *path,
 	ls_print_time(finfo->time);
 	ft_fprintf(FT_STDOUT, " %s", name);
 	if (S_ISLNK(finfo->stat->st_mode))
-		ls_print_target(path, finfo->stat->st_size);
+		ls_print_target(finfo->target);
 	ft_fputc('\n', FT_STDOUT);
 	if (ft_ferror(FT_STDOUT))
 		ls_err(LS_EXIT_FAILURE, "stdout");

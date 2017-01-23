@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/22 08:30:23 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 12:09:33 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_finfo {
 	struct stat		*stat;
 	const char		*owner;
 	const char		*group;
+	char			target[];
 }				t_finfo;
 
 /*
@@ -128,7 +129,7 @@ void			ls_print_time(time_t time);
 /*
 ** Print link target
 */
-void			ls_print_target(const char *path, off_t size);
+void			ls_print_target(const char *target);
 
 /*
 ** Return '@', '+' or ' ' depending on the file having xattrs or acls

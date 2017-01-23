@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 12:58:13 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/18 12:04:09 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 12:10:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	ls_print_target(const char *path, off_t size)
+void	ls_print_target(const char *target)
 {
-	char	*target;
-	ssize_t	len;
-
-	if (size <= 0)
-		size = PATH_MAX;
-	if (!(target = (char *)malloc(size + 1)))
-		return ;
-	len = readlink(path, target, size + 1);
-	if (len < 0 || len > size)
-	{
-		free(target);
-		return ;
-	}
-	ft_fprintf(FT_STDOUT, " -> %.*s", len, target);
-	free(target);
+	if (target[0])
+		ft_fprintf(FT_STDOUT, " -> %s", target);
 }

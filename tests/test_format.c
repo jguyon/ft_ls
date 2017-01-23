@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 18:45:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 12:24:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,17 @@ TLS_TEST(test_format_dinfo)
 	t_finfo		finfo;
 
 	bzero(&dinfo, sizeof(dinfo));
+	bzero(&finfo, sizeof(finfo));
 	st.st_mode = S_IFBLK;
 	st.st_blocks = 512;
 	st.st_nlink = 16;
 	st.st_uid = getuid();
 	st.st_gid = getgid();
 	st.st_rdev = makedev(13, 3);
-	ls_set_finfo(&finfo, "file", st.st_mtime, &st);
+	finfo.stat = &st;
+	finfo.owner = (getpwuid(st.st_uid)->pw_name);
+	finfo.group = (getgrgid(st.st_gid)->gr_name);
+	finfo.extended = ' ';
 	ls_update_dinfo(&dinfo, &finfo);
 	TLS_ASSERT(dinfo.total == 512);
 	TLS_ASSERT(dinfo.has_files);
