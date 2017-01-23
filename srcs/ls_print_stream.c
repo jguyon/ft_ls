@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 13:16:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 13:52:20 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 15:51:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@
 size_t	ls_print_stream(const char *name, size_t col, int last, size_t width)
 {
 	size_t	len;
+	size_t	needed;
 
 	len = ft_strlen(name);
-	if (col + len + 2 > width)
+	needed = last ? col + len + 1 : col + len + 3;
+	if (needed > width)
 	{
 		ft_fputc('\n', FT_STDOUT);
 		col = 0;

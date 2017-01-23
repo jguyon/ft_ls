@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/23 12:57:38 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 13:11:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 15:45:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ size_t	ls_tty_width(void)
 			width = LS_TTY_DEFAULT_WIDTH;
 			errno = errnum;
 		}
-		width = win.ws_col;
+		else
+			width = win.ws_col;
 	}
 	return (width);
 }
