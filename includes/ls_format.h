@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 17:00:30 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 15:40:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 18:54:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,21 @@
 # include <sys/stat.h>
 # include <stddef.h>
 # include <limits.h>
+
+/*
+** Structure holding info about the directory for some formats
+*/
+typedef struct	s_dinfo {
+	int			has_files;
+	size_t		colwidth;
+	size_t		total;
+	size_t		max_nlink;
+	size_t		max_owner;
+	size_t		max_group;
+	size_t		max_size;
+	size_t		max_maj;
+	size_t		max_min;
+}				t_dinfo;
 
 /*
 ** Print directory name
@@ -45,6 +60,23 @@ size_t			ls_print_stream(const char *name, size_t col, int last,
 								size_t width);
 
 /*
+** Update the @info according to file @name for columns format
+*/
+void			ls_update_columns(t_dinfo *info, const char *name);
+
+/*
+** Print file in column format
+** @name: name of the file
+** @col: index of the column
+** @colwidth: size of columns
+** @last: whether the file is the last one to print
+**
+** Returns the index of the next column.
+*/
+size_t			ls_print_columns(const char *name, size_t col,
+									size_t colwidth, int last);
+
+/*
 ** Macros to extract major and minor device numbers from a dev_t number
 */
 # ifdef __APPLE__
@@ -59,20 +91,6 @@ size_t			ls_print_stream(const char *name, size_t col, int last,
 ** Six months in type time_t
 */
 # define LS_SIX_MONTHS ((time_t)((365 / 2) * 24 * 3600))
-
-/*
-** Structure holding info about the directory for long format
-*/
-typedef struct	s_dinfo {
-	int			has_files;
-	size_t		total;
-	size_t		max_nlink;
-	size_t		max_owner;
-	size_t		max_group;
-	size_t		max_size;
-	size_t		max_maj;
-	size_t		max_min;
-}				t_dinfo;
 
 /*
 ** Structure holding info about the file for long format

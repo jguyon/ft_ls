@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 15:17:46 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:05:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int				g_ls_status;
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "ARSacdfglmnortu1"
+# define LS_FLAGS "ARSacdfglmnortux1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_ALMOST	'A'
@@ -46,6 +46,7 @@ int				g_ls_status;
 # define LS_FLAG_NODIR	'd'
 # define LS_FLAG_LINE	'1'
 # define LS_FLAG_STREAM	'm'
+# define LS_FLAG_ACROSS 'x'
 # define LS_FLAG_ATIM	'u'
 # define LS_FLAG_CTIM	'c'
 # define LS_FLAG_NOSRT	'f'
@@ -56,6 +57,7 @@ typedef enum	e_format {
 	LS_FORMAT_LINE = 0,
 	LS_FORMAT_LONG = 1,
 	LS_FORMAT_STREAM = 2,
+	LS_FORMAT_ACROSS = 3,
 }				t_format;
 
 typedef enum	e_sorting {
@@ -164,6 +166,7 @@ void			ls_print_dirinfo(int is_single, t_flags flags,
 typedef struct	s_print_info {
 	t_flags		flags;
 	void		*acc;
+	t_dinfo		*dinfo;
 	t_dlist		*list;
 }				t_print_info;
 

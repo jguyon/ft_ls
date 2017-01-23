@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/13 18:09:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 13:54:33 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 18:41:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
+#include <sys/ioctl.h>
 
 TLS_TEST(test_format_dinfo)
 {
@@ -55,14 +56,26 @@ TLS_TEST(test_format_print_line)
 
 TLS_TEST(test_format_print_stream)
 {
-	TLS_ASSERT(ls_print_stream("file", 74, 0, 80) == 80);
+	TLS_ASSERT(ls_print_stream("file", 73, 0, 80) == 79);
 	TLS_ASSERT(tls_outcmp("file, "));
-	TLS_ASSERT(ls_print_stream("file", 75, 0, 80) == 6);
+	TLS_ASSERT(ls_print_stream("file", 74, 0, 80) == 6);
 	TLS_ASSERT(tls_outcmp("\nfile, "));
-	ls_print_stream("file", 74, 1, 80);
+	ls_print_stream("file", 73, 1, 80);
 	TLS_ASSERT(tls_outcmp("file\n"));
 	ls_print_stream("file", 77, 1, 80);
 	TLS_ASSERT(tls_outcmp("\nfile\n"));
+}
+
+TLS_TEST(test_format_print_columns)
+{
+	TLS_ASSERT(ls_print_columns("file", 8, 8, 0) == 9);
+	TLS_ASSERT(tls_outcmp("file    "));
+	TLS_ASSERT(ls_print_columns("file", 9, 8, 0) == 0);
+	TLS_ASSERT(tls_outcmp("file\n"));
+	ls_print_columns("file", 8, 8, 1);
+	TLS_ASSERT(tls_outcmp("file\n"));
+	ls_print_columns("file", 9, 8, 1);
+	TLS_ASSERT(tls_outcmp("file\n"));
 }
 
 TLS_TEST(test_format_print_total)
@@ -121,9 +134,15 @@ TLS_TEST(test_print_dir)
 
 void	test_format(void)
 {
+	struct winsize	win;
+
+	ioctl(1, TIOCGWINSZ, &win);
+	win.ws_col = 80;
+	ioctl(1, TIOCSWINSZ, &win);
 	TLS_RUN(test_format_dinfo);
 	TLS_RUN(test_format_print_line);
 	TLS_RUN(test_format_print_stream);
+	TLS_RUN(test_format_print_columns);
 	TLS_RUN(test_format_print_long);
 	TLS_RUN(test_format_print_total);
 	TLS_RUN(test_print_dir);

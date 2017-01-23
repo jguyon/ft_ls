@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/11 11:13:56 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/21 19:27:25 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 19:00:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,14 @@ static t_file		*create_file(t_flags flags,
 	return (file);
 }
 
+static void			update_info(t_dinfo *info, t_flags flags, t_file *file)
+{
+	if (flags.format == LS_FORMAT_LONG)
+		ls_update_dinfo(info, file->info);
+	else if (flags.format == LS_FORMAT_ACROSS)
+		ls_update_columns(info, file->name);
+}
+
 void				ls_list_files(t_flags flags, t_file *dir,
 									t_dinfo *dinfo, t_dlist *files)
 {
@@ -104,8 +112,8 @@ void				ls_list_files(t_flags flags, t_file *dir,
 	{
 		if ((file = create_file(flags, dname, dnamlen, dentry)))
 			ft_dlst_pushr(files, &(file->node));
-		if (file && flags.format == LS_FORMAT_LONG)
-			ls_update_dinfo(dinfo, file->info);
+		if (file)
+			update_info(dinfo, flags, file);
 	}
 	closedir(dstream);
 }

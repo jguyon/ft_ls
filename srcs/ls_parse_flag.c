@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 14:12:11 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 18:47:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ static void	parse_format(t_flags *flags, int opt)
 	if (opt == LS_FLAG_LFMT || opt == LS_FLAG_USR || opt == LS_FLAG_GRP
 		|| opt == LS_FLAG_NUM)
 		flags->format = LS_FORMAT_LONG;
-	if (opt == LS_FLAG_STREAM)
+	if (opt == LS_FLAG_ACROSS)
+		flags->format = LS_FORMAT_ACROSS;
+	else if (opt == LS_FLAG_STREAM)
 		flags->format = LS_FORMAT_STREAM;
-	if (opt == LS_FLAG_USR)
+	else if (opt == LS_FLAG_USR)
 		flags->nogroup = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_GRP)
 		flags->noowner = LS_BOOL_TRUE;
