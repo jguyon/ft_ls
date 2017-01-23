@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 14:16:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/23 15:17:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,11 +161,11 @@ t_file			*ls_pop_next(t_flags flags, t_dlist *dirs);
 void			ls_print_dirinfo(int is_single, t_flags flags,
 									t_file *dir, t_dinfo *dinfo);
 
-typedef struct	s_proginfo {
+typedef struct	s_print_info {
 	t_flags		flags;
-	void		*dinfo;
+	void		*acc;
 	t_dlist		*list;
-}				t_proginfo;
+}				t_print_info;
 
 /*
 ** Output files info in the correct format
