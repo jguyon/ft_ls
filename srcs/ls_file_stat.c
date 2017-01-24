@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 14:15:53 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 15:05:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 21:16:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 
 static t_ftype	file_type(struct stat *st)
 {
-	if (S_ISFIFO(st->st_mode))
+	if (LS_ISFIFO(st->st_mode))
 		return (LS_FTYP_FIFO);
-	else if (S_ISCHR(st->st_mode))
+	else if (LS_ISCHR(st->st_mode))
 		return (LS_FTYP_CHR);
-	else if (S_ISDIR(st->st_mode))
+	else if (LS_ISDIR(st->st_mode))
 		return (LS_FTYP_DIR);
-	else if (S_ISBLK(st->st_mode))
+	else if (LS_ISBLK(st->st_mode))
 		return (LS_FTYP_BLK);
-	else if (S_ISLNK(st->st_mode))
+	else if (LS_ISLNK(st->st_mode))
 		return (LS_FTYP_LNK);
-	else if (S_ISSOCK(st->st_mode))
+	else if (LS_ISSOCK(st->st_mode))
 		return (LS_FTYP_SOCK);
-	else if (S_ISWHT(st->st_mode))
+	else if (LS_ISWHT(st->st_mode))
 		return (LS_FTYP_WHT);
 	else
 		return (LS_FTYP_REG);
@@ -68,7 +68,7 @@ int				ls_file_stat(t_file *file)
 	}
 	if (file->stat)
 		return (0);
-	if (file->lstat && !S_ISLNK(file->lstat->st_mode))
+	if (file->lstat && !LS_ISLNK(file->lstat->st_mode))
 	{
 		file->stat = file->lstat;
 		return (0);

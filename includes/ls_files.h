@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 18:23:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 21:15:27 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,24 @@ typedef int		t_ftype;
 # define LS_FTYP_REG		DT_REG
 # define LS_FTYP_LNK		DT_LNK
 # define LS_FTYP_SOCK		DT_SOCK
-# define LS_FTYP_WHT		DT_WHT
+# ifdef __APPLE__
+#  define LS_FTYP_WHT		DT_WHT
+# else
+#  define LS_FTYP_WHT		(-1)
+# endif
+
+# define LS_ISFIFO(m)		S_ISFIFO(m)
+# define LS_ISCHR(m)		S_ISCHR(m)
+# define LS_ISDIR(m)		S_ISDIR(m)
+# define LS_ISBLK(m)		S_ISBLK(m)
+# define LS_ISREG(m)		S_ISREG(m)
+# define LS_ISLNK(m)		S_ISLNK(m)
+# define LS_ISSOCK(m)		S_ISSOCK(m)
+# ifdef __APPLE__
+#  define LS_ISWHT(m)		S_ISWHT(m)
+# else
+#  define LS_ISWHT(m)		0
+# endif
 
 typedef void	t_file_del(void *info);
 
