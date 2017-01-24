@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:22:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 21:38:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 00:10:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	print_file(t_file *file, t_flist *flist)
 
 void		ls_flist_print(t_flist *flist)
 {
-	if (flist->recur)
+	if (flist->reverse)
 	{
 		ft_dlst_foreachr(&(flist->files), flist,
 							(t_dlist_iterator)(&print_file));
