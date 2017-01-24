@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 00:09:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 00:30:53 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ TLS_TEST(test_files_traverse)
 	TLS_TOUCHT("197001010000.02", "1");
 	TLS_TOUCHT("197001010000.02", "a/1");
 	TLS_TOUCHT("197001010000.04", "a/3");
+	TLS_MKDIR("a/0");
 	TLS_TOUCHT("197001010000.01", "a/0");
 	ls_flist_add(&flist, TLS_DIR "b", 1);
 	ls_flist_add(&flist, TLS_DIR "a", 1);
@@ -179,10 +180,52 @@ TLS_TEST(test_files_reverse)
 	TLS_STOP_FS;
 }
 
+TLS_TEST(test_files_recursive)
+{
+	t_flist		flist;
+	size_t		count;
+	t_file		*next;
+
+	count = 0;
+	count_config(&flist, &count);
+	flist.recur = 1;
+	TLS_ASSERT(!ls_flist_init(&flist));
+	TLS_INIT_FS;
+	TLS_MKDIR("dir");
+	TLS_MKDIR("dir/dir1");
+	TLS_TOUCHT("197001010000.00", "dir/dir1/file1");
+	TLS_TOUCHT("197001010000.00", "dir/dir1");
+	TLS_MKDIR("dir/dir2");
+	TLS_TOUCHT("197001010000.00", "dir/dir2/file2");
+	TLS_TOUCHT("197001010000.00", "dir/dir2");
+	ls_flist_add(&flist, TLS_DIR "dir", 1);
+	ls_flist_start(&flist);
+	TLS_ASSERT((next = ls_flist_next(&flist)));
+	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "dir") == 0);
+	ls_flist_print(&flist);
+	TLS_ASSERT(tls_outcmp("dir1 = 0\ndir2 = 0\n"));
+	ls_file_del(&next);
+	TLS_ASSERT((next = ls_flist_next(&flist)));
+	TLS_ASSERT(next && strcmp(next->name, "dir1") == 0);
+	ls_flist_print(&flist);
+	TLS_ASSERT((tls_outcmp("file1 = 0\n")));
+	ls_file_del(&next);
+	TLS_ASSERT((next = ls_flist_next(&flist)));
+	TLS_ASSERT(next && strcmp(next->name, "dir2") == 0);
+	ls_flist_print(&flist);
+	TLS_ASSERT((tls_outcmp("file2 = 0\n")));
+	ls_file_del(&next);
+	TLS_ASSERT(!ls_flist_next(&flist));
+	TLS_ASSERT(tls_errcmp(""));
+	ls_flist_clear(&flist);
+	TLS_STOP_FS;
+}
+
 void	test_files(void)
 {
 	ls_setprogname("ft_ls");
 	TLS_RUN(test_files_traverse);
 	TLS_RUN(test_files_reverse);
+	TLS_RUN(test_files_recursive);
 	TLS_RUN(test_files_errors);
 }
