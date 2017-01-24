@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 14:15:53 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 21:16:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 00:38:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int				ls_file_stat(t_file *file)
 		file->stat = file->lstat;
 		return (0);
 	}
-	if (!(st = (struct stat *)malloc(sizeof(*stat)))
+	if (!(st = (struct stat *)malloc(sizeof(*st)))
 		|| stat(file->path, st))
 	{
 		free(st);
