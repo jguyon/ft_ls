@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/23 19:38:45 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/24 18:11:01 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -32,8 +32,6 @@ LIB_INC_PATH = $(LIB_PATH)/includes
 LIB_NAME = $(LIB_PATH)/libft.a
 
 SRC_NAMES = \
-	main \
-	\
 	ls_setprogname \
 	ls_getprogname \
 	ls_atexit \
@@ -54,41 +52,53 @@ SRC_NAMES = \
 	\
 	ls_tty_width \
 	\
-	ls_print_dir \
-	ls_print_line \
-	ls_print_stream \
-	ls_update_columns \
-	ls_print_columns \
-	ls_update_long \
-	ls_print_total \
-	ls_print_long \
-	ls_print_mode \
-	ls_print_nlink \
-	ls_print_pwd \
-	ls_print_size \
-	ls_print_dev \
-	ls_print_time \
-	ls_print_target \
-	ls_extended_chr \
-	ls_get_owner \
-	ls_get_group \
-	\
-	ls_parse_args \
-	ls_list_files \
-	ls_sort_files \
-	ls_pop_next \
-	ls_print_dirinfo \
-	ls_print_files \
-	ls_destroy_file \
-	ls_file_new \
-	ls_parse_flag \
+	ls_file_stat \
+	ls_file_type \
+	ls_file_del \
+	ls_flist_init \
+	ls_flist_add \
+	ls_flist_start \
+	ls_flist_next \
+	ls_flist_print \
+#	\
+#	ls_print_dir \
+#	ls_print_line \
+#	ls_print_stream \
+#	ls_update_columns \
+#	ls_print_columns \
+#	ls_update_long \
+#	ls_print_total \
+#	ls_print_long \
+#	ls_print_mode \
+#	ls_print_nlink \
+#	ls_print_pwd \
+#	ls_print_size \
+#	ls_print_dev \
+#	ls_print_time \
+#	ls_print_target \
+#	ls_extended_chr \
+#	ls_get_owner \
+#	ls_get_group \
+#	\
+#	ls_parse_args \
+#	ls_list_files \
+#	ls_sort_files \
+#	ls_pop_next \
+#	ls_print_dirinfo \
+#	ls_print_files \
+#	ls_destroy_file \
+#	ls_file_new \
+#	ls_parse_flag \
+#	\
+#	main \
 
 TST_NAMES = \
 	main \
 	test_program \
 	test_cache \
-	test_format \
-	test_ls \
+	test_files \
+#	test_format \
+#	test_ls \
 
 SRC = $(SRC_NAMES:%=$(SRC_PATH)/%.c)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)

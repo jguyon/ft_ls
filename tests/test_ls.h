@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 22:18:41 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 19:01:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 
 void	test_program(void);
 void	test_cache(void);
-void	test_ls(void);
-void	test_format(void);
+void	test_files(void);
+/* void	test_format(void); */
+/* void	test_ls(void); */
 
 int		tls_outcmp(const char *str);
 int		tls_errcmp(const char *str);
@@ -82,7 +83,7 @@ int		g_tls_fail;
 # define TLS_STOP_FS system("rm -rf " TLS_DIR)
 # define TLS_MKDIR(dir) system("mkdir " TLS_DIR dir)
 # define TLS_TOUCH(file) system("touch " TLS_DIR file)
-# define TLS_TOUCHT(time, file) system("touch -t " time " " TLS_DIR file)
+# define TLS_TOUCHT(time, file) system("TZ=UTC touch -t " time " " TLS_DIR file)
 # define TLS_LNS(target, link) system("ln -s " TLS_DIR target " " TLS_DIR link)
 
 #endif

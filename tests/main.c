@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 14:56:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 19:08:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static size_t	buff_write(void *cookie, const char *buf, size_t count)
 
 static void		clear_caches(void)
 {
-	ls_cache_clear(&g_ls_owners);
-	ls_cache_clear(&g_ls_groups);
+	/* ls_cache_clear(&g_ls_owners); */
+	/* ls_cache_clear(&g_ls_groups); */
 }
 
 static void		close_streams(void)
@@ -49,8 +49,9 @@ int			main(void)
 	TLS_START;
 	test_program();
 	test_cache();
-	test_ls();
-	test_format();
+	test_files();
+	/* test_ls(); */
+	/* test_format(); */
 	TLS_SUMUP;
 	return (ls_cleanup(0));
 }
@@ -61,6 +62,7 @@ int			tls_outcmp(const char *str)
 
 	ft_fflush(FT_STDOUT);
 	cmp = ft_strcmp(g_outbuf, str);
+	printf("%s\n", g_outbuf);
 	ft_bzero(g_outbuf, 8192);
 	return (cmp == 0);
 }
