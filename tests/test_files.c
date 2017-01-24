@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 19:13:19 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 23:54:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_ls.h"
 #include "ls_files.h"
+#include "ls_program.h"
 #include "ft_printf.h"
 #include "ft_strings.h"
 
@@ -36,10 +37,11 @@ static int	count_insert(size_t *count, t_file *file)
 	return (0);
 }
 
-static void	count_print(size_t *count, t_file *file)
+static int	count_print(size_t *count, t_file *file)
 {
 	(void)count;
 	ft_fprintf(FT_STDOUT, "%s = %ld\n", file->name, (long)*((time_t *)file->info));
+	return (0);
 }
 
 static int	count_compare(t_file *f1, t_file *f2)
@@ -52,20 +54,31 @@ static int	count_reject(t_file *file)
 	return (ft_strcmp(file->name, ".") == 0 || ft_strcmp(file->name, "..") == 0);
 }
 
+static void	count_error(const char *name)
+{
+	ls_warn("%s", name);
+}
+
+static void	count_config(t_flist *flist, size_t *count)
+{
+	bzero(flist, sizeof(*flist));
+	flist->dirinfo = count;
+	flist->init = (t_flist_init *)(&count_init);
+	flist->insert = (t_flist_insert *)(&count_insert);
+	flist->print = (t_flist_print *)(&count_print);
+	flist->compare = &count_compare;
+	flist->reject = &count_reject;
+	flist->error = &count_error;
+}
+
 TLS_TEST(test_files_traverse)
 {
 	t_flist		flist;
 	size_t		count;
 	t_file		*next;
 
-	bzero(&flist, sizeof(flist));
 	count = 0;
-	flist.dirinfo = &count;
-	flist.init = (t_flist_init *)(&count_init);
-	flist.insert = (t_flist_insert *)(&count_insert);
-	flist.print = (t_flist_print *)(&count_print);
-	flist.compare = &count_compare;
-	flist.reject = &count_reject;
+	count_config(&flist, &count);
 	TLS_ASSERT(!ls_flist_init(&flist));
 	TLS_INIT_FS;
 	TLS_MKDIR("a");
@@ -93,10 +106,41 @@ TLS_TEST(test_files_traverse)
 	TLS_ASSERT(tls_outcmp(""));
 	ls_file_del(&next);
 	TLS_ASSERT(!ls_flist_next(&flist));
+	TLS_ASSERT(tls_errcmp(""));
+	ls_flist_clear(&flist);
+	TLS_STOP_FS;
+}
+
+TLS_TEST(test_files_errors)
+{
+	t_flist		flist;
+	size_t		count;
+	t_file		*next;
+
+	count = 0;
+	count_config(&flist, &count);
+	TLS_ASSERT(!ls_flist_init(&flist));
+	TLS_INIT_FS;
+	TLS_MKDIR("dir");
+	TLS_MKDIR("otherdir");
+	ls_flist_add(&flist, TLS_DIR "none", 1);
+	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "none: No such file or directory\n"));
+	ls_flist_add(&flist, TLS_DIR "dir", 1);
+	ls_flist_add(&flist, TLS_DIR "otherdir", 1);
+	TLS_ASSERT(tls_errcmp(""));
+	ls_flist_start(&flist);
+	TLS_CHMOD("000", "dir");
+	TLS_ASSERT((next = ls_flist_next(&flist)));
+	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "otherdir") == 0);
+	ls_file_del(&next);
+	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "dir: Permission denied\n"));
+	ls_flist_clear(&flist);
 	TLS_STOP_FS;
 }
 
 void	test_files(void)
 {
+	ls_setprogname("ft_ls");
 	TLS_RUN(test_files_traverse);
+	TLS_RUN(test_files_errors);
 }

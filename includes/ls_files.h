@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 21:15:27 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 21:44:11 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ void			ls_file_del(t_file **file);
 
 typedef void	t_flist_init(void *dirinfo);
 typedef int		t_flist_insert(void *dirinfo, t_file *file);
-typedef void	t_flist_print(void *dirinfo, t_file *file);
+typedef int		t_flist_print(void *dirinfo, t_file *file);
 typedef int		t_flist_compare(t_file *f1, t_file *f2);
 typedef int		t_flist_reject(t_file *file);
+typedef void	t_flist_error(const char *name);
 
 typedef struct	s_flist {
 	int				reverse;
@@ -81,6 +82,7 @@ typedef struct	s_flist {
 	t_flist_print	*print;
 	t_flist_compare	*compare;
 	t_flist_reject	*reject;
+	t_flist_error	*error;
 	t_dlist			files;
 	t_dlist			dirs;
 }				t_flist;
@@ -90,5 +92,6 @@ void			ls_flist_add(t_flist *flist, const char *path, int nofollow);
 void			ls_flist_start(t_flist *flist);
 t_file			*ls_flist_next(t_flist *flist);
 void			ls_flist_print(t_flist *flist);
+void			ls_flist_clear(t_flist *flist);
 
 #endif

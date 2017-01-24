@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 18:01:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 23:50:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_files.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
+#include <errno.h>
 
 static t_file	*new_file(const char *path, struct dirent *entry)
 {
@@ -26,7 +27,7 @@ static t_file	*new_file(const char *path, struct dirent *entry)
 	if (path[dlen - 1] == '/')
 		--dlen;
 	flen = ft_strlen(entry->d_name);
-	if ((file->path = ft_strnew(dlen + 1 + flen)))
+	if ((file->path = ft_strnew(dlen + flen + 1)))
 	{
 		ft_memcpy(file->path, path, dlen);
 		file->path[dlen] = '/';
@@ -38,24 +39,32 @@ static t_file	*new_file(const char *path, struct dirent *entry)
 	return (file);
 }
 
-static void		list_files(const char *path, DIR *dir, t_flist *flist)
+static void		list_files(const char *name, const char *path,
+							DIR *dir, t_flist *flist)
 {
 	struct dirent	*entry;
 	t_file			*file;
+	int				errnum;
 
+	errnum = errno;
+	errno = 0;
 	while ((entry = readdir(dir)))
 	{
 		if (!(file = new_file(path, entry))
 			|| (flist->insert && flist->insert(flist->dirinfo, file)))
 		{
+			flist->error(entry->d_name);
 			ls_file_del(&file);
-			continue ;
 		}
-		if (flist->reject && flist->reject(file))
+		else if (flist->reject && flist->reject(file))
 			ls_file_del(&file);
 		else
 			ft_dlst_pushr(&(flist->files), &(file->node));
 	}
+	if (errno)
+		flist->error(name);
+	else
+		errno = errnum;
 }
 
 t_file			*ls_flist_next(t_flist *flist)
@@ -72,10 +81,11 @@ t_file			*ls_flist_next(t_flist *flist)
 		flist->init(flist->dirinfo);
 	if (!(dir = opendir(file->path)))
 	{
+		flist->error(file->name);
 		ls_file_del(&file);
 		return (ls_flist_next(flist));
 	}
-	list_files(file->path, dir, flist);
+	list_files(file->name, file->path, dir, flist);
 	closedir(dir);
 	if (flist->compare)
 		ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);

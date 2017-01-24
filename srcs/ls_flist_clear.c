@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_flist_init.c                                    :+:      :+:    :+:   */
+/*   ls_flist_clear.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/24 15:47:55 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 21:27:22 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/24 21:44:26 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/24 21:50:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_files.h"
-#include <errno.h>
 
-int		ls_flist_init(t_flist *flist)
+int		del_file(t_file *file, void *acc)
 {
-	FT_DLST_INIT(&(flist->dirs), t_file, node);
-	FT_DLST_INIT(&(flist->files), t_file, node);
-	if (!(flist->print) || !(flist->error))
-	{
-		errno = EINVAL;
-		return (-1);
-	}
-	if (flist->init)
-		flist->init(flist->dirinfo);
-	return (0);
+	(void)acc;
+	ft_dlst_remove(&(file->node));
+	ls_file_del(&file);
+	return (1);
+}
+
+void	ls_flist_clear(t_flist *flist)
+{
+	ft_dlst_foreachl(&(flist->files), NULL, (t_dlist_iterator)(&del_file));
+	ft_dlst_foreachl(&(flist->dirs), NULL, (t_dlist_iterator)(&del_file));
 }

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 15:58:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 18:08:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 21:27:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	ls_flist_add(t_flist *flist, const char *path, int nofollow)
 		|| (nofollow && ls_file_ltype(file))
 		|| (!nofollow && ls_file_type(file)))
 	{
+		flist->error(path);
 		ls_file_del(&file);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 19:01:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/24 23:42:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ int		g_tls_fail;
 # define TLS_TOUCH(file) system("touch " TLS_DIR file)
 # define TLS_TOUCHT(time, file) system("TZ=UTC touch -t " time " " TLS_DIR file)
 # define TLS_LNS(target, link) system("ln -s " TLS_DIR target " " TLS_DIR link)
+# define TLS_CHMOD(rights, file) system("chmod " rights " " TLS_DIR file)
 
 #endif
