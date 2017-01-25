@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 17:30:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 20:13:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,9 @@ t_file			*ls_flist_next(t_flist *flist);
 ** After ls_flist_start, will print files that were not directories.
 ** After ls_flist_next, will print the files of the returned directory.
 ** Should ALWAYS be called after each call to these two functions.
+** Returns whether at least one file needed to be printed.
 */
-void			ls_flist_print(t_flist *flist);
+int				ls_flist_print(t_flist *flist);
 
 /*
 ** Empty the lists and free memory

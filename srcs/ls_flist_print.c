@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:22:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 00:10:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 20:15:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ static int	print_file(t_file *file, t_flist *flist)
 	return (1);
 }
 
-void		ls_flist_print(t_flist *flist)
+int			ls_flist_print(t_flist *flist)
 {
+	int		had_files;
+
+	had_files = ft_dlst_empty(&(flist->files)) ? 0 : 1;
 	if (flist->reverse)
 	{
 		ft_dlst_foreachr(&(flist->files), flist,
@@ -43,4 +46,5 @@ void		ls_flist_print(t_flist *flist)
 			ft_dlst_joinl(&(flist->dirs), &(flist->files));
 	}
 	ft_dlst_init(&(flist->files), flist->files.offset);
+	return (had_files);
 }

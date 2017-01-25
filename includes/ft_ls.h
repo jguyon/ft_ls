@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 16:44:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 19:30:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef enum	e_bool {
 }				t_bool;
 
 typedef struct	s_flags {
+	t_bool			singlearg : 1;
 	t_bool			noowner : 1;
 	t_bool			nogroup : 1;
 	t_bool			numeric : 1;

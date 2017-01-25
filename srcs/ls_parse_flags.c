@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 16:36:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 19:30:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int			ls_parse_flags(int argc, char *const argv[], t_flags *flags)
 		parse_format(flags, opt);
 		parse_sorting(flags, opt);
 	}
+	flags->singlearg = g_ls_optind < argc - 1 ? 0 : 1;
 	return (0);
 }
