@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 00:44:53 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 14:15:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int			main(void)
 	test_program();
 	test_cache();
 	test_files();
+	test_callbacks();
 	/* test_ls(); */
 	/* test_format(); */
 	TLS_SUMUP;

@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_line.c                                    :+:      :+:    :+:   */
+/*   ls_compare_size.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/15 20:56:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:29:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/25 14:05:34 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/25 14:07:46 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_callbacks.h"
-#include "ft_streams.h"
 
-int		ls_print_line(void *dirinfo, t_file *file)
+int		ls_compare_size(t_file *f1, t_file *f2)
 {
-	(void)dirinfo;
-	ft_fputs(file->name, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
-	if (ft_ferror(FT_STDOUT))
+	if (f1->lstat->st_size > f2->lstat->st_size)
 		return (-1);
-	return (0);
+	if (f1->lstat->st_size < f2->lstat->st_size)
+		return (1);
+	return (ls_compare_lexi(f1, f2));
 }

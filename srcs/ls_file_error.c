@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_line.c                                    :+:      :+:    :+:   */
+/*   ls_file_error.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/15 20:56:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:29:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/25 13:31:50 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/25 13:35:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_callbacks.h"
+#include "ls_program.h"
 #include "ft_streams.h"
 
-int		ls_print_line(void *dirinfo, t_file *file)
+int		g_ls_status = LS_EXIT_SUCCESS;
+
+void	ls_file_error(const char *name)
 {
-	(void)dirinfo;
-	ft_fputs(file->name, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
+	g_ls_status = LS_EXIT_FAILURE;
 	if (ft_ferror(FT_STDOUT))
-		return (-1);
-	return (0);
+		ls_err(g_ls_status, "stdout");
+	else
+		ls_warn("%s", name);
 }

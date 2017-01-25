@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_line.c                                    :+:      :+:    :+:   */
+/*   ls_insert_lstat.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/15 20:56:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:29:37 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/25 14:01:35 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/25 14:02:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_callbacks.h"
-#include "ft_streams.h"
 
-int		ls_print_line(void *dirinfo, t_file *file)
+int		ls_insert_lstat(void *dirinfo, t_file *file)
 {
 	(void)dirinfo;
-	ft_fputs(file->name, FT_STDOUT);
-	ft_fputc('\n', FT_STDOUT);
-	if (ft_ferror(FT_STDOUT))
-		return (-1);
-	return (0);
+	return (ls_file_lstat(file));
 }

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:51:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 23:42:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 14:15:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 void	test_program(void);
 void	test_cache(void);
 void	test_files(void);
+void	test_callbacks(void);
 /* void	test_format(void); */
 /* void	test_ls(void); */
 

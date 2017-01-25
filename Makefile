@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/24 21:51:08 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/25 14:16:06 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -61,9 +61,16 @@ SRC_NAMES = \
 	ls_flist_next \
 	ls_flist_print \
 	ls_flist_clear \
+	\
+	ls_file_error \
+	ls_insert_lstat \
+	ls_reject_hidden \
+	ls_compare_lexi \
+	ls_compare_time \
+	ls_compare_size \
+	ls_print_line \
 #	\
 #	ls_print_dir \
-#	ls_print_line \
 #	ls_print_stream \
 #	ls_update_columns \
 #	ls_print_columns \
@@ -98,6 +105,7 @@ TST_NAMES = \
 	test_program \
 	test_cache \
 	test_files \
+	test_callbacks \
 #	test_format \
 #	test_ls \
 
