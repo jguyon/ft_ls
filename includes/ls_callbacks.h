@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 14:06:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 20:53:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ls_file_error(const char *name);
 int		ls_insert_lstat(void *dirinfo, t_file *file);
 
 int		ls_reject_hidden(t_file *file);
+int		ls_reject_implied(t_file *file);
 
 # ifdef __APPLE__
 #  define LS_MNSEC(stat) ((stat)->st_mtimespec.tv_nsec)

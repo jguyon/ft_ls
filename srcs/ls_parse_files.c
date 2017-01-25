@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 19:30:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:01:38 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	config_flist(t_flags *flags, t_flist *flist)
 		flist->compare = &ls_compare_atim;
 	if (flags->show == LS_SHOW_NOHIDDEN)
 		flist->reject = &ls_reject_hidden;
+	else if (flags->show == LS_SHOW_ALMOST)
+		flist->reject = &ls_reject_implied;
 }
 
 void		ls_parse_files(int argc, char *const argv[],
