@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 21:17:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:28:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ls_program.h"
 #include "ls_callbacks.h"
 #include "ft_memory.h"
-#include "ft_printf.h"
 
 static void	config_flist(t_flags *flags, t_flist *flist)
 {
