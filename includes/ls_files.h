@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 20:13:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:13:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,8 +191,10 @@ int				ls_flist_init(t_flist *flist);
 **
 ** Should be used at the beginning of the program with the arguments.
 ** In case @nofollow is not 0, will not follow symlinks.
+** In case @nodirs is not 0, will not open directories.
 */
-void			ls_flist_add(t_flist *flist, const char *path, int nofollow);
+void			ls_flist_add(t_flist *flist, const char *path,
+								int nofollow, int nodirs);
 
 /*
 ** Should be called right after all your calls to ls_flist_add

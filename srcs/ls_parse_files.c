@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 21:01:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:17:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 static void	config_flist(t_flags *flags, t_flist *flist)
 {
 	flist->reverse = flags->reverse;
-	flist->recur = flags->recur;
+	flist->recur = flags->recur && !(flags->nodirs);
 	flist->error = &ls_file_error;
 	if (flags->sorting == LS_SORT_TIME || flags->sorting == LS_SORT_SIZE)
 		flist->insert = &ls_insert_lstat;
@@ -48,12 +48,12 @@ void		ls_parse_files(int argc, char *const argv[],
 	if (ls_flist_init(flist))
 		ls_err(LS_EXIT_FAILURE, "%s", "ls_flist_init");
 	if (g_ls_optind == argc)
-		ls_flist_add(flist, ".", 0);
+		ls_flist_add(flist, ".", 0, flags->nodirs);
 	else
 	{
 		while (g_ls_optind < argc)
 		{
-			ls_flist_add(flist, argv[g_ls_optind], 0);
+			ls_flist_add(flist, argv[g_ls_optind], 0, flags->nodirs);
 			++g_ls_optind;
 		}
 	}

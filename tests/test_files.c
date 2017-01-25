@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 20:24:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:25:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ TLS_TEST(test_files_traverse)
 	TLS_TOUCHT("197001010000.04", "a/3");
 	TLS_MKDIR("a/0");
 	TLS_TOUCHT("197001010000.01", "a/0");
-	ls_flist_add(&flist, TLS_DIR "b", 1);
-	ls_flist_add(&flist, TLS_DIR "a", 1);
-	ls_flist_add(&flist, TLS_DIR "1", 1);
-	ls_flist_add(&flist, TLS_DIR "0", 1);
+	ls_flist_add(&flist, TLS_DIR "b", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "a", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "1", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "0", 0, 0);
 	ls_flist_start(&flist);
 	TLS_ASSERT(ls_flist_print(&flist));
 	TLS_ASSERT(tls_outcmp(TLS_DIR "0, 1, 2\n" TLS_DIR "1, 2, 2\n"));
@@ -124,10 +124,10 @@ TLS_TEST(test_files_errors)
 	TLS_INIT_FS;
 	TLS_MKDIR("dir");
 	TLS_MKDIR("otherdir");
-	ls_flist_add(&flist, TLS_DIR "none", 1);
+	ls_flist_add(&flist, TLS_DIR "none", 0, 0);
 	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "none: No such file or directory\n"));
-	ls_flist_add(&flist, TLS_DIR "dir", 1);
-	ls_flist_add(&flist, TLS_DIR "otherdir", 1);
+	ls_flist_add(&flist, TLS_DIR "dir", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "otherdir", 0, 0);
 	TLS_ASSERT(tls_errcmp(""));
 	ls_flist_start(&flist);
 	TLS_CHMOD("000", "dir");
@@ -157,10 +157,10 @@ TLS_TEST(test_files_reverse)
 	TLS_TOUCHT("197001010000.02", "a/1");
 	TLS_TOUCHT("197001010000.04", "a/3");
 	TLS_TOUCHT("197001010000.01", "a/0");
-	ls_flist_add(&flist, TLS_DIR "a", 1);
-	ls_flist_add(&flist, TLS_DIR "b", 1);
-	ls_flist_add(&flist, TLS_DIR "0", 1);
-	ls_flist_add(&flist, TLS_DIR "1", 1);
+	ls_flist_add(&flist, TLS_DIR "a", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "b", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "0", 0, 0);
+	ls_flist_add(&flist, TLS_DIR "1", 0, 0);
 	ls_flist_start(&flist);
 	TLS_ASSERT(ls_flist_print(&flist));
 	TLS_ASSERT(tls_outcmp(TLS_DIR "1, 2, 2\n" TLS_DIR "0, 1, 2\n"));
@@ -198,7 +198,7 @@ TLS_TEST(test_files_recursive)
 	TLS_MKDIR("dir/dir2");
 	TLS_TOUCHT("197001010000.00", "dir/dir2/file2");
 	TLS_TOUCHT("197001010000.00", "dir/dir2");
-	ls_flist_add(&flist, TLS_DIR "dir", 1);
+	ls_flist_add(&flist, TLS_DIR "dir", 0, 0);
 	ls_flist_start(&flist);
 	TLS_ASSERT(!ls_flist_print(&flist));
 	TLS_ASSERT((next = ls_flist_next(&flist)));
@@ -236,7 +236,7 @@ TLS_TEST(test_files_nofollow)
 	TLS_TOUCHT("197001010000.00", "dir/file");
 	TLS_LNS("dir", "lnk");
 	TLS_TOUCHT("197001010000.00 -h", "lnk");
-	ls_flist_add(&flist, TLS_DIR "lnk", 0);
+	ls_flist_add(&flist, TLS_DIR "lnk", 0, 0);
 	ls_flist_start(&flist);
 	TLS_ASSERT(!ls_flist_print(&flist));
 	TLS_ASSERT(tls_outcmp(""));
@@ -249,10 +249,31 @@ TLS_TEST(test_files_nofollow)
 	TLS_ASSERT(tls_errcmp(""));
 	ls_flist_clear(&flist);
 	TLS_ASSERT(!ls_flist_init(&flist));
-	ls_flist_add(&flist, TLS_DIR "lnk", 1);
+	ls_flist_add(&flist, TLS_DIR "lnk", 1, 0);
 	ls_flist_start(&flist);
 	TLS_ASSERT(ls_flist_print(&flist));
 	TLS_ASSERT(tls_outcmp(TLS_DIR "lnk, 0, 1\n"));
+	TLS_ASSERT(!ls_flist_next(&flist));
+	ls_flist_clear(&flist);
+	TLS_ASSERT(tls_errcmp(""));
+	TLS_STOP_FS;
+}
+
+TLS_TEST(test_files_nodirs)
+{
+	t_flist		flist;
+	size_t		count;
+
+	count = 0;
+	count_config(&flist, &count);
+	TLS_ASSERT(!ls_flist_init(&flist));
+	TLS_INIT_FS;
+	TLS_MKDIR("dir");
+	TLS_TOUCHT("197001010000.00", "dir");
+	ls_flist_add(&flist, TLS_DIR "dir", 0, 1);
+	ls_flist_start(&flist);
+	TLS_ASSERT(ls_flist_print(&flist));
+	TLS_ASSERT(tls_outcmp(TLS_DIR "dir, 0, 1\n"));
 	TLS_ASSERT(!ls_flist_next(&flist));
 	ls_flist_clear(&flist);
 	TLS_ASSERT(tls_errcmp(""));
@@ -266,5 +287,6 @@ void	test_files(void)
 	TLS_RUN(test_files_reverse);
 	TLS_RUN(test_files_recursive);
 	TLS_RUN(test_files_nofollow);
+	TLS_RUN(test_files_nodirs);
 	TLS_RUN(test_files_errors);
 }

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 15:58:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 17:35:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 21:15:37 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,25 @@ static void	add_dir(t_flist *flist, t_file *file)
 		ft_dlst_pushr(&(flist->dirs), &(file->node));
 }
 
-void		ls_flist_add(t_flist *flist, const char *path, int nofollow)
+void		ls_flist_add(t_flist *flist, const char *path,
+							int nofollow, int nodirs)
 {
 	t_file	*file;
 
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
 		return ;
 	if (!(file->path = ft_strdup(path))
-		|| (nofollow && ls_file_ltype(file))
-		|| (!nofollow && ls_file_type(file)))
+		|| (!nodirs && nofollow && ls_file_ltype(file))
+		|| (!nodirs && !nofollow && ls_file_type(file)))
 	{
 		flist->error(path);
 		ls_file_del(&file);
 		return ;
 	}
 	file->name = file->path;
-	if ((nofollow && file->ltype == LS_FTYP_DIR)
-		|| (!nofollow && file->type == LS_FTYP_DIR))
+	if (!nodirs
+		&& ((nofollow && file->ltype == LS_FTYP_DIR)
+			|| (!nofollow && file->type == LS_FTYP_DIR)))
 		add_dir(flist, file);
 	else
 		add_file(flist, file);
