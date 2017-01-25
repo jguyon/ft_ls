@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 00:45:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 13:17:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static int	count_insert(size_t *count, t_file *file)
 
 static int	count_print(size_t *count, t_file *file)
 {
-	(void)count;
-	ft_fprintf(FT_STDOUT, "%s = %ld\n", file->name, (long)*((time_t *)file->info));
+	ft_fprintf(FT_STDOUT, "%s, %ld, %zu\n", file->name, (long)*((time_t *)file->info), *count);
 	return (0);
 }
 
@@ -95,11 +94,11 @@ TLS_TEST(test_files_traverse)
 	ls_flist_add(&flist, TLS_DIR "0", 1);
 	ls_flist_start(&flist);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp(TLS_DIR "0 = 1\n" TLS_DIR "1 = 2\n"));
+	TLS_ASSERT(tls_outcmp(TLS_DIR "0, 1, 2\n" TLS_DIR "1, 2, 2\n"));
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "a") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp("0 = 1\n1 = 2\n3 = 4\n"));
+	TLS_ASSERT(tls_outcmp("0, 1, 3\n1, 2, 3\n3, 4, 3\n"));
 	ls_file_del(&next);
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "b") == 0);
@@ -163,7 +162,7 @@ TLS_TEST(test_files_reverse)
 	ls_flist_add(&flist, TLS_DIR "1", 1);
 	ls_flist_start(&flist);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp(TLS_DIR "1 = 2\n" TLS_DIR "0 = 1\n"));
+	TLS_ASSERT(tls_outcmp(TLS_DIR "1, 2, 2\n" TLS_DIR "0, 1, 2\n"));
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "b") == 0);
 	ls_flist_print(&flist);
@@ -172,7 +171,7 @@ TLS_TEST(test_files_reverse)
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "a") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp("3 = 4\n1 = 2\n0 = 1\n"));
+	TLS_ASSERT(tls_outcmp("3, 4, 3\n1, 2, 3\n0, 1, 3\n"));
 	ls_file_del(&next);
 	TLS_ASSERT(!ls_flist_next(&flist));
 	TLS_ASSERT(tls_errcmp(""));
@@ -203,17 +202,17 @@ TLS_TEST(test_files_recursive)
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "dir") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp("dir1 = 0\ndir2 = 0\n"));
+	TLS_ASSERT(tls_outcmp("dir1, 0, 2\ndir2, 0, 2\n"));
 	ls_file_del(&next);
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, "dir1") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT((tls_outcmp("file1 = 0\n")));
+	TLS_ASSERT((tls_outcmp("file1, 0, 1\n")));
 	ls_file_del(&next);
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, "dir2") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT((tls_outcmp("file2 = 0\n")));
+	TLS_ASSERT((tls_outcmp("file2, 0, 1\n")));
 	ls_file_del(&next);
 	TLS_ASSERT(!ls_flist_next(&flist));
 	TLS_ASSERT(tls_errcmp(""));
@@ -242,7 +241,7 @@ TLS_TEST(test_files_nofollow)
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "lnk") == 0);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp("file = 0\n"));
+	TLS_ASSERT(tls_outcmp("file, 0, 1\n"));
 	ls_file_del(&next);
 	TLS_ASSERT(!ls_flist_next(&flist));
 	TLS_ASSERT(tls_errcmp(""));
@@ -251,7 +250,7 @@ TLS_TEST(test_files_nofollow)
 	ls_flist_add(&flist, TLS_DIR "lnk", 1);
 	ls_flist_start(&flist);
 	ls_flist_print(&flist);
-	TLS_ASSERT(tls_outcmp(TLS_DIR "lnk = 0\n"));
+	TLS_ASSERT(tls_outcmp(TLS_DIR "lnk, 0, 1\n"));
 	TLS_ASSERT(!ls_flist_next(&flist));
 	ls_flist_clear(&flist);
 	TLS_ASSERT(tls_errcmp(""));

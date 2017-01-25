@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 23:50:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 13:19:02 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,27 +44,27 @@ static void		list_files(const char *name, const char *path,
 {
 	struct dirent	*entry;
 	t_file			*file;
-	int				errnum;
 
-	errnum = errno;
 	errno = 0;
 	while ((entry = readdir(dir)))
 	{
-		if (!(file = new_file(path, entry))
-			|| (flist->insert && flist->insert(flist->dirinfo, file)))
+		if (!(file = new_file(path, entry)))
 		{
 			flist->error(entry->d_name);
 			ls_file_del(&file);
 		}
 		else if (flist->reject && flist->reject(file))
 			ls_file_del(&file);
+		else if (flist->insert && flist->insert(flist->dirinfo, file))
+		{
+			flist->error(entry->d_name);
+			ls_file_del(&file);
+		}
 		else
 			ft_dlst_pushr(&(flist->files), &(file->node));
 	}
 	if (errno)
 		flist->error(name);
-	else
-		errno = errnum;
 }
 
 t_file			*ls_flist_next(t_flist *flist)
