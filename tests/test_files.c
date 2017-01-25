@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:17:15 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 17:14:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static int	count_insert(size_t *count, t_file *file)
 	file->info = malloc(sizeof(time_t));
 	*((time_t *)(file->info)) = file->lstat->st_mtime;
 	file->del = (t_file_del *)(&count_del);
-	++(*count);
+	if (count)
+		++(*count);
 	return (0);
 }
 

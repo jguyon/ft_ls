@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/25 14:16:06 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/25 16:57:36 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -69,6 +69,13 @@ SRC_NAMES = \
 	ls_compare_time \
 	ls_compare_size \
 	ls_print_line \
+	\
+	ls_parse_flags \
+	ls_parse_files \
+	ls_print_files \
+	ls_cleanup_files \
+	\
+	main \
 #	\
 #	ls_print_dir \
 #	ls_print_stream \
@@ -88,17 +95,12 @@ SRC_NAMES = \
 #	ls_get_owner \
 #	ls_get_group \
 #	\
-#	ls_parse_args \
 #	ls_list_files \
 #	ls_sort_files \
 #	ls_pop_next \
 #	ls_print_dirinfo \
-#	ls_print_files \
 #	ls_destroy_file \
 #	ls_file_new \
-#	ls_parse_flag \
-#	\
-#	main \
 
 TST_NAMES = \
 	main \

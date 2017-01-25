@@ -1,16 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_parse_flag.c                                    :+:      :+:    :+:   */
+/*   ls_parse_flags.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 18:47:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 16:36:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+#include "ls_program.h"
+#include "ft_memory.h"
+#include "ft_printf.h"
 
 static void	parse_traversing(t_flags *flags, int opt)
 {
@@ -59,9 +62,21 @@ static void	parse_sorting(t_flags *flags, int opt)
 		flags->time = LS_TIME_CHANGE;
 }
 
-void		ls_parse_flag(t_flags *flags, int opt)
+int			ls_parse_flags(int argc, char *const argv[], t_flags *flags)
 {
-	parse_traversing(flags, opt);
-	parse_format(flags, opt);
-	parse_sorting(flags, opt);
+	int		opt;
+
+	ft_bzero(flags, sizeof(*flags));
+	while ((opt = ls_getopt(argc, argv, LS_FLAGS)) != -1)
+	{
+		if (opt == '?')
+		{
+			ft_fprintf(FT_STDERR, LS_USAGE_FMT, ls_getprogname(), LS_FLAGS);
+			return (-1);
+		}
+		parse_traversing(flags, opt);
+		parse_format(flags, opt);
+		parse_sorting(flags, opt);
+	}
+	return (0);
 }

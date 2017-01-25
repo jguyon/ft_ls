@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/23 19:05:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 16:44:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,7 @@
 ** Main logic of ft_ls
 */
 
-# include "ft_dlists.h"
-# include "ls_format.h"
-# include <sys/stat.h>
-
-/*
-** Macro to get program exit status
-*/
-int				g_ls_status;
-# define LS_EXIT_STATUS g_ls_status
+# include "ls_files.h"
 
 /*
 ** Macros and structure for parsing opts given to the program
@@ -85,116 +77,44 @@ typedef enum	e_bool {
 }				t_bool;
 
 typedef struct	s_flags {
-	t_format		format : 2;
 	t_bool			noowner : 1;
 	t_bool			nogroup : 1;
 	t_bool			numeric : 1;
 	t_bool			reverse : 1;
-	t_show			show : 2;
 	t_bool			recur : 1;
 	t_bool			nodirs : 1;
+	t_show			show : 2;
+	t_format		format : 2;
 	t_sorting		sorting : 2;
 	t_time			time : 2;
 }				t_flags;
 
 /*
-** Structure for listing files
-*/
-
-typedef struct	s_file {
-	int				is_dir;
-	const char		*name;
-	const char		*path;
-	struct timespec	*time;
-	t_dlist_node	node;
-	struct stat		*stat;
-	t_finfo			*info;
-}				t_file;
-
-/*
-** Get pointer to timespec
-*/
-# ifdef linux
-#  define LS_MTIM(st) (&((st)->st_mtim))
-#  define LS_ATIM(st) (&((st)->st_atim))
-#  define LS_CTIM(st) (&((st)->st_ctim))
-# elif __APPLE__
-#  define LS_MTIM(st) (&((st)->st_mtimespec))
-#  define LS_ATIM(st) (&((st)->st_atimespec))
-#  define LS_CTIM(st) (&((st)->st_ctimespec))
-# endif
-
-/*
-** Structure holding parsed arguments
-*/
-
-typedef struct	s_args {
-	t_flags		flags;
-	int			single;
-	t_dinfo		dinfo;
-	t_dlist		dirs;
-	t_dlist		files;
-}				t_args;
-
-/*
-** Parse command line arguments
-*/
-int				ls_parse_args(int argc, char *const argv[], t_args *args);
-
-/*
-** List files in a directory and initialize directory information
-*/
-void			ls_list_files(t_flags flags, t_file *dir,
-								t_dinfo *dinfo, t_dlist *files);
-
-/*
-** Sort files according to given flags
-*/
-void			ls_sort_files(t_flags flags, t_dlist *files);
-
-/*
-** Pop next dir to process
-*/
-t_file			*ls_pop_next(t_flags flags, t_dlist *dirs);
-
-/*
-** Print name of directory and associated info
-*/
-void			ls_print_dirinfo(int is_single, t_flags flags,
-									t_file *dir, t_dinfo *dinfo);
-
-typedef struct	s_print_info {
-	t_flags		flags;
-	void		*acc;
-	t_dinfo		*dinfo;
-	t_dlist		*list;
-}				t_print_info;
-
-/*
-** Output files info in the correct format
+** Parse command line flags
 **
-** Puts dirs which need to be recursed over into @dirs, deletes and frees
-** the rest.
+** Returns 0 if successful, -1 if not.
 */
-void			ls_print_files(t_flags flags, t_dlist *files, t_dinfo *dinfo,
-								t_dlist *dirs);
+int				ls_parse_flags(int argc, char *const argv[], t_flags *flags);
 
 /*
-** Free file structure memory
+** Parse files given as arguments
 */
-void			ls_destroy_file(t_file *file);
+void			ls_parse_files(int argc, char *const argv[],
+								t_flags *flags, t_flist *flist);
 
 /*
-** Parse one flag
-*/
-void			ls_parse_flag(t_flags *flags, int opt);
-
-/*
-** Create file, allocating only what is needed according to @flags
+** Print everything
 **
-** If @need_stat is 1, the stat structure will always be filled.
+** Returns the appropriate exit status.
 */
-t_file			*ls_file_new(t_flags flags, const char *name, const char *path,
-								int need_stat);
+int				ls_print_files(t_flags *flags, t_flist *flist);
+
+/*
+** Cleanup memory
+**
+** Should be defined as an atexit callback between
+** ls_parse_flags and ls_print_files.
+*/
+void			ls_cleanup_files(t_flist *flist);
 
 #endif

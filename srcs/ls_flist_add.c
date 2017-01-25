@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 15:58:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/24 21:27:45 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 17:35:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,23 @@
 #include "ft_memory.h"
 #include "ft_strings.h"
 
-void	ls_flist_add(t_flist *flist, const char *path, int nofollow)
+static void	add_file(t_flist *flist, t_file *file)
+{
+	if (flist->insert && flist->insert(flist->dirinfo, file))
+		ls_file_del(&file);
+	else
+		ft_dlst_pushr(&(flist->files), &(file->node));
+}
+
+static void	add_dir(t_flist *flist, t_file *file)
+{
+	if (flist->insert && flist->insert(NULL, file))
+		ls_file_del(&file);
+	else
+		ft_dlst_pushr(&(flist->dirs), &(file->node));
+}
+
+void		ls_flist_add(t_flist *flist, const char *path, int nofollow)
 {
 	t_file	*file;
 
@@ -31,12 +47,7 @@ void	ls_flist_add(t_flist *flist, const char *path, int nofollow)
 	file->name = file->path;
 	if ((nofollow && file->ltype == LS_FTYP_DIR)
 		|| (!nofollow && file->type == LS_FTYP_DIR))
-		ft_dlst_pushr(&(flist->dirs), &(file->node));
+		add_dir(flist, file);
 	else
-	{
-		if (flist->insert && flist->insert(flist->dirinfo, file))
-			ls_file_del(&file);
-		else
-			ft_dlst_pushr(&(flist->files), &(file->node));
-	}
+		add_file(flist, file);
 }

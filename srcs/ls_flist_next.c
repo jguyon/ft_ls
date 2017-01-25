@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:19:02 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 17:22:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static t_file	*new_file(const char *path, struct dirent *entry)
 
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
 		return (NULL);
+	file->ltype = entry->d_type;
 	dlen = ft_strlen(path);
 	if (path[dlen - 1] == '/')
 		--dlen;

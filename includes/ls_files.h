@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 01:30:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/25 17:30:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef void	t_flist_init(void *dirinfo);
 **
 ** This is an appropriate place to initialize the @info and @del
 ** members of the file.
+** @dirinfo will be null if @file was a directory given on the command line.
 ** Must return 0 if successful, -1 otherwise.
 */
 typedef int		t_flist_insert(void *dirinfo, t_file *file);
