@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 19:30:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:06:09 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,17 @@
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "ARSacdfglmnortux1"
+# define LS_FLAGS "ARSacdflrtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_ALMOST	'A'
 # define LS_FLAG_LFMT	'l'
-# define LS_FLAG_GRP	'g'
-# define LS_FLAG_USR	'o'
-# define LS_FLAG_NUM	'n'
 # define LS_FLAG_TIME	't'
 # define LS_FLAG_SIZE	'S'
 # define LS_FLAG_REV	'r'
 # define LS_FLAG_REC	'R'
 # define LS_FLAG_NODIR	'd'
 # define LS_FLAG_LINE	'1'
-# define LS_FLAG_STREAM	'm'
-# define LS_FLAG_ACROSS 'x'
 # define LS_FLAG_ATIM	'u'
 # define LS_FLAG_CTIM	'c'
 # define LS_FLAG_NOSRT	'f'
@@ -48,8 +43,6 @@
 typedef enum	e_format {
 	LS_FORMAT_LINE = 0,
 	LS_FORMAT_LONG = 1,
-	LS_FORMAT_STREAM = 2,
-	LS_FORMAT_ACROSS = 3,
 }				t_format;
 
 typedef enum	e_sorting {
@@ -77,17 +70,14 @@ typedef enum	e_bool {
 }				t_bool;
 
 typedef struct	s_flags {
-	t_bool			singlearg : 1;
-	t_bool			noowner : 1;
-	t_bool			nogroup : 1;
-	t_bool			numeric : 1;
-	t_bool			reverse : 1;
-	t_bool			recur : 1;
-	t_bool			nodirs : 1;
-	t_show			show : 2;
-	t_format		format : 2;
-	t_sorting		sorting : 2;
-	t_time			time : 2;
+	t_bool		singlearg : 1;
+	t_bool		reverse : 1;
+	t_bool		recur : 1;
+	t_bool		nodirs : 1;
+	t_format	format : 1;
+	t_show		show : 2;
+	t_sorting	sorting : 2;
+	t_time		time : 2;
 }				t_flags;
 
 /*

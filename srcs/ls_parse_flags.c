@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 19:30:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:07:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,10 @@ static void	parse_traversing(t_flags *flags, int opt)
 
 static void	parse_format(t_flags *flags, int opt)
 {
-	if (opt == LS_FLAG_LFMT || opt == LS_FLAG_USR || opt == LS_FLAG_GRP
-		|| opt == LS_FLAG_NUM)
+	if (opt == LS_FLAG_LFMT)
 		flags->format = LS_FORMAT_LONG;
-	if (opt == LS_FLAG_ACROSS)
-		flags->format = LS_FORMAT_ACROSS;
-	else if (opt == LS_FLAG_STREAM)
-		flags->format = LS_FORMAT_STREAM;
-	else if (opt == LS_FLAG_USR)
-		flags->nogroup = LS_BOOL_TRUE;
-	else if (opt == LS_FLAG_GRP)
-		flags->noowner = LS_BOOL_TRUE;
 	else if (opt == LS_FLAG_LINE)
 		flags->format = LS_FORMAT_LINE;
-	else if (opt == LS_FLAG_NUM)
-		flags->numeric = LS_BOOL_TRUE;
 }
 
 static void	parse_sorting(t_flags *flags, int opt)
