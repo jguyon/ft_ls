@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/25 23:47:28 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/26 02:35:00 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -86,29 +86,6 @@ SRC_NAMES = \
 	ls_cleanup_files \
 	\
 	main \
-#	\
-#	ls_print_dir \
-#	ls_print_stream \
-#	ls_update_columns \
-#	ls_print_columns \
-#	ls_update_long \
-#	ls_print_mode \
-#	ls_print_nlink \
-#	ls_print_pwd \
-#	ls_print_size \
-#	ls_print_dev \
-#	ls_print_time \
-#	ls_print_target \
-#	ls_extended_chr \
-#	ls_get_owner \
-#	ls_get_group \
-#	\
-#	ls_list_files \
-#	ls_sort_files \
-#	ls_pop_next \
-#	ls_print_dirinfo \
-#	ls_destroy_file \
-#	ls_file_new \
 
 TST_NAMES = \
 	main \
@@ -116,8 +93,6 @@ TST_NAMES = \
 	test_cache \
 	test_files \
 	test_callbacks \
-#	test_format \
-#	test_ls \
 
 SRC = $(SRC_NAMES:%=$(SRC_PATH)/%.c)
 OBJ = $(SRC:$(SRC_PATH)/%.c=$(OBJ_PATH)/%.o)
