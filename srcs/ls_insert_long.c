@@ -6,11 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 21:59:02 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:36:38 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:08:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_callbacks.h"
+#include "ls_long_format.h"
 #include "ft_memory.h"
 #include "ft_strings.h"
 

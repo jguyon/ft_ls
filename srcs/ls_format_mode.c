@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 23:34:20 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 23:38:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:07:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls_callbacks.h"
+#include "ls_long_format.h"
 #include "ft_memory.h"
 
 static void	set_type(char str[1], mode_t mode)

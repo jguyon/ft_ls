@@ -6,12 +6,12 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 16:16:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:20:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:09:56 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
-#include "ls_callbacks.h"
+#include "ls_long_format.h"
 
 void	ls_cleanup_files(t_flist *flist)
 {

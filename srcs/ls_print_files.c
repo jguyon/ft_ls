@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 16:39:09 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:39:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:19:09 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int		ls_print_files(t_flags *flags, t_flist *flist)
 		ls_flist_print(flist);
 		ls_file_del(&dir);
 	}
-	return (LS_EXIT_STATUS);
+	return (g_ls_status);
 }

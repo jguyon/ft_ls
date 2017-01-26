@@ -6,13 +6,14 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 23:02:07 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:33:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:08:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls_callbacks.h"
+#include "ls_long_format.h"
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 
 size_t	ls_target_size(struct stat *st)
 {

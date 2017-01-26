@@ -6,11 +6,11 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/19 12:27:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 22:28:34 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 02:06:15 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls_callbacks.h"
+#include "ls_long_format.h"
 #include <errno.h>
 #include <sys/types.h>
 #ifdef __APPLE__
