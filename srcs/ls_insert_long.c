@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 21:59:02 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:08:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:31:16 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static t_long_finfo	*get_info(t_file *file)
 	if (!(finfo = (t_long_finfo *)ft_memalloc(sizeof(*finfo) + len + 1))
 		|| (file->ltype == LS_FTYP_LNK
 			&& ls_read_target(finfo->target, file->path, len))
-		|| ls_format_time(finfo->time, file->lstat->st_mtime))
+		|| ls_format_time(finfo->time, g_get_time(file->lstat)->tv_sec))
 	{
 		ft_memdel((void **)&finfo);
 		return (NULL);

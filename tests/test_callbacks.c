@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 14:12:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:09:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:41:01 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ TLS_TEST(test_compare)
 	TLS_ASSERT(ls_compare_lexi(&f1, &f2) > 0);
 	st1.st_mtime = 2;
 	st2.st_mtime = 1;
-	TLS_ASSERT(ls_compare_mtim(&f1, &f2) < 0);
+	TLS_ASSERT(ls_compare_time(&f1, &f2) < 0);
 	st1.st_mtime = 1;
 	st2.st_mtime = 2;
-	TLS_ASSERT(ls_compare_mtim(&f1, &f2) > 0);
+	TLS_ASSERT(ls_compare_time(&f1, &f2) > 0);
 	st1.st_mtime = 2;
-	TLS_ASSERT(ls_compare_lexi(&f1, &f2) > 0);
+	TLS_ASSERT(ls_compare_time(&f1, &f2) > 0);
 	st1.st_size = 2;
 	st2.st_size = 1;
 	TLS_ASSERT(ls_compare_size(&f1, &f2) < 0);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:28:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:40:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,18 @@ static void			config_flist(t_flags *flags, t_flist *flist)
 		flist->compare = &ls_compare_size;
 	else if (flags->sorting == LS_SORT_LEXI)
 		flist->compare = &ls_compare_lexi;
-	else if (flags->sorting == LS_SORT_TIME && flags->time == LS_TIME_MODIF)
-		flist->compare = &ls_compare_mtim;
-	else if (flags->sorting == LS_SORT_TIME && flags->time == LS_TIME_CHANGE)
-		flist->compare = &ls_compare_ctim;
-	else if (flags->sorting == LS_SORT_TIME && flags->time == LS_TIME_ACCESS)
-		flist->compare = &ls_compare_atim;
+	else if (flags->sorting == LS_SORT_TIME)
+		flist->compare = &ls_compare_time;
 	if (flags->show == LS_SHOW_NOHIDDEN)
 		flist->reject = &ls_reject_hidden;
 	else if (flags->show == LS_SHOW_ALMOST)
 		flist->reject = &ls_reject_implied;
+	if (flags->time == LS_TIME_MODIF)
+		g_get_time = &ls_get_mtime;
+	else if (flags->time == LS_TIME_CHANGE)
+		g_get_time = &ls_get_ctime;
+	else if (flags->time == LS_TIME_ACCESS)
+		g_get_time = &ls_get_atime;
 }
 
 void				ls_parse_files(int argc, char *const argv[],

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:24:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 11:31:57 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@
 int				g_ls_status;
 
 /*
+** Initialize this with one of the functions below to
+** configure which file time is used
+**
+** Set to ls_get_mtime by default.
+*/
+struct timespec	*(*g_get_time)(struct stat *st);
+
+struct timespec	*ls_get_mtime(struct stat *st);
+struct timespec	*ls_get_ctime(struct stat *st);
+struct timespec	*ls_get_atime(struct stat *st);
+
+/*
 ** Print the error represented by errno
 */
 void			ls_file_error(const char *name);
@@ -41,25 +53,10 @@ int				ls_reject_hidden(t_file *file);
 int				ls_reject_implied(t_file *file);
 
 /*
-** Get the nanosecond part of a timestamp
-*/
-# ifdef __APPLE__
-#  define LS_MNSEC(stat) ((stat)->st_mtimespec.tv_nsec)
-#  define LS_CNSEC(stat) ((stat)->st_ctimespec.tv_nsec)
-#  define LS_ANSEC(stat) ((stat)->st_atimespec.tv_nsec)
-# elif linux
-#  define LS_MNSEC(stat) ((stat)->st_mtim.tv_nsec)
-#  define LS_CNSEC(stat) ((stat)->st_ctim.tv_nsec)
-#  define LS_ANSEC(stat) ((stat)->st_atim.tv_nsec)
-# endif
-
-/*
 ** Comparison functions for sorting
 */
 int				ls_compare_lexi(t_file *f1, t_file *f2);
-int				ls_compare_mtim(t_file *f1, t_file *f2);
-int				ls_compare_ctim(t_file *f1, t_file *f2);
-int				ls_compare_atim(t_file *f1, t_file *f2);
+int				ls_compare_time(t_file *f1, t_file *f2);
 int				ls_compare_size(t_file *f1, t_file *f2);
 
 /*
