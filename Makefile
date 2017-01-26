@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/26 11:36:53 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/26 12:25:45 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -50,6 +50,7 @@ SRC_NAMES = \
 	ls_cache_get \
 	ls_cache_clear \
 	\
+	ls_istty \
 	ls_tty_width \
 	\
 	ls_file_stat \
@@ -74,6 +75,7 @@ SRC_NAMES = \
 	ls_print_long \
 	ls_print_total \
 	ls_get_time \
+	ls_print_name \
 	\
 	ls_extended_chr \
 	ls_get_owner \

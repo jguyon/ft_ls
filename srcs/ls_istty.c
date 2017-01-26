@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_tty.h                                           :+:      :+:    :+:   */
+/*   ls_istty.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/23 12:51:01 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 11:57:56 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/26 11:58:25 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/26 12:11:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LS_TTY_H
-# define LS_TTY_H
+#include "ls_tty.h"
+#include <termios.h>
+#include <unistd.h>
+#include <errno.h>
 
-/*
-** Utils to get information about the terminal
-*/
+int		ls_istty(void)
+{
+	static int		istty = -1;
+	struct termios	term;
+	int				errnum;
 
-# include <stddef.h>
-
-/*
-** File descriptor of the terminal
-*/
-# define LS_TTY_FD 1
-
-/*
-** Terminal width to assume if not possible to get it
-*/
-# define LS_TTY_DEFAULT_WIDTH 80
-
-/*
-** Returns whether output is to a terminal
-*/
-int		ls_istty(void);
-
-/*
-** Get terminal width
-*/
-size_t	ls_tty_width(void);
-
-#endif
+	if (istty == -1)
+	{
+		errnum = errno;
+		if (tcgetattr(LS_TTY_FD, &term))
+			istty = 0;
+		else
+			istty = 1;
+		errno = errnum;
+	}
+	return (istty);
+}

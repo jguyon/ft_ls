@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:56:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 13:29:37 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 13:14:42 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int		ls_print_line(void *dirinfo, t_file *file)
 {
 	(void)dirinfo;
-	ft_fputs(file->name, FT_STDOUT);
+	g_print_name(file);
 	ft_fputc('\n', FT_STDOUT);
 	if (ft_ferror(FT_STDOUT))
 		return (-1);

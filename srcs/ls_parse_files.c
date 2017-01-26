@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 11:40:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 13:19:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ls_program.h"
+#include "ls_tty.h"
 #include "ls_callbacks.h"
 #include "ft_memory.h"
 
@@ -48,6 +49,10 @@ static void			config_flist(t_flags *flags, t_flist *flist)
 		g_get_time = &ls_get_ctime;
 	else if (flags->time == LS_TIME_ACCESS)
 		g_get_time = &ls_get_atime;
+	if (flags->color && ls_istty())
+		g_print_name = &ls_name_color;
+	else
+		g_print_name = &ls_name_normal;
 }
 
 void				ls_parse_files(int argc, char *const argv[],

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 11:31:57 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 13:17:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,22 @@
 int				g_ls_status;
 
 /*
+** Colors corresponding to each type of file
+*/
+# define LS_COLOR_RESET	"\x1B[0m"
+# define LS_COLOR_DIR	"\x1B[0;34m"
+# define LS_COLOR_LNK	"\x1B[0;35m"
+# define LS_COLOR_SOCK	"\x1B[0;32m"
+# define LS_COLOR_FIFO	"\x1B[0;33m"
+# define LS_COLOR_EXEC	"\x1B[0;31m"
+# define LS_COLOR_BLK	"\x1B[0;34;46m"
+# define LS_COLOR_CHR	"\x1B[0;34;42m"
+# define LS_COLOR_XUID	"\x1B[0;30;41m"
+# define LS_COLOR_XGID	"\x1B[0;30;46m"
+# define LS_COLOR_OTHS	"\x1B[0;30;42m"
+# define LS_COLOR_OTHD	"\x1B[0;30;43m"
+
+/*
 ** Initialize this with one of the functions below to
 ** configure which file time is used
 **
@@ -35,6 +51,17 @@ struct timespec	*(*g_get_time)(struct stat *st);
 struct timespec	*ls_get_mtime(struct stat *st);
 struct timespec	*ls_get_ctime(struct stat *st);
 struct timespec	*ls_get_atime(struct stat *st);
+
+/*
+** Initialize this with one of the functions below to
+** configure how file names are displayed
+**
+** Set to ls_name_normal by default
+*/
+int				(*g_print_name)(t_file *file);
+
+int				ls_name_normal(t_file *file);
+int				ls_name_color(t_file *file);
 
 /*
 ** Print the error represented by errno

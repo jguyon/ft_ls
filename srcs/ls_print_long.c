@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:09:21 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 13:16:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ int			ls_print_long(t_long_dinfo *dinfo, t_file *file)
 		print_dev(dinfo, file);
 	else
 		print_size(dinfo, file);
-	ft_fprintf(FT_STDOUT, " %s %s", finfo->time, file->name);
+	ft_fprintf(FT_STDOUT, " %s ", finfo->time);
+	g_print_name(file);
 	if (finfo->target[0])
 		ft_fprintf(FT_STDOUT, " -> %s", finfo->target);
 	ft_fputc('\n', FT_STDOUT);
