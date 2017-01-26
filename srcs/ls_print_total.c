@@ -6,22 +6,21 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/16 13:33:24 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 19:16:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 01:39:23 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls_format.h"
-#include "ft_printf.h"
+#include "ls_callbacks.h"
 #include "ls_program.h"
+#include "ft_printf.h"
 #include <errno.h>
 
-void	ls_print_total(t_dinfo *info)
+void	ls_print_total(t_long_dinfo *dinfo)
 {
-	if (info->has_files)
+	errno = 0;
+	if (dinfo->has_files)
 	{
-		errno = 0;
-		ft_fprintf(FT_STDOUT, "total %zu\n", info->total);
-		if (ft_ferror(FT_STDOUT))
-			ls_err(LS_EXIT_FAILURE, "stdout");
+		if (ft_fprintf(FT_STDOUT, "total %zu\n", dinfo->total) < 0)
+			ls_file_error("stdout");
 	}
 }

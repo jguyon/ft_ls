@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/25 16:57:36 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/25 23:47:28 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -69,6 +69,16 @@ SRC_NAMES = \
 	ls_compare_time \
 	ls_compare_size \
 	ls_print_line \
+	ls_init_long \
+	ls_insert_long \
+	ls_print_long \
+	ls_print_total \
+	ls_extended_chr \
+	ls_get_owner \
+	ls_get_group \
+	ls_format_mode \
+	ls_format_time \
+	ls_read_target \
 	\
 	ls_parse_flags \
 	ls_parse_files \
@@ -82,8 +92,6 @@ SRC_NAMES = \
 #	ls_update_columns \
 #	ls_print_columns \
 #	ls_update_long \
-#	ls_print_total \
-#	ls_print_long \
 #	ls_print_mode \
 #	ls_print_nlink \
 #	ls_print_pwd \

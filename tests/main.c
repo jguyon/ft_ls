@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/03 15:57:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 14:15:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 01:09:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static size_t	buff_write(void *cookie, const char *buf, size_t count)
 
 static void		clear_caches(void)
 {
-	/* ls_cache_clear(&g_ls_owners); */
-	/* ls_cache_clear(&g_ls_groups); */
+	ls_cache_clear(&g_ls_owners);
+	ls_cache_clear(&g_ls_groups);
 }
 
 static void		close_streams(void)

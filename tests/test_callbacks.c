@@ -6,12 +6,15 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 14:12:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 20:58:47 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/26 01:09:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test_ls.h"
 #include "ls_callbacks.h"
+#include <pwd.h>
+#include <grp.h>
+#include <unistd.h>
 
 TLS_TEST(test_reject_hidden)
 {
@@ -83,9 +86,40 @@ TLS_TEST(test_print_line)
 	TLS_ASSERT(tls_outcmp("filename\n"));
 }
 
+TLS_TEST(test_print_long)
+{
+	t_long_dinfo	dinfo;
+	t_file			*file;
+	char			*str;
+
+	file = calloc(1, sizeof(*file));
+	ls_init_long(&dinfo);
+	TLS_INIT_FS;
+	TLS_TOUCHT("197001010000", "file1");
+	TLS_CHMOD("777", "file1");
+	file->name = "file1";
+	file->path = strdup(TLS_DIR "file1");
+	TLS_ASSERT(!ls_insert_long(&dinfo, file));
+	TLS_ASSERT(dinfo.has_files == 1);
+	TLS_ASSERT(dinfo.total == 0);
+	TLS_ASSERT(dinfo.max_nlink == 1);
+	TLS_ASSERT(dinfo.max_owner == strlen(getpwuid(getuid())->pw_name));
+	TLS_ASSERT(dinfo.max_group == strlen(getgrgid(getgid())->gr_name));
+	TLS_ASSERT(dinfo.max_size == 1);
+	TLS_ASSERT(!ls_print_long(&dinfo, file));
+	asprintf(&str, "-rwxrwxrwx  1 %s  %s  0 Jan  1  1970 file1\n",
+			 getpwuid(getuid())->pw_name,
+			 getgrgid(getgid())->gr_name);
+	TLS_ASSERT(tls_outcmp(str));
+	free(str);
+	ls_file_del(&file);
+	TLS_STOP_FS;
+}
+
 void	test_callbacks(void)
 {
 	TLS_RUN(test_reject_hidden);
 	TLS_RUN(test_compare);
 	TLS_RUN(test_print_line);
+	TLS_RUN(test_print_long);
 }

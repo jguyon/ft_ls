@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_cleanup_files.c                                 :+:      :+:    :+:   */
+/*   ls_init_long.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/25 16:16:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:20:58 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/25 21:57:33 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/25 21:58:26 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include "ls_callbacks.h"
+#include "ft_memory.h"
 
-void	ls_cleanup_files(t_flist *flist)
+void	ls_init_long(t_long_dinfo *dinfo)
 {
-	ls_cache_clear(&g_ls_owners);
-	ls_cache_clear(&g_ls_groups);
-	ls_flist_clear(flist);
+	ft_bzero(dinfo, sizeof(*dinfo));
 }

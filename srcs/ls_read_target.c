@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_cleanup_files.c                                 :+:      :+:    :+:   */
+/*   ls_read_target.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/25 16:16:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 01:20:58 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/25 23:02:07 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/26 01:33:39 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include "ls_callbacks.h"
+#include <stdlib.h>
+#include <unistd.h>
 
-void	ls_cleanup_files(t_flist *flist)
+size_t	ls_target_size(struct stat *st)
 {
-	ls_cache_clear(&g_ls_owners);
-	ls_cache_clear(&g_ls_groups);
-	ls_flist_clear(flist);
+	if (st->st_size == 0)
+		return (PATH_MAX);
+	else
+		return (st->st_size);
+}
+
+int		ls_read_target(char *dst, const char *path, size_t size)
+{
+	ssize_t	res;
+
+	res = readlink(path, dst, size + 1);
+	if (res < 0 || (size_t)res > size)
+		return (-1);
+	dst[res] = '\0';
+	return (0);
 }
