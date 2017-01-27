@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 13:16:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 12:56:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	print_pwd(t_long_dinfo *dinfo, t_file *file)
 		ft_fprintf(FT_STDOUT, " %*s", -(int)dinfo->max_group, str);
 	else
 		ft_fprintf(FT_STDOUT, " %*u",
-				   -(int)dinfo->max_group, file->lstat->st_gid);
+					-(int)dinfo->max_group, file->lstat->st_gid);
 }
 
 static void	print_dev(t_long_dinfo *dinfo, t_file *file)

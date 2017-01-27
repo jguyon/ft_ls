@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 12:22:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 13:10:04 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 12:57:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static void	print_color(mode_t mode)
 	else if (S_ISCHR(mode))
 		ft_fputs(LS_COLOR_CHR, FT_STDOUT);
 	else if ((mode & (S_IFREG | S_IEXEC | S_ISUID))
-			 == (S_IFREG | S_IEXEC | S_ISUID))
+				== (S_IFREG | S_IEXEC | S_ISUID))
 		ft_fputs(LS_COLOR_XUID, FT_STDOUT);
 	else if ((mode & (S_IFREG | S_IEXEC | S_ISGID))
-			 == (S_IFREG | S_IEXEC | S_ISGID))
+				== (S_IFREG | S_IEXEC | S_ISGID))
 		ft_fputs(LS_COLOR_XGID, FT_STDOUT);
 	else if ((mode & (S_IFREG | S_IEXEC)) == (S_IFREG | S_IEXEC))
 		ft_fputs(LS_COLOR_EXEC, FT_STDOUT);

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 21:59:02 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 11:31:16 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 12:56:48 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void			update_dinfo(t_long_dinfo *dinfo, t_file *file)
 		dinfo->max_maj = MAX(dinfo->max_maj,
 			uim_len(LS_MAJOR(file->lstat->st_rdev)));
 		dinfo->max_min = MAX(dinfo->max_min,
-							 uim_len(LS_MINOR(file->lstat->st_rdev)));
+								uim_len(LS_MINOR(file->lstat->st_rdev)));
 	}
 	else
 		dinfo->max_size = MAX(dinfo->max_size, uim_len(file->lstat->st_size));

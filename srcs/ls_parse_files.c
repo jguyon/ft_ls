@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 13:19:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:00:58 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,24 @@
 
 static t_long_dinfo	g_long_info;
 
-static void			config_flist(t_flags *flags, t_flist *flist)
+static void			config_sorting(t_flags *flags, t_flist *flist)
 {
-	flist->reverse = flags->reverse;
-	flist->recur = flags->recur && !(flags->nodirs);
-	flist->error = &ls_file_error;
-	flist->print = &ls_print_line;
+	if (flags->sorting == LS_SORT_SIZE)
+		flist->compare = &ls_compare_size;
+	else if (flags->sorting == LS_SORT_LEXI)
+		flist->compare = &ls_compare_lexi;
+	else if (flags->sorting == LS_SORT_TIME)
+		flist->compare = &ls_compare_time;
+	if (flags->time == LS_TIME_MODIF)
+		g_get_time = &ls_get_mtime;
+	else if (flags->time == LS_TIME_CHANGE)
+		g_get_time = &ls_get_ctime;
+	else if (flags->time == LS_TIME_ACCESS)
+		g_get_time = &ls_get_atime;
+}
+
+static void			config_format(t_flags *flags, t_flist *flist)
+{
 	if (flags->format == LS_FORMAT_LONG)
 	{
 		flist->dirinfo = &g_long_info;
@@ -33,30 +45,28 @@ static void			config_flist(t_flags *flags, t_flist *flist)
 	}
 	else if (flags->sorting == LS_SORT_TIME || flags->sorting == LS_SORT_SIZE)
 		flist->insert = &ls_insert_lstat;
-	if (flags->sorting == LS_SORT_SIZE)
-		flist->compare = &ls_compare_size;
-	else if (flags->sorting == LS_SORT_LEXI)
-		flist->compare = &ls_compare_lexi;
-	else if (flags->sorting == LS_SORT_TIME)
-		flist->compare = &ls_compare_time;
 	if (flags->show == LS_SHOW_NOHIDDEN)
 		flist->reject = &ls_reject_hidden;
 	else if (flags->show == LS_SHOW_ALMOST)
 		flist->reject = &ls_reject_implied;
-	if (flags->time == LS_TIME_MODIF)
-		g_get_time = &ls_get_mtime;
-	else if (flags->time == LS_TIME_CHANGE)
-		g_get_time = &ls_get_ctime;
-	else if (flags->time == LS_TIME_ACCESS)
-		g_get_time = &ls_get_atime;
 	if (flags->color && ls_istty())
 		g_print_name = &ls_name_color;
 	else
 		g_print_name = &ls_name_normal;
 }
 
+static void			config_flist(t_flags *flags, t_flist *flist)
+{
+	flist->reverse = flags->reverse;
+	flist->recur = flags->recur && !(flags->nodirs);
+	flist->error = &ls_file_error;
+	flist->print = &ls_print_line;
+	config_sorting(flags, flist);
+	config_format(flags, flist);
+}
+
 void				ls_parse_files(int argc, char *const argv[],
-								   t_flags *flags, t_flist *flist)
+									t_flags *flags, t_flist *flist)
 {
 	ft_bzero(flist, sizeof(*flist));
 	config_flist(flags, flist);
