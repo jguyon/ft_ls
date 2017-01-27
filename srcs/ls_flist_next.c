@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 17:22:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:05:35 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ static void		list_files(const char *name, const char *path,
 	errno = 0;
 	while ((entry = readdir(dir)))
 	{
+		if (flist->reject && flist->reject(entry->d_name))
+			continue ;
 		if (!(file = new_file(path, entry)))
 		{
 			flist->error(entry->d_name);
 			ls_file_del(&file);
 		}
-		else if (flist->reject && flist->reject(file))
-			ls_file_del(&file);
 		else if (flist->insert && flist->insert(flist->dirinfo, file))
 		{
 			flist->error(entry->d_name);

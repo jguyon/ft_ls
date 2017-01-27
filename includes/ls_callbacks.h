@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 13:17:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:06:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ int				ls_insert_lstat(void *dirinfo, t_file *file);
 /*
 ** Hide hidden files or implied '.' and '..'
 */
-int				ls_reject_hidden(t_file *file);
-int				ls_reject_implied(t_file *file);
+int				ls_reject_hidden(const char *name);
+int				ls_reject_implied(const char *name);
 
 /*
 ** Comparison functions for sorting

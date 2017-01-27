@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:22:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 20:15:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:13:20 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static int	print_file(t_file *file, t_flist *flist)
 {
 	if (flist->print && flist->print(flist->dirinfo, file))
 		flist->error(file->name);
-	if (!(flist->recur) || ls_file_ltype(file) || file->ltype != LS_FTYP_DIR
-		|| !ft_strcmp(file->name, ".") || !ft_strcmp(file->name, ".."))
+	if (!(flist->recur)
+		|| !ft_strcmp(file->name, ".") || !ft_strcmp(file->name, "..")
+		|| ls_file_ltype(file) || file->ltype != LS_FTYP_DIR)
 	{
 		ft_dlst_remove(&(file->node));
 		ls_file_del(&file);

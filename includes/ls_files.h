@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 21:13:52 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:04:36 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ typedef int		t_flist_compare(t_file *f1, t_file *f2);
 /*
 ** Check whether or not a file in a dir should be printed
 */
-typedef int		t_flist_reject(t_file *file);
+typedef int		t_flist_reject(const char *name);
 
 /*
 ** Called when an error occurs with the name of the current file

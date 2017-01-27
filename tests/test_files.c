@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 12:42:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:06:06 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static int	count_compare(t_file *f1, t_file *f2)
 	return (ft_strcmp(f1->name, f2->name));
 }
 
-static int	count_reject(t_file *file)
+static int	count_reject(const char *name)
 {
-	return (ft_strcmp(file->name, ".") == 0 || ft_strcmp(file->name, "..") == 0);
+	return (ft_strcmp(name, ".") == 0 || ft_strcmp(name, "..") == 0);
 }
 
 static void	count_error(const char *name)

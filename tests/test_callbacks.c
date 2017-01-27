@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 14:12:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 12:53:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:09:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,16 @@
 
 TLS_TEST(test_reject_hidden)
 {
-	t_file	file;
-
-	bzero(&file, sizeof(file));
-	file.name = ".";
-	TLS_ASSERT(ls_reject_hidden(&file));
-	TLS_ASSERT(ls_reject_implied(&file));
-	file.name = "..";
-	TLS_ASSERT(ls_reject_hidden(&file));
-	TLS_ASSERT(ls_reject_implied(&file));
-	file.name = ".hidden";
-	TLS_ASSERT(ls_reject_hidden(&file));
-	TLS_ASSERT(!ls_reject_implied(&file));
-	file.name = "..hidden";
-	TLS_ASSERT(ls_reject_hidden(&file));
-	TLS_ASSERT(!ls_reject_implied(&file));
-	file.name = "visible";
-	TLS_ASSERT(!ls_reject_hidden(&file));
-	TLS_ASSERT(!ls_reject_implied(&file));
+	TLS_ASSERT(ls_reject_hidden("."));
+	TLS_ASSERT(ls_reject_implied("."));
+	TLS_ASSERT(ls_reject_hidden(".."));
+	TLS_ASSERT(ls_reject_implied(".."));
+	TLS_ASSERT(ls_reject_hidden(".hidden"));
+	TLS_ASSERT(!ls_reject_implied(".hidden"));
+	TLS_ASSERT(ls_reject_hidden("..hidden"));
+	TLS_ASSERT(!ls_reject_implied("..hidden"));
+	TLS_ASSERT(!ls_reject_hidden("visible"));
+	TLS_ASSERT(!ls_reject_implied("visible"));
 }
 
 TLS_TEST(test_compare)
