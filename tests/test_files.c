@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 21:25:49 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 12:42:50 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ TLS_TEST(test_files_errors)
 	ls_file_del(&next);
 	TLS_ASSERT(tls_errcmp("ft_ls: " TLS_DIR "dir: Permission denied\n"));
 	ls_flist_clear(&flist);
+	TLS_CHMOD("777", "dir");
 	TLS_STOP_FS;
 }
 

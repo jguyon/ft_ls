@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 14:12:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 11:41:01 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 12:53:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ TLS_TEST(test_print_long)
 	t_long_dinfo	dinfo;
 	t_file			*file;
 	char			*str;
+	struct stat		st;
+	struct passwd	*pw;
+	struct group	*gr;
 
 	file = calloc(1, sizeof(*file));
 	ls_init_long(&dinfo);
@@ -103,13 +106,16 @@ TLS_TEST(test_print_long)
 	TLS_ASSERT(dinfo.has_files == 1);
 	TLS_ASSERT(dinfo.total == 0);
 	TLS_ASSERT(dinfo.max_nlink == 1);
-	TLS_ASSERT(dinfo.max_owner == strlen(getpwuid(getuid())->pw_name));
-	TLS_ASSERT(dinfo.max_group == strlen(getgrgid(getgid())->gr_name));
+	lstat(TLS_DIR "file1", &st);
+	pw = getpwuid(st.st_uid);
+	gr = getgrgid(st.st_gid);
+	TLS_ASSERT(dinfo.max_owner == strlen(pw->pw_name));
+	TLS_ASSERT(dinfo.max_group == strlen(gr->gr_name));
 	TLS_ASSERT(dinfo.max_size == 1);
 	TLS_ASSERT(!ls_print_long(&dinfo, file));
 	asprintf(&str, "-rwxrwxrwx  1 %s  %s  0 Jan  1  1970 file1\n",
-			 getpwuid(getuid())->pw_name,
-			 getgrgid(getgid())->gr_name);
+			 pw->pw_name,
+			 gr->gr_name);
 	TLS_ASSERT(tls_outcmp(str));
 	free(str);
 	ls_file_del(&file);
