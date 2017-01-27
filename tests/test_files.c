@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:06:06 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:25:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,9 @@ TLS_TEST(test_files_errors)
 	TLS_ASSERT(tls_errcmp(""));
 	ls_flist_start(&flist);
 	TLS_CHMOD("000", "dir");
+	TLS_ASSERT((next = ls_flist_next(&flist)));
+	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "dir") == 0);
+	ls_file_del(&next);
 	TLS_ASSERT((next = ls_flist_next(&flist)));
 	TLS_ASSERT(next && strcmp(next->name, TLS_DIR "otherdir") == 0);
 	ls_file_del(&next);

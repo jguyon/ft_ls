@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:05:35 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 13:23:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ t_file			*ls_flist_next(t_flist *flist)
 	if (!(dir = opendir(file->path)))
 	{
 		flist->error(file->name);
-		ls_file_del(&file);
-		return (ls_flist_next(flist));
+		return (file);
 	}
 	list_files(file->name, file->path, dir, flist);
 	closedir(dir);
