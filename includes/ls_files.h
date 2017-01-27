@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:04:36 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 14:11:13 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,14 @@ typedef void	t_flist_init(void *dirinfo);
 typedef int		t_flist_insert(void *dirinfo, t_file *file);
 
 /*
+** Called after sorting
+**
+** Used when reordering is necessary for printing correctly, like
+** when printing in columns.
+*/
+typedef void	t_flist_prepare(void *dirinfo, t_dlist *files, int reverse);
+
+/*
 ** Print file information
 **
 ** Must return 0 if successful, -1 otherwise.
@@ -155,7 +163,7 @@ typedef void	t_flist_error(const char *name);
 ** Struct used to traverse directories
 ** @reverse: whether or not the ordering is reversed
 ** @recur: whether or not the traverse should be recursive
-** @init, @insert, @print, @compare, @reject, @error: described above
+** @init, @insert, @prepare, @print, @compare, @reject, @error: described above
 ** @files: list of the next files to print
 ** @dirs: list of the next directories to traverse
 **
@@ -169,6 +177,7 @@ typedef struct	s_flist {
 	void			*dirinfo;
 	t_flist_init	*init;
 	t_flist_insert	*insert;
+	t_flist_prepare	*prepare;
 	t_flist_print	*print;
 	t_flist_compare	*compare;
 	t_flist_reject	*reject;

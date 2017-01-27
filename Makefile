@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/26 12:25:45 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/27 14:41:33 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -76,6 +76,10 @@ SRC_NAMES = \
 	ls_print_total \
 	ls_get_time \
 	ls_print_name \
+	ls_init_cols \
+	ls_insert_cols \
+	ls_prepare_cols \
+	ls_print_cols \
 	\
 	ls_extended_chr \
 	ls_get_owner \

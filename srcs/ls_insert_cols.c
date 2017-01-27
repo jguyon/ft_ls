@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_flist_start.c                                   :+:      :+:    :+:   */
+/*   ls_insert_cols.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/01/24 16:25:04 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:04:36 by jguyon           ###   ########.fr       */
+/*   Created: 2017/01/27 14:19:42 by jguyon            #+#    #+#             */
+/*   Updated: 2017/01/27 14:59:59 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ls_files.h"
+#include "ls_callbacks.h"
+#include "ft_strings.h"
 
-void	ls_flist_start(t_flist *flist)
+int		ls_insert_cols(t_cols_dinfo *dinfo, t_file *file)
 {
-	if (flist->compare)
+	size_t	width;
+
+	if (dinfo)
 	{
-		ft_dlst_sort(&(flist->dirs), (t_dlist_compare)flist->compare);
-		ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);
+		++(dinfo->count);
+		width = ft_strlen(file->name) + 1;
+		if (width > dinfo->colwidth)
+			dinfo->colwidth = width;
 	}
-	if (flist->prepare)
-		flist->prepare(flist->dirinfo, &(flist->files), flist->reverse);
+	return (0);
 }

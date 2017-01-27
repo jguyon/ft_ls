@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:06:50 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 16:31:44 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,7 @@ int				ls_compare_size(t_file *f1, t_file *f2);
 int				ls_print_line(void *dirinfo, t_file *file);
 
 /*
-** Structs holding informations about a directory and its files
-** for long format
+** Struct and callbacks used for long format
 */
 
 typedef struct	s_long_dinfo {
@@ -116,12 +115,28 @@ typedef struct	s_long_finfo {
 	char			target[];
 }				t_long_finfo;
 
-/*
-** Callbacks used for long format
-*/
 void			ls_init_long(t_long_dinfo *dinfo);
 int				ls_insert_long(t_long_dinfo *dinfo, t_file *file);
 int				ls_print_long(t_long_dinfo *dinfo, t_file *file);
 void			ls_print_total(t_long_dinfo *dinfo);
+
+/*
+** Struct and callbacks used for column format
+*/
+
+typedef struct	s_cols_dinfo {
+	size_t		count;
+	size_t		colwidth;
+	size_t		cols;
+	size_t		rows;
+	size_t		last;
+	size_t		x;
+	size_t		y;
+}				t_cols_dinfo;
+
+void			ls_init_cols(t_cols_dinfo *dinfo);
+int				ls_insert_cols(t_cols_dinfo *dinfo, t_file *file);
+void			ls_prepare_cols(t_cols_dinfo *dinfo, t_dlist *files, int rev);
+int				ls_print_cols(t_cols_dinfo *dinfo, t_file *file);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 12:14:14 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 14:47:51 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "AGRSacdflrtu1"
+# define LS_FLAGS "ACGRSacdflrtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_ALMOST	'A'
 # define LS_FLAG_LFMT	'l'
+# define LS_FLAG_COLS	'C'
 # define LS_FLAG_TIME	't'
 # define LS_FLAG_SIZE	'S'
 # define LS_FLAG_REV	'r'
@@ -44,6 +45,7 @@
 typedef enum	e_format {
 	LS_FORMAT_LINE = 0,
 	LS_FORMAT_LONG = 1,
+	LS_FORMAT_COLS = 2,
 }				t_format;
 
 typedef enum	e_sorting {
@@ -76,7 +78,7 @@ typedef struct	s_flags {
 	t_bool		recur : 1;
 	t_bool		nodirs : 1;
 	t_bool		color : 1;
-	t_format	format : 1;
+	t_format	format : 2;
 	t_show		show : 2;
 	t_sorting	sorting : 2;
 	t_time		time : 2;

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:23:24 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 14:57:05 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ t_file			*ls_flist_next(t_flist *flist)
 	closedir(dir);
 	if (flist->compare)
 		ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);
+	if (flist->prepare)
+		flist->prepare(flist->dirinfo, &(flist->files), flist->reverse);
 	return (file);
 }

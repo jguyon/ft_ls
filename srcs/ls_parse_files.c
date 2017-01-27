@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:00:58 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 14:47:17 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "ft_memory.h"
 
 static t_long_dinfo	g_long_info;
+
+static t_cols_dinfo g_cols_info;
 
 static void			config_sorting(t_flags *flags, t_flist *flist)
 {
@@ -42,6 +44,14 @@ static void			config_format(t_flags *flags, t_flist *flist)
 		flist->init = (t_flist_init *)&ls_init_long;
 		flist->insert = (t_flist_insert *)&ls_insert_long;
 		flist->print = (t_flist_print *)&ls_print_long;
+	}
+	else if (flags->format == LS_FORMAT_COLS)
+	{
+		flist->dirinfo = &g_cols_info;
+		flist->init = (t_flist_init *)&ls_init_cols;
+		flist->insert = (t_flist_insert *)&ls_insert_cols;
+		flist->prepare = (t_flist_prepare *)&ls_prepare_cols;
+		flist->print = (t_flist_print *)&ls_print_cols;
 	}
 	else if (flags->sorting == LS_SORT_TIME || flags->sorting == LS_SORT_SIZE)
 		flist->insert = &ls_insert_lstat;
