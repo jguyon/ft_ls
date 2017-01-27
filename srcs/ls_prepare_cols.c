@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 14:22:21 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 18:16:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 19:35:19 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void			order_cols(t_dlist *list, size_t rows, int rev)
 void				ls_prepare_cols(t_cols_dinfo *dinfo, t_dlist *files,
 									int rev)
 {
+	dinfo->colwidth += g_print_suffix ? 2 : 1;
 	if (dinfo->count > 0)
 	{
 		if (dinfo->colwidth > 0 && ls_tty_width() > dinfo->colwidth)

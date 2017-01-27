@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 18:20:30 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 19:20:52 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ static void	parse_format(t_flags *flags, int opt)
 		flags->format = LS_FORMAT_LINE;
 	else if (opt == LS_FLAG_COLOR)
 		flags->color = LS_BOOL_TRUE;
+	else if (opt == LS_FLAG_TYPE)
+		flags->suffix = LS_SUFFIX_ALL;
+	else if (opt == LS_FLAG_DIR)
+		flags->suffix = LS_SUFFIX_DIR;
 }
 
 static void	parse_sorting(t_flags *flags, int opt)

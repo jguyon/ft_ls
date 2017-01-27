@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:47:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 19:19:22 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 ** Macros and structure for parsing opts given to the program
 */
 
-# define LS_FLAGS "ACGRSacdflrtu1"
+# define LS_FLAGS "ACFGRSacdflprtu1"
 
 # define LS_FLAG_ALL	'a'
 # define LS_FLAG_ALMOST	'A'
@@ -39,6 +39,8 @@
 # define LS_FLAG_CTIM	'c'
 # define LS_FLAG_NOSRT	'f'
 # define LS_FLAG_COLOR	'G'
+# define LS_FLAG_TYPE	'F'
+# define LS_FLAG_DIR	'p'
 
 # define LS_USAGE_FMT "usage: %s [-%s] [file ...]\n"
 
@@ -67,6 +69,12 @@ typedef enum	e_show {
 	LS_SHOW_ALL = 2,
 }				t_show;
 
+typedef enum	e_suffix {
+	LS_SUFFIX_NONE = 0,
+	LS_SUFFIX_DIR = 1,
+	LS_SUFFIX_ALL = 2,
+}				t_suffix;
+
 typedef enum	e_bool {
 	LS_BOOL_FALSE = 0,
 	LS_BOOL_TRUE = 1
@@ -78,6 +86,7 @@ typedef struct	s_flags {
 	t_bool		recur : 1;
 	t_bool		nodirs : 1;
 	t_bool		color : 1;
+	t_suffix	suffix : 2;
 	t_format	format : 2;
 	t_show		show : 2;
 	t_sorting	sorting : 2;

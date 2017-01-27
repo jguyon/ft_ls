@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/27 14:41:33 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/27 19:16:08 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -63,6 +63,8 @@ SRC_NAMES = \
 	ls_flist_print \
 	ls_flist_clear \
 	\
+	ls_print_name \
+	ls_print_suffix \
 	ls_file_error \
 	ls_insert_lstat \
 	ls_reject_hidden \
@@ -75,7 +77,6 @@ SRC_NAMES = \
 	ls_print_long \
 	ls_print_total \
 	ls_get_time \
-	ls_print_name \
 	ls_init_cols \
 	ls_insert_cols \
 	ls_prepare_cols \

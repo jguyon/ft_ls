@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 14:19:42 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:59:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 19:34:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ls_insert_cols(t_cols_dinfo *dinfo, t_file *file)
 	if (dinfo)
 	{
 		++(dinfo->count);
-		width = ft_strlen(file->name) + 1;
+		width = ft_strlen(file->name);
 		if (width > dinfo->colwidth)
 			dinfo->colwidth = width;
 	}

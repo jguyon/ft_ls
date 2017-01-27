@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:47:17 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 20:07:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,20 @@ static void			config_sorting(t_flags *flags, t_flist *flist)
 		g_get_time = &ls_get_atime;
 }
 
+static void			config_name(t_flags *flags)
+{
+	if (flags->color && ls_istty())
+		g_print_name = &ls_name_color;
+	else
+		g_print_name = &ls_name_normal;
+	if (flags->suffix == LS_SUFFIX_ALL)
+		g_print_suffix = &ls_suffix_type;
+	else if (flags->suffix == LS_SUFFIX_DIR)
+		g_print_suffix = &ls_suffix_dir;
+	else
+		g_print_suffix = NULL;
+}
+
 static void			config_format(t_flags *flags, t_flist *flist)
 {
 	if (flags->format == LS_FORMAT_LONG)
@@ -53,16 +67,13 @@ static void			config_format(t_flags *flags, t_flist *flist)
 		flist->prepare = (t_flist_prepare *)&ls_prepare_cols;
 		flist->print = (t_flist_print *)&ls_print_cols;
 	}
-	else if (flags->sorting == LS_SORT_TIME || flags->sorting == LS_SORT_SIZE)
+	else if (flags->sorting == LS_SORT_TIME
+			 || flags->sorting == LS_SORT_SIZE)
 		flist->insert = &ls_insert_lstat;
 	if (flags->show == LS_SHOW_NOHIDDEN)
 		flist->reject = &ls_reject_hidden;
 	else if (flags->show == LS_SHOW_ALMOST)
 		flist->reject = &ls_reject_implied;
-	if (flags->color && ls_istty())
-		g_print_name = &ls_name_color;
-	else
-		g_print_name = &ls_name_normal;
 }
 
 static void			config_flist(t_flags *flags, t_flist *flist)
@@ -72,6 +83,7 @@ static void			config_flist(t_flags *flags, t_flist *flist)
 	flist->error = &ls_file_error;
 	flist->print = &ls_print_line;
 	config_sorting(flags, flist);
+	config_name(flags);
 	config_format(flags, flist);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 16:31:44 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 19:42:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,25 @@ struct timespec	*ls_get_atime(struct stat *st);
 ** Initialize this with one of the functions below to
 ** configure how file names are displayed
 **
-** Set to ls_name_normal by default
+** Set to ls_name_normal by default.
+** Returns -1 on error, 0 otherwise.
 */
 int				(*g_print_name)(t_file *file);
 
 int				ls_name_normal(t_file *file);
 int				ls_name_color(t_file *file);
+
+/*
+** Initialize this with one of the functions below to
+** print a suffix after the name
+**
+** Set to null by default.
+** Returns -1 on error, 0 if no suffix was printed, 1 otherwise.
+*/
+int				(*g_print_suffix)(t_file *file);
+
+int				ls_suffix_type(t_file *file);
+int				ls_suffix_dir(t_file *file);
 
 /*
 ** Print the error represented by errno
