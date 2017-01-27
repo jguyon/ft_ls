@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 20:07:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 20:36:18 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ static void			config_format(t_flags *flags, t_flist *flist)
 		flist->prepare = (t_flist_prepare *)&ls_prepare_cols;
 		flist->print = (t_flist_print *)&ls_print_cols;
 	}
-	else if (flags->sorting == LS_SORT_TIME
-			 || flags->sorting == LS_SORT_SIZE)
+	else
 		flist->insert = &ls_insert_lstat;
+	if (flags->sorting == LS_SORT_TIME || flags->sorting == LS_SORT_SIZE
+		|| flags->color || flags->suffix == LS_SUFFIX_ALL)
+		g_need_lstat = 1;
 	if (flags->show == LS_SHOW_NOHIDDEN)
 		flist->reject = &ls_reject_hidden;
 	else if (flags->show == LS_SHOW_ALMOST)

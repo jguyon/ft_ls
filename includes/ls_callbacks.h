@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 19:42:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 20:32:07 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int				g_ls_status;
 # define LS_COLOR_XGID	"\x1B[0;30;46m"
 # define LS_COLOR_OTHS	"\x1B[0;30;42m"
 # define LS_COLOR_OTHD	"\x1B[0;30;43m"
+
+/*
+** Assign 1 if stat is needed for all files
+*/
+int				g_need_lstat;
 
 /*
 ** Initialize this with one of the functions below to
@@ -82,7 +87,7 @@ int				ls_suffix_dir(t_file *file);
 void			ls_file_error(const char *name);
 
 /*
-** Prepare the stat of a file for sorting by time or size
+** Prepare the stat of a file if needed
 */
 int				ls_insert_lstat(void *dirinfo, t_file *file);
 
