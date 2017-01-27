@@ -6,12 +6,13 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 18:42:08 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:44:26 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/27 18:20:30 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 #include "ls_program.h"
+#include "ls_tty.h"
 #include "ft_memory.h"
 #include "ft_printf.h"
 
@@ -60,6 +61,8 @@ int			ls_parse_flags(int argc, char *const argv[], t_flags *flags)
 	int		opt;
 
 	ft_bzero(flags, sizeof(*flags));
+	if (ls_istty())
+		flags->format = LS_FORMAT_COLS;
 	while ((opt = ls_getopt(argc, argv, LS_FLAGS)) != -1)
 	{
 		if (opt == '?')
