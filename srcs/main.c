@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 10:53:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/25 17:02:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 17:24:25 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				main(int argc, char **argv)
 	ls_atexit(&close_streams);
 	if (ls_parse_flags(argc, argv, &g_flags))
 		return (ls_cleanup(LS_EXIT_FAILURE));
-	ls_parse_files(argc, argv, &g_flags, &g_flist);
 	ls_atexit(&cleanup_files);
+	ls_parse_files(argc, argv, &g_flags, &g_flist);
 	return (ls_cleanup(ls_print_files(&g_flags, &g_flist)));
 }
