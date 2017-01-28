@@ -6,7 +6,7 @@
 #    By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/03 12:54:24 by jguyon            #+#    #+#              #
-#    Updated: 2017/01/27 19:16:08 by jguyon           ###   ########.fr        #
+#    Updated: 2017/01/28 20:25:28 by jguyon           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -111,14 +111,11 @@ TST_SRC = $(TST_NAMES:%=$(TST_PATH)/%.c)
 TST_OBJ = $(TST_SRC:$(TST_PATH)/%.c=$(OBJ_PATH)/$(TST_PATH)/%.o)
 TST_DEP = $(TST_SRC:$(TST_PATH)/%.c=$(DEP_PATH)/$(TST_PATH)/%.d)
 
-all: lib $(NAME)
-
-lib:
-	@make -C $(LIB_PATH)
+all: $(NAME)
 
 test: CFLAGS += -g
 test: LDFLAGS += -g
-test: lib $(TST_NAME)
+test: $(TST_NAME)
 	./$(TST_NAME)
 
 $(NAME): $(LIB_NAME) $(OBJ)
@@ -126,6 +123,9 @@ $(NAME): $(LIB_NAME) $(OBJ)
 
 $(TST_NAME): $(LIB_NAME) $(filter-out $(OBJ_PATH)/main.o,$(OBJ)) $(TST_OBJ)
 	$(CC) $(LDFLAGS) -o $@ $(filter %.o,$^) $(LIBS)
+
+$(LIB_NAME): force
+	@make -C $(LIB_PATH)
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c $(DEP_PATH)/%.d
 	@mkdir -p $(dir $@) $(dir $(DEP_PATH)/$*)
@@ -148,4 +148,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all test lib clean fclean re
+.PHONY: all test force clean fclean re
