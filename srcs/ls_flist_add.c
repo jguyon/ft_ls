@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 15:58:44 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:39:55 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 17:39:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		ls_flist_add(t_flist *flist, const char *path,
 	if (!(file = (t_file *)ft_memalloc(sizeof(*file))))
 		return ;
 	if (!(file->path = ft_strdup(path))
-		|| (!nodirs && ls_file_ltype(file)))
+		|| ls_file_ltype(file))
 	{
 		flist->error(path);
 		ls_file_del(&file);
