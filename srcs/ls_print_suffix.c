@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 19:05:22 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 19:38:03 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 21:36:54 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int		ls_suffix_type(t_file *file)
 		c = '%';
 	else if (file->ltype == LS_FTYP_FIFO)
 		c = '|';
-	else if (file->ltype == LS_FTYP_REG && (file->lstat->st_mode & S_IEXEC))
+	else if (file->ltype == LS_FTYP_REG
+			&& (file->lstat->st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
 		c = '*';
 	else
 		return (0);
