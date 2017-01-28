@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 23:54:17 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 00:09:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 19:06:34 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ TLS_TEST(test_cache_get_entry)
 		.is = &num_is,
 		.new = &num_new,
 		.del = &num_del,
-		.list = LS_DLST(cache.list, t_num, node),
+		.list = FT_DLST(cache.list, t_num, node),
 	};
 	int		n;
 	t_num	*entry;
