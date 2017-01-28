@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 19:02:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 20:43:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,12 +211,13 @@ void			ls_flist_add(t_flist *flist, const char *path,
 void			ls_flist_start(t_flist *flist);
 
 /*
-** Prepare the structure to print the files of the next directory
+** Print the name of the directory and prepare the structure
+** to print the files of the next directory
 **
 ** Returns the directory or null if finished.
 ** ls_file_del should be called on the returned dir.
 */
-t_file			*ls_flist_next(t_flist *flist);
+t_file			*ls_flist_next(t_flist *flist, t_flist_print *print);
 
 /*
 ** Print prepared files

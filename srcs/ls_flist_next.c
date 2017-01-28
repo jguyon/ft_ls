@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:57:05 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 21:20:29 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void		list_files(const char *name, const char *path,
 		flist->error(name);
 }
 
-t_file			*ls_flist_next(t_flist *flist)
+t_file			*ls_flist_next(t_flist *flist, t_flist_print *print)
 {
 	t_dlist_node	*node;
 	t_file			*file;
@@ -80,7 +80,7 @@ t_file			*ls_flist_next(t_flist *flist)
 	file = FT_DLST_ENTRY(&(flist->dirs), node);
 	if (flist->init)
 		flist->init(flist->dirinfo);
-	if (!(dir = opendir(file->path)))
+	if ((print && print(flist->dirinfo, file)) || !(dir = opendir(file->path)))
 	{
 		flist->error(file->name);
 		return (file);
