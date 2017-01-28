@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/26 02:03:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:16:54 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 18:56:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct	s_group {
 
 /*
 ** Caches for owners and groups
+**
+** ls_clear_cache should be called on them before program exit
 */
 t_cache			g_ls_owners;
 t_cache			g_ls_groups;

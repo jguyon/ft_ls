@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 20:31:11 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 19:19:22 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 18:57:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ int				ls_print_files(t_flags *flags, t_flist *flist);
 /*
 ** Cleanup memory
 **
-** Should be defined as an atexit callback between
-** ls_parse_flags and ls_print_files.
+** Should be defined as an atexit callback between ls_parse_flags and
+** ls_print_files to ensure memory is always cleaned up.
 */
 void			ls_cleanup_files(t_flist *flist);
 

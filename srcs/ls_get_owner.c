@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 19:57:43 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:06:42 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 18:51:24 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cache		g_ls_owners = {
 	.is = &is_owner,
 	.new = &new_owner,
 	.del = &free,
-	.list = LS_DLST(g_ls_owners.list, t_owner, node)
+	.list = FT_DLST(g_ls_owners.list, t_owner, node)
 };
 
 const char	*ls_get_owner(uid_t uid)

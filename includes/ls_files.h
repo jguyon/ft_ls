@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 14:11:13 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 19:02:32 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LS_FILES_H
 
 /*
-** File system traversing
+** Abstraction for traversing directories
 */
 
 # include "ft_dlists.h"

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/14 21:24:38 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/15 00:15:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 18:50:45 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,6 @@
 */
 
 # include "ft_dlists.h"
-
-/*
-** Helper to easily initialize the dlist of t_cache
-**
-** Should be move to ft_dlists.h.
-*/
-# define LS_DLST(n, t, m) {FT_DLST_OFFSET(t, m), {&(n.head), &(n.head)}}
 
 /*
 ** Check if @entry corresponds to @val

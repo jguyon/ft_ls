@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:16:18 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/26 02:06:59 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 18:51:40 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_cache		g_ls_groups = {
 	.is = &is_group,
 	.new = &new_group,
 	.del = &free,
-	.list = LS_DLST(g_ls_groups.list, t_group, node)
+	.list = FT_DLST(g_ls_groups.list, t_group, node)
 };
 
 const char	*ls_get_group(gid_t gid)

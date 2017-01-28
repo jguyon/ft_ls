@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 11:17:43 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/16 14:49:51 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 19:00:28 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LS_PROGRAM_H
 
 /*
-** Program hooks and helpers
+** Hooks and helpers for creating programs
 */
 
 /*

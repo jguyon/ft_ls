@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 20:32:07 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/28 19:01:31 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define LS_CALLBACKS_H
 
 /*
-** Functions to use with a t_flist
+** Callbacks to use with t_flist structures
 */
 
 # include "ls_files.h"
@@ -88,6 +88,8 @@ void			ls_file_error(const char *name);
 
 /*
 ** Prepare the stat of a file if needed
+**
+** This should be the default flist insert callback
 */
 int				ls_insert_lstat(void *dirinfo, t_file *file);
 
