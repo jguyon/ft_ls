@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 17:22:36 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 20:13:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 12:00:03 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int			ls_flist_print(t_flist *flist)
 	{
 		ft_dlst_foreachr(&(flist->files), flist,
 							(t_dlist_iterator)(&print_file));
+		if (flist->prepare && flist->compare)
+			ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);
 		if (!ft_dlst_empty(&(flist->files)))
 			ft_dlst_joinr(&(flist->dirs), &(flist->files));
 	}
@@ -43,6 +45,8 @@ int			ls_flist_print(t_flist *flist)
 	{
 		ft_dlst_foreachl(&(flist->files), flist,
 							(t_dlist_iterator)(&print_file));
+		if (flist->prepare && flist->compare)
+			ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);
 		if (!ft_dlst_empty(&(flist->files)))
 			ft_dlst_joinl(&(flist->dirs), &(flist->files));
 	}
