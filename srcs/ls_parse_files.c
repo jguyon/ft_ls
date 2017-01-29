@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/10 22:16:45 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 20:36:18 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 13:50:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void			config_format(t_flags *flags, t_flist *flist)
 		flist->dirinfo = &g_cols_info;
 		flist->init = (t_flist_init *)&ls_init_cols;
 		flist->insert = (t_flist_insert *)&ls_insert_cols;
-		flist->prepare = (t_flist_prepare *)&ls_prepare_cols;
 		flist->print = (t_flist_print *)&ls_print_cols;
 	}
 	else

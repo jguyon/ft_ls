@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/15 20:59:00 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 19:42:48 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 13:25:55 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	print_size(t_long_dinfo *dinfo, t_file *file)
 	ft_fprintf(FT_STDOUT, "  %*llu", (int)width, file->lstat->st_size);
 }
 
-int			ls_print_long(t_long_dinfo *dinfo, t_file *file)
+static int	print_file(t_file *file, t_long_dinfo *dinfo)
 {
 	t_long_finfo	*finfo;
 
@@ -71,11 +71,19 @@ int			ls_print_long(t_long_dinfo *dinfo, t_file *file)
 		print_size(dinfo, file);
 	ft_fprintf(FT_STDOUT, " %s ", finfo->time);
 	if (g_print_name(file) || (g_print_suffix && g_print_suffix(file) < 0))
-		return (-1);
+	{
+		ls_file_error(file->name);
+		return (1);
+	}
 	if (finfo->target[0])
 		ft_fprintf(FT_STDOUT, " -> %s", finfo->target);
 	ft_fputc('\n', FT_STDOUT);
 	if (ft_ferror(FT_STDOUT))
-		return (-1);
-	return (0);
+		ls_file_error(file->name);
+	return (1);
+}
+
+void		ls_print_long(t_long_dinfo *dinfo, t_dlist *files)
+{
+	ft_dlst_foreachl(files, dinfo, (t_dlist_iterator)(&print_file));
 }

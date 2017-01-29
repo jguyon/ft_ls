@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 12:44:47 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 20:43:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 12:56:49 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,19 +125,9 @@ typedef void	t_flist_init(void *dirinfo);
 typedef int		t_flist_insert(void *dirinfo, t_file *file);
 
 /*
-** Called after sorting
-**
-** Used when reordering is necessary for printing correctly, like
-** when printing in columns.
-*/
-typedef void	t_flist_prepare(void *dirinfo, t_dlist *files, int reverse);
-
-/*
 ** Print file information
-**
-** Must return 0 if successful, -1 otherwise.
 */
-typedef int		t_flist_print(void *dirinfo, t_file *file);
+typedef void	t_flist_print(void *dirinfo, t_dlist *files);
 
 /*
 ** Compare the order of two files
@@ -177,7 +167,6 @@ typedef struct	s_flist {
 	void			*dirinfo;
 	t_flist_init	*init;
 	t_flist_insert	*insert;
-	t_flist_prepare	*prepare;
 	t_flist_print	*print;
 	t_flist_compare	*compare;
 	t_flist_reject	*reject;
@@ -217,7 +206,8 @@ void			ls_flist_start(t_flist *flist);
 ** Returns the directory or null if finished.
 ** ls_file_del should be called on the returned dir.
 */
-t_file			*ls_flist_next(t_flist *flist, t_flist_print *print);
+t_file			*ls_flist_next(t_flist *flist,
+								int (*print)(void *dirinfo, t_file *dir));
 
 /*
 ** Print prepared files

@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 18:10:06 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 21:16:40 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 14:01:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,18 @@ static int	count_insert(size_t *count, t_file *file)
 	return (0);
 }
 
-static int	count_print(size_t *count, t_file *file)
+static void	count_print(size_t *count, t_dlist *files)
 {
-	ft_fprintf(FT_STDOUT, "%s, %ld, %zu\n", file->name, (long)*((time_t *)file->info), *count);
-	return (0);
+	t_dlist_node	*node;
+	t_file			*file;
+
+	node = ft_dlst_first(files);
+	while (node)
+	{
+		file = FT_DLST_ENTRY(files, node);
+		ft_fprintf(FT_STDOUT, "%s, %ld, %zu\n", file->name, (long)*((time_t *)file->info), *count);
+		node = ft_dlst_next(files, node);
+	}
 }
 
 static int	count_compare(t_file *f1, t_file *f2)

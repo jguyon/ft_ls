@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 13:21:39 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 19:01:31 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 13:26:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int				ls_compare_size(t_file *f1, t_file *f2);
 /*
 ** Print the name of a file and a newline
 */
-int				ls_print_line(void *dirinfo, t_file *file);
+void			ls_print_line(void *dirinfo, t_dlist *files);
 
 /*
 ** Struct and callbacks used for long format
@@ -137,7 +137,7 @@ typedef struct	s_long_finfo {
 
 void			ls_init_long(t_long_dinfo *dinfo);
 int				ls_insert_long(t_long_dinfo *dinfo, t_file *file);
-int				ls_print_long(t_long_dinfo *dinfo, t_file *file);
+void			ls_print_long(t_long_dinfo *dinfo, t_dlist *files);
 void			ls_print_total(t_long_dinfo *dinfo);
 
 /*
@@ -156,7 +156,6 @@ typedef struct	s_cols_dinfo {
 
 void			ls_init_cols(t_cols_dinfo *dinfo);
 int				ls_insert_cols(t_cols_dinfo *dinfo, t_file *file);
-void			ls_prepare_cols(t_cols_dinfo *dinfo, t_dlist *files, int rev);
-int				ls_print_cols(t_cols_dinfo *dinfo, t_file *file);
+void			ls_print_cols(t_cols_dinfo *dinfo, t_dlist *files);
 
 #endif

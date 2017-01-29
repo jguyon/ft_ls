@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 16:39:09 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 21:46:39 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 13:52:43 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	print_dir(void *dirinfo, t_file *file)
 int			ls_print_files(t_flags *flags, t_flist *flist)
 {
 	t_file			*dir;
-	t_flist_print	*print;
+	int				(*print)(void *, t_file *);
 
 	print = flags->singlearg ? NULL : &print_first;
 	if (ls_flist_print(flist) && (dir = ls_flist_next(flist, &print_dir)))

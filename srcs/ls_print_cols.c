@@ -6,15 +6,16 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 14:34:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 19:40:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 14:43:10 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ls_callbacks.h"
+#include "ls_tty.h"
 #include "ft_printf.h"
 #include "ft_strings.h"
 
-int		ls_print_cols(t_cols_dinfo *dinfo, t_file *file)
+static int			print_file(t_cols_dinfo *dinfo, t_file *file)
 {
 	int		has_suffix;
 
@@ -33,8 +34,59 @@ int		ls_print_cols(t_cols_dinfo *dinfo, t_file *file)
 	}
 	else
 		ft_fprintf(FT_STDOUT, "%*s",
-					dinfo->colwidth - ft_strlen(file->name) - has_suffix, "");
+				   dinfo->colwidth - ft_strlen(file->name) - has_suffix, "");
 	if (ft_ferror(FT_STDOUT))
 		return (-1);
 	return (0);
+}
+
+static void			do_print_cols(t_cols_dinfo *dinfo, t_dlist *files)
+{
+	t_file			*arr[dinfo->count];
+	size_t			i;
+	size_t			j;
+	t_dlist_node	*curr;
+
+	curr = ft_dlst_first(files);
+	i = 0;
+	while (i < dinfo->count)
+	{
+		arr[i] = curr ? FT_DLST_ENTRY(files, curr) : NULL;
+		curr = ft_dlst_next(files, curr);
+		++i;
+	}
+	i = 0;
+	while (i < dinfo->rows)
+	{
+		j = i;
+		while (j < dinfo->count && arr[j])
+		{
+			if (print_file(dinfo, arr[j]))
+				ls_file_error(arr[j]->name);
+			j += dinfo->rows;
+		}
+		++i;
+	}
+}
+
+void				ls_print_cols(t_cols_dinfo *dinfo, t_dlist *files)
+{
+	dinfo->colwidth += g_print_suffix ? 2 : 1;
+	if (dinfo->count > 0)
+	{
+		if (ls_tty_width() > dinfo->colwidth)
+			dinfo->cols = ls_tty_width() / dinfo->colwidth;
+		else
+			dinfo->cols = 1;
+		dinfo->rows = dinfo->count / dinfo->cols
+			+ !!(dinfo->count % dinfo->cols);
+		while (dinfo->count / dinfo->rows
+				+ !!(dinfo->count % dinfo->rows) < dinfo->cols)
+		{
+			--(dinfo->cols);
+			dinfo->rows = dinfo->count / dinfo->cols
+				+ !!(dinfo->count % dinfo->cols);
+		}
+		do_print_cols(dinfo, files);
+	}
 }

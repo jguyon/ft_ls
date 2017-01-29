@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/24 16:31:27 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/28 21:20:29 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 14:18:21 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,26 @@ static void		list_files(const char *name, const char *path,
 		flist->error(name);
 }
 
-t_file			*ls_flist_next(t_flist *flist, t_flist_print *print)
+static void		reverse_files(t_dlist *files)
+{
+	t_dlist			new;
+	t_dlist_node	*curr;
+
+	ft_dlst_init(&new, files->offset);
+	while ((curr = ft_dlst_popl(files)))
+		ft_dlst_pushl(&new, curr);
+	if (!ft_dlst_empty(&new))
+		ft_dlst_joinl(files, &new);
+}
+
+t_file			*ls_flist_next(t_flist *flist,
+								int (*print)(void *dirinfo, t_file *file))
 {
 	t_dlist_node	*node;
 	t_file			*file;
 	DIR				*dir;
 
-	if ((flist->reverse && !(node = ft_dlst_popr(&(flist->dirs))))
-		|| (!(flist->reverse) && !(node = ft_dlst_popl(&(flist->dirs)))))
+	if (!(node = ft_dlst_popl(&(flist->dirs))))
 		return (NULL);
 	file = FT_DLST_ENTRY(&(flist->dirs), node);
 	if (flist->init)
@@ -89,7 +101,7 @@ t_file			*ls_flist_next(t_flist *flist, t_flist_print *print)
 	closedir(dir);
 	if (flist->compare)
 		ft_dlst_sort(&(flist->files), (t_dlist_compare)flist->compare);
-	if (flist->prepare)
-		flist->prepare(flist->dirinfo, &(flist->files), flist->reverse);
+	if (flist->reverse)
+		reverse_files(&(flist->files));
 	return (file);
 }

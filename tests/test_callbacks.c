@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 14:12:12 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/27 13:09:32 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/29 13:57:12 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ TLS_TEST(test_compare)
 
 TLS_TEST(test_print_line)
 {
+	t_dlist	list;
 	t_file	file;
 
+	FT_DLST_INIT(&list, t_file, node);
 	bzero(&file, sizeof(file));
 	file.name = "filename";
-	TLS_ASSERT(!ls_print_line(NULL, &file));
+	ft_dlst_pushl(&list, &(file.node));
+	ls_print_line(NULL, &list);
 	TLS_ASSERT(tls_outcmp("filename\n"));
 }
 
@@ -82,11 +85,13 @@ TLS_TEST(test_print_long)
 {
 	t_long_dinfo	dinfo;
 	t_file			*file;
+	t_dlist			list;
 	char			*str;
 	struct stat		st;
 	struct passwd	*pw;
 	struct group	*gr;
 
+	FT_DLST_INIT(&list, t_file, node);
 	file = calloc(1, sizeof(*file));
 	ls_init_long(&dinfo);
 	TLS_INIT_FS;
@@ -94,6 +99,7 @@ TLS_TEST(test_print_long)
 	TLS_CHMOD("777", "file1");
 	file->name = "file1";
 	file->path = strdup(TLS_DIR "file1");
+	ft_dlst_pushl(&list, &(file->node));
 	TLS_ASSERT(!ls_insert_long(&dinfo, file));
 	TLS_ASSERT(dinfo.has_files == 1);
 	TLS_ASSERT(dinfo.total == 0);
@@ -104,7 +110,7 @@ TLS_TEST(test_print_long)
 	TLS_ASSERT(dinfo.max_owner == strlen(pw->pw_name));
 	TLS_ASSERT(dinfo.max_group == strlen(gr->gr_name));
 	TLS_ASSERT(dinfo.max_size == 1);
-	TLS_ASSERT(!ls_print_long(&dinfo, file));
+	ls_print_long(&dinfo, &list);
 	asprintf(&str, "-rwxrwxrwx  1 %s  %s  0 Jan  1  1970 file1\n",
 			 pw->pw_name,
 			 gr->gr_name);
