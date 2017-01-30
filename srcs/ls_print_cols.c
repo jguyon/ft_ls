@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 14:34:25 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/29 14:43:10 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/30 12:56:47 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int			print_file(t_cols_dinfo *dinfo, t_file *file)
 	}
 	else
 		ft_fprintf(FT_STDOUT, "%*s",
-				   dinfo->colwidth - ft_strlen(file->name) - has_suffix, "");
+					dinfo->colwidth - ft_strlen(file->name) - has_suffix, "");
 	if (ft_ferror(FT_STDOUT))
 		return (-1);
 	return (0);
