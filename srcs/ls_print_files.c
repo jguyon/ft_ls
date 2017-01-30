@@ -6,7 +6,7 @@
 /*   By: jguyon <jguyon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 16:39:09 by jguyon            #+#    #+#             */
-/*   Updated: 2017/01/29 13:52:43 by jguyon           ###   ########.fr       */
+/*   Updated: 2017/01/30 13:03:08 by jguyon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ static int	print_dir(void *dirinfo, t_file *file)
 int			ls_print_files(t_flags *flags, t_flist *flist)
 {
 	t_file			*dir;
-	int				(*print)(void *, t_file *);
 
-	print = flags->singlearg ? NULL : &print_first;
 	if (ls_flist_print(flist) && (dir = ls_flist_next(flist, &print_dir)))
 	{
 		if (flags->format == LS_FORMAT_LONG)
@@ -45,7 +43,8 @@ int			ls_print_files(t_flags *flags, t_flist *flist)
 		ls_flist_print(flist);
 		ls_file_del(&dir);
 	}
-	else if ((dir = ls_flist_next(flist, print)))
+	else if ((dir =
+		ls_flist_next(flist, flags->singlearg ? NULL : &print_first)))
 	{
 		if (flags->format == LS_FORMAT_LONG)
 			ls_print_total(flist->dirinfo);
@@ -54,6 +53,8 @@ int			ls_print_files(t_flags *flags, t_flist *flist)
 	}
 	while ((dir = ls_flist_next(flist, &print_dir)))
 	{
+		if (flags->format == LS_FORMAT_LONG)
+			ls_print_total(flist->dirinfo);
 		ls_flist_print(flist);
 		ls_file_del(&dir);
 	}
